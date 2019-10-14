@@ -1,0 +1,7 @@
+*.vo
+*.glob
+*.pyc
+*.aux
+.lia.cache
+.coqdeps.d
+*.agdai

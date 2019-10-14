@@ -1,0 +1,1285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="assets/resources/coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="assets/resources/coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="assets/resources/config.js"></script>
+<script type="text/javascript" src="assets/resources/coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="https://amaurremi.github.io/dot-calculus/src/extensions/paths/">README</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">LibUtils</h1>
+
+<div class="code">
+<span class="id" title="keyword">Set Implicit Arguments</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">Metalib.Metatheory</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">Metalib.AssocList</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <span class="id" title="library">Coq.Structures.Equalities</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <span class="id" title="library">Coq.Lists.List</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <span class="id" title="library">Coq.Program.Equality</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <span class="id" title="library">Coq.Program.Tactics</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">Coq.omega.Omega</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+timeout in seconds for some tactic.
+<a name="lab2"></a><h1 class="section">TODO: we shall not need it. however, metalib provides nondeterministic</h1>
+
+<a name="lab3"></a><h1 class="section">tactics, which is somewhat difficult to get over with.</h1>
+
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">TIMEOUT</span> := 2.<br/>
+
+<br/>
+<span class="id" title="keyword">Notation</span> <a name="d25722d08c5e669f66ae2b705b855780"><span class="id" title="notation">&quot;</span></a>f $ x" := ((<span class="id" title="var">f</span>) (<span class="id" title="var">x</span>)) (<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 68, <span class="id" title="tactic">right</span> <span class="id" title="keyword">associativity</span>, <span class="id" title="var">only</span> <span class="id" title="var">parsing</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Notation</span> <a name="ae46b8cec434cef6e60356f5466d64a0"><span class="id" title="notation">&quot;</span></a>&lt;[ e1 ; .. ; en ]&gt;" := (<span class="id" title="constructor">cons</span> <span class="id" title="var">e1</span> .. (<span class="id" title="constructor">cons</span> <span class="id" title="var">en</span> <span class="id" title="constructor">nil</span>) .. ) (<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 39).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Some Tactics 
+<div class="paragraph"> </div>
+
+ Util Tactics 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "gen" <span class="id" title="var">ident</span>(<span class="id" title="var">x</span>) := <span class="id" title="tactic">generalize</span> <span class="id" title="tactic">dependent</span> <span class="id" title="var">x</span>.<br/>
+<span class="id" title="keyword">Tactic Notation</span> "gen" <span class="id" title="var">ident</span>(<span class="id" title="var">x</span>) <span class="id" title="var">ident</span>(<span class="id" title="var">y</span>) := <span class="id" title="var">gen</span> <span class="id" title="var">x</span>; <span class="id" title="var">gen</span> <span class="id" title="var">y</span>.<br/>
+<span class="id" title="keyword">Tactic Notation</span> "gen" <span class="id" title="var">ident</span>(<span class="id" title="var">x</span>) <span class="id" title="var">ident</span>(<span class="id" title="var">y</span>) <span class="id" title="var">ident</span>(<span class="id" title="var">z</span>) := <span class="id" title="var">gen</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span>; <span class="id" title="var">gen</span> <span class="id" title="var">z</span>.<br/>
+<span class="id" title="keyword">Tactic Notation</span> "gen" <span class="id" title="var">ident</span>(<span class="id" title="var">x</span>) <span class="id" title="var">ident</span>(<span class="id" title="var">y</span>) <span class="id" title="var">ident</span>(<span class="id" title="var">z</span>) <span class="id" title="var">ident</span>(<span class="id" title="var">w</span>) := <span class="id" title="var">gen</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">z</span>; <span class="id" title="var">gen</span> <span class="id" title="var">w</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "invert" <span class="id" title="var">hyp</span>(<span class="id" title="var">H1</span>) := <span class="id" title="tactic">inversion</span> <span class="id" title="var">H1</span>.<br/>
+<span class="id" title="keyword">Tactic Notation</span> "invert" <span class="id" title="var">hyp</span>(<span class="id" title="var">H1</span>) <span class="id" title="var">hyp</span>(<span class="id" title="var">H2</span>) := <span class="id" title="var">invert</span> <span class="id" title="var">H1</span>; <span class="id" title="var">invert</span> <span class="id" title="var">H2</span>.<br/>
+<span class="id" title="keyword">Tactic Notation</span> "invert" <span class="id" title="var">hyp</span>(<span class="id" title="var">H1</span>) <span class="id" title="var">hyp</span>(<span class="id" title="var">H2</span>) <span class="id" title="var">hyp</span>(<span class="id" title="var">H3</span>) := <span class="id" title="var">invert</span> <span class="id" title="var">H1</span> <span class="id" title="var">H2</span>; <span class="id" title="var">invert</span> <span class="id" title="var">H3</span>.<br/>
+<span class="id" title="keyword">Tactic Notation</span> "invert" <span class="id" title="var">hyp</span>(<span class="id" title="var">H1</span>) <span class="id" title="var">hyp</span>(<span class="id" title="var">H2</span>) <span class="id" title="var">hyp</span>(<span class="id" title="var">H3</span>) <span class="id" title="var">hyp</span>(<span class="id" title="var">H4</span>) := <span class="id" title="var">invert</span> <span class="id" title="var">H1</span> <span class="id" title="var">H2</span> <span class="id" title="var">H3</span>; <span class="id" title="var">invert</span> <span class="id" title="var">H4</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">intro_do</span> <span class="id" title="var">tac</span> <span class="id" title="var">trm</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| [ <span class="id" title="var">H</span> : <span class="id" title="keyword">context</span>[<span class="id" title="var">trm</span>] |- <span class="id" title="var">_</span> ] =&gt; <span class="id" title="var">tac</span> <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">_</span> =&gt; <span class="id" title="tactic">intro</span>; <span class="id" title="var">intro_do</span> <span class="id" title="var">tac</span> <span class="id" title="var">trm</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "destr" "on" <span class="id" title="keyword">constr</span>(<span class="id" title="var">trm</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">intro_do</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="keyword">fun</span> <span class="id" title="var">H</span> =&gt; <span class="id" title="tactic">destruct</span> <span class="id" title="var">H</span>) <span class="id" title="var">trm</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "destr" "on" <span class="id" title="keyword">constr</span>(<span class="id" title="var">trm1</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">trm2</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">destr</span> <span class="id" title="var">on</span> <span class="id" title="var">trm1</span>; <span class="id" title="var">destr</span> <span class="id" title="var">on</span> <span class="id" title="var">trm2</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "invert" "on" <span class="id" title="keyword">constr</span>(<span class="id" title="var">trm</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">intro_do</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="keyword">fun</span> <span class="id" title="var">H</span> =&gt; <span class="id" title="var">invert</span> <span class="id" title="var">H</span>) <span class="id" title="var">trm</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "invert" "on" <span class="id" title="keyword">constr</span>(<span class="id" title="var">trm1</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">trm2</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">invert</span> <span class="id" title="var">trm1</span>; <span class="id" title="var">invert</span> <span class="id" title="var">trm2</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+hell of a hack. we try to <span class="inlinecode"><span class="id" title="tactic">eapply</span></span> <span class="inlinecode"><span class="id" title="var">H</span></span> onto the goal and 
+<a name="lab4"></a><h1 class="section">if it's successful, then we consider it to be inductive hypothesis,</h1>
+
+<a name="lab5"></a><h1 class="section">and roll back by using <span class="inlinecode"><span class="id" title="tactic">fail</span></span>;</h1>
+
+<a name="lab6"></a><h1 class="section">otherwise, we give a higher failure level to break it through.</h1>
+
+</div>
+<div class="code">
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">guess_is_ind_hyp</span> <span class="id" title="var">H</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">try</span> (<span class="id" title="var">tryif</span> <span class="id" title="tactic">eapply</span> <span class="id" title="var">H</span> <span class="id" title="keyword">then</span> <span class="id" title="tactic">fail</span> <span class="id" title="keyword">else</span> <span class="id" title="tactic">fail</span> 1).<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">ctx_app</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">multimatch</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| [<span class="id" title="var">H</span> : <span class="id" title="var">_</span> |- <span class="id" title="var">_</span>] =&gt; <span class="id" title="tactic">eapply</span> <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">not_let_bind</span> <span class="id" title="var">name</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| [<span class="id" title="var">x</span> := <span class="id" title="var">_</span> |- <span class="id" title="var">_</span>] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="var">name</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">x</span> =&gt; <span class="id" title="tactic">fail</span> 1<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">_</span> =&gt; <span class="id" title="tactic">fail</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">_</span> =&gt; <span class="id" title="tactic">idtac</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">find_dup_hyp</span> <span class="id" title="var">tac</span> <span class="id" title="var">non</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| [ <span class="id" title="var">H</span> : ?<span class="id" title="var">X</span>, <span class="id" title="var">H'</span> : ?<span class="id" title="var">X</span> |- <span class="id" title="var">_</span> ] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">not_let_bind</span> <span class="id" title="var">H</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">not_let_bind</span> <span class="id" title="var">H'</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="keyword">type</span> <span class="id" title="keyword">of</span> <span class="id" title="var">X</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="keyword">Prop</span> =&gt; <span class="id" title="var">tac</span> <span class="id" title="var">H</span> <span class="id" title="var">H'</span> <span class="id" title="var">X</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">_</span> =&gt; <span class="id" title="tactic">idtac</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">_</span> =&gt; <span class="id" title="var">non</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">fail_at_if_dup</span> <span class="id" title="var">n</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">find_dup_hyp</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="keyword">fun</span> <span class="id" title="var">H</span> <span class="id" title="var">H'</span> <span class="id" title="var">X</span> =&gt; <span class="id" title="tactic">fail</span> <span class="id" title="var">n</span> "dup hypothesis" <span class="id" title="var">H</span> "and" <span class="id" title="var">H'</span> ":" <span class="id" title="var">X</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">ltac</span>:(<span class="id" title="tactic">idtac</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">fail_if_dup</span> := <span class="id" title="var">fail_at_if_dup</span> <span class="id" title="keyword">ltac</span>:(1).<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">clear_dups</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="var">find_dup_hyp</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="keyword">fun</span> <span class="id" title="var">H</span> <span class="id" title="var">H'</span> <span class="id" title="var">_</span> =&gt; <span class="id" title="tactic">clear</span> <span class="id" title="var">H</span> || <span class="id" title="tactic">clear</span> <span class="id" title="var">H'</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">ltac</span>:(<span class="id" title="tactic">idtac</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">clear_tauto_eq</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span> [ <span class="id" title="var">H</span> : ?<span class="id" title="var">X</span> <span class="id" title="notation">=</span> ?<span class="id" title="var">X</span> |- <span class="id" title="var">_</span> ] =&gt; <span class="id" title="tactic">clear</span> <span class="id" title="var">H</span> <span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">different</span> <span class="id" title="var">t1</span> <span class="id" title="var">t2</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="var">t1</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">t2</span> =&gt; <span class="id" title="tactic">fail</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">_</span> =&gt; <span class="id" title="tactic">idtac</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">same</span> <span class="id" title="var">t1</span> <span class="id" title="var">t2</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="var">t1</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">t2</span> =&gt; <span class="id" title="tactic">idtac</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">_</span> =&gt; <span class="id" title="tactic">fail</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "pose" <span class="id" title="var">hyp</span>(<span class="id" title="var">H</span>) "apply" <span class="id" title="var">uconstr</span>(<span class="id" title="var">trm</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">H'</span> := <span class="id" title="tactic">fresh</span> <span class="id" title="tactic">in</span> <span class="id" title="tactic">pose</span> <span class="id" title="var">proof</span> <span class="id" title="var">H</span> <span class="id" title="keyword">as</span> <span class="id" title="var">H'</span>; <span class="id" title="tactic">apply</span> <span class="id" title="var">trm</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H'</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "pose" <span class="id" title="var">hyp</span>(<span class="id" title="var">H</span>) "eapply" <span class="id" title="var">uconstr</span>(<span class="id" title="var">trm</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">H'</span> := <span class="id" title="tactic">fresh</span> <span class="id" title="tactic">in</span> <span class="id" title="tactic">pose</span> <span class="id" title="var">proof</span> <span class="id" title="var">H</span> <span class="id" title="keyword">as</span> <span class="id" title="var">H'</span>; <span class="id" title="tactic">eapply</span> <span class="id" title="var">trm</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H'</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">dup_eq</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">clear_tauto_eq</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| [ <span class="id" title="var">_</span> : ?<span class="id" title="var">X</span> <span class="id" title="notation">=</span> ?<span class="id" title="var">Y</span>, <span class="id" title="var">_</span> : ?<span class="id" title="var">Y</span> <span class="id" title="notation">=</span> ?<span class="id" title="var">X</span> |- <span class="id" title="var">_</span> ] =&gt; <span class="id" title="tactic">fail</span><br/>
+&nbsp;&nbsp;| [ <span class="id" title="var">_</span> : ?<span class="id" title="var">X</span> <span class="id" title="notation">=</span> ?<span class="id" title="var">Y</span> |- ?<span class="id" title="var">Y</span> <span class="id" title="notation">=</span> ?<span class="id" title="var">X</span> ] =&gt; <span class="id" title="tactic">fail</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">_</span> =&gt; <span class="id" title="tactic">idtac</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">invert_eq</span> <span class="id" title="var">H</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">invert</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">subst</span>; <span class="id" title="var">clear_tauto_eq</span>; <span class="id" title="var">clear_dups</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+define a general marker for stateful tactics 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="marker"><span class="id" title="definition">marker</span></a> {<span class="id" title="var">P</span> : <span class="id" title="keyword">Type</span>} (<span class="id" title="var">s</span> : <span class="id" title="inductive">String.string</span>) (<span class="id" title="var">ev</span> : <span class="id" title="keyword">Type</span>) := <a class="idref" href="LibUtils.html#ev"><span class="id" title="variable">ev</span></a>.<br/>
+<span class="id" title="keyword">Opaque</span> <a class="idref" href="LibUtils.html#marker"><span class="id" title="definition">marker</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">mark</span> <span class="id" title="var">tag</span> <span class="id" title="var">H</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">pose</span> (<a class="idref" href="LibUtils.html#marker"><span class="id" title="definition">marker</span></a> <span class="id" title="var">tag</span> <span class="id" title="var">H</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">unmark_all</span> <span class="id" title="var">tag</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="keyword">lazymatch</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| [<span class="id" title="var">x</span> := <a class="idref" href="LibUtils.html#marker"><span class="id" title="definition">marker</span></a> <span class="id" title="var">tag</span> <span class="id" title="var">_</span> |- <span class="id" title="var">_</span> ] =&gt; <span class="id" title="tactic">clear</span> <span class="id" title="var">x</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">not_marked</span> <span class="id" title="var">tag</span> <span class="id" title="var">H</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| [<span class="id" title="var">_</span> : <a class="idref" href="LibUtils.html#marker"><span class="id" title="definition">marker</span></a> <span class="id" title="var">tag</span> <span class="id" title="var">H</span> |- <span class="id" title="var">_</span>] =&gt; <span class="id" title="tactic">fail</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">_</span> =&gt; <span class="id" title="tactic">idtac</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+this is a flag to show if a hypothesis has been inverted. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="inv_scanned"><span class="id" title="definition">inv_scanned</span></a> {<span class="id" title="var">P</span> : <span class="id" title="keyword">Type</span>} (<span class="id" title="var">ev</span> : <a class="idref" href="LibUtils.html#P"><span class="id" title="variable">P</span></a>) : <a class="idref" href="LibUtils.html#P"><span class="id" title="variable">P</span></a> := <a class="idref" href="LibUtils.html#ev"><span class="id" title="variable">ev</span></a>.<br/>
+<span class="id" title="keyword">Opaque</span> <a class="idref" href="LibUtils.html#inv_scanned"><span class="id" title="definition">inv_scanned</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">pose_inverted</span> <span class="id" title="var">H</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">pose</span> (<a class="idref" href="LibUtils.html#inv_scanned"><span class="id" title="definition">inv_scanned</span></a> <span class="id" title="var">H</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">not_inverted</span> <span class="id" title="var">H</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| [<span class="id" title="var">_</span> := <a class="idref" href="LibUtils.html#inv_scanned"><span class="id" title="definition">inv_scanned</span></a> <span class="id" title="var">H</span> |- <span class="id" title="var">_</span>] =&gt; <span class="id" title="tactic">fail</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">_</span> =&gt; <span class="id" title="tactic">idtac</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">cleanup_inverted</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="keyword">lazymatch</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| [<span class="id" title="var">x</span> := <a class="idref" href="LibUtils.html#inv_scanned"><span class="id" title="definition">inv_scanned</span></a> <span class="id" title="var">_</span> |- <span class="id" title="var">_</span>] =&gt; <span class="id" title="tactic">clear</span> <span class="id" title="var">x</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">progressive_inversion</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| [ <span class="id" title="var">H</span> : ?<span class="id" title="var">T</span> |- <span class="id" title="var">_</span> ] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">not_let_bind</span> <span class="id" title="var">H</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">not_inverted</span> <span class="id" title="var">H</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="keyword">type</span> <span class="id" title="keyword">of</span> <span class="id" title="var">T</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="keyword">Prop</span> =&gt; <span class="id" title="tactic">idtac</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="keyword">Type</span> =&gt; <span class="id" title="tactic">idtac</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">x</span> := <span class="id" title="var">numgoals</span> <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">fail_if_dup</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">y</span> := <span class="id" title="var">numgoals</span> <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">guard</span> <span class="id" title="var">x</span> &gt;= <span class="id" title="var">y</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">subst</span>; <span class="id" title="var">clear_tauto_eq</span>; <span class="id" title="var">clear_dups</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">try</span> <span class="id" title="var">pose_inverted</span> <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">progressive_inversions</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">clear_dups</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="var">progressive_inversion</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">cleanup_inverted</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">destruct_logic</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">destruct_one_pair</span><br/>
+&nbsp;&nbsp;|| <span class="id" title="var">destruct_one_ex</span><br/>
+&nbsp;&nbsp;|| <span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| [ <span class="id" title="var">H</span> : ?<span class="id" title="var">X</span> <span class="id" title="notation">\/</span> ?<span class="id" title="var">Y</span> |- <span class="id" title="var">_</span> ] =&gt; <span class="id" title="tactic">destruct</span> <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| [ <span class="id" title="var">ev</span> : <span class="id" title="notation">{</span> <span class="id" title="var">_</span> <span class="id" title="notation">}</span> <span class="id" title="notation">+</span> <span class="id" title="notation">{</span> <span class="id" title="var">_</span> <span class="id" title="notation">}</span> |- <span class="id" title="var">_</span> ] =&gt; <span class="id" title="tactic">destruct</span> <span class="id" title="var">ev</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| [ <span class="id" title="var">ev</span> : <span class="id" title="var">_</span> <span class="id" title="notation">+</span> <span class="id" title="notation">{</span> <span class="id" title="var">_</span> <span class="id" title="notation">}</span> |- <span class="id" title="var">_</span> ] =&gt; <span class="id" title="tactic">destruct</span> <span class="id" title="var">ev</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| [ <span class="id" title="var">ev</span> : <span class="id" title="var">_</span> <span class="id" title="notation">+</span> <span class="id" title="var">_</span> |- <span class="id" title="var">_</span> ] =&gt; <span class="id" title="tactic">destruct</span> <span class="id" title="var">ev</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">destruct_all</span> := <span class="id" title="tactic">repeat</span> <span class="id" title="var">destruct_logic</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">destruct_eq</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">destruct_notin</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| [ |- <span class="id" title="keyword">context</span>[<span class="id" title="keyword">if</span> ?<span class="id" title="var">x</span> <span class="id" title="notation">==</span> ?<span class="id" title="var">x</span> <span class="id" title="keyword">then</span> <span class="id" title="var">_</span> <span class="id" title="keyword">else</span> <span class="id" title="var">_</span>]] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<span class="id" title="var">x</span> <span class="id" title="notation">==</span> <span class="id" title="var">x</span>); [| <span class="id" title="tactic">congruence</span>]<br/>
+&nbsp;&nbsp;| [ |- <span class="id" title="keyword">context</span>[<span class="id" title="keyword">if</span> ?<span class="id" title="var">x</span> <span class="id" title="notation">==</span> ?<span class="id" title="var">y</span> <span class="id" title="keyword">then</span> <span class="id" title="var">_</span> <span class="id" title="keyword">else</span> <span class="id" title="var">_</span>]] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<span class="id" title="var">x</span> <span class="id" title="notation">==</span> <span class="id" title="var">y</span>); [<span class="id" title="tactic">subst</span> |]; <span class="id" title="tactic">try</span> <span class="id" title="tactic">congruence</span><br/>
+&nbsp;&nbsp;| [ <span class="id" title="var">H</span> : <span class="id" title="keyword">context</span>[<span class="id" title="keyword">if</span> ?<span class="id" title="var">x</span> <span class="id" title="notation">==</span> ?<span class="id" title="var">x</span> <span class="id" title="keyword">then</span> <span class="id" title="var">_</span> <span class="id" title="keyword">else</span> <span class="id" title="var">_</span>] |- <span class="id" title="var">_</span>] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<span class="id" title="var">x</span> <span class="id" title="notation">==</span> <span class="id" title="var">x</span>); [| <span class="id" title="tactic">congruence</span>]<br/>
+&nbsp;&nbsp;| [ <span class="id" title="var">H</span> : <span class="id" title="keyword">context</span>[<span class="id" title="keyword">if</span> ?<span class="id" title="var">x</span> <span class="id" title="notation">==</span> ?<span class="id" title="var">y</span> <span class="id" title="keyword">then</span> <span class="id" title="var">_</span> <span class="id" title="keyword">else</span> <span class="id" title="var">_</span>] |- <span class="id" title="var">_</span>] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<span class="id" title="var">x</span> <span class="id" title="notation">==</span> <span class="id" title="var">y</span>); [<span class="id" title="tactic">subst</span> |]; <span class="id" title="tactic">try</span> <span class="id" title="tactic">congruence</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">dep_destruct</span> <span class="id" title="var">ev</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">E</span> := <span class="id" title="tactic">fresh</span> "E" <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">remember</span> <span class="id" title="var">ev</span> <span class="id" title="keyword">as</span> <span class="id" title="var">E</span>; <span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> <span class="id" title="var">E</span>; <span class="id" title="tactic">dependent</span> <span class="id" title="tactic">destruction</span> <span class="id" title="var">E</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">pick_fresh_do</span> <span class="id" title="var">tac</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">L</span> := <span class="id" title="var">gather_atoms</span> <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">L</span> := <span class="id" title="var">beautify_fset</span> <span class="id" title="var">L</span> <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">tac</span> <span class="id" title="var">L</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">doit</span> <span class="id" title="var">from</span> <span class="id" title="var">num</span> <span class="id" title="var">tac</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">from</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">num</span> =&gt;  <span class="id" title="tactic">idtac</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">_</span> =&gt; <span class="id" title="var">tac</span> <span class="id" title="var">from</span>; <span class="id" title="var">doit</span> (<span class="id" title="constructor">S</span> <span class="id" title="var">from</span>) <span class="id" title="var">num</span> <span class="id" title="var">tac</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">foreach</span> <span class="id" title="var">l</span> <span class="id" title="var">tac</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="var">l</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| <span class="id" title="constructor">nil</span> =&gt; <span class="id" title="tactic">idtac</span><br/>
+&nbsp;&nbsp;| ?<span class="id" title="var">x</span> <span class="id" title="notation">::</span> ?<span class="id" title="var">xs</span> =&gt; <span class="id" title="var">tac</span> <span class="id" title="var">x</span>; <span class="id" title="var">foreach</span> <span class="id" title="var">xs</span> <span class="id" title="var">tac</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "for" <span class="id" title="keyword">constr</span>(<span class="id" title="var">l</span>) "do" "{" <span class="id" title="var">tactic</span>(<span class="id" title="var">tac</span>) "}" :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">foreach</span> <span class="id" title="var">l</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="var">tac</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">cofinite</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| [  |- <span class="id" title="keyword">forall</span> <span class="id" title="var">_</span>, <span class="id" title="var">_</span> <span class="id" title="notation">`</span><span class="id" title="notation">notin</span><span class="id" title="notation">`</span> ?<span class="id" title="var">L'</span> <span class="id" title="notation">-&gt;</span> <span class="id" title="var">_</span> ] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">is_evar</span> <span class="id" title="var">L'</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">x</span> := <span class="id" title="tactic">fresh</span> "x" <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">pick_fresh_do</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="keyword">fun</span> <span class="id" title="var">L</span> =&gt; <span class="id" title="var">unify</span> <span class="id" title="var">L'</span> <span class="id" title="var">L</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">Fr</span> := <span class="id" title="tactic">fresh</span> "Fr" <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">x</span> <span class="id" title="var">Fr</span><br/>
+&nbsp;&nbsp;| [ <span class="id" title="var">H</span> : ?<span class="id" title="var">x</span> <span class="id" title="notation">`</span><span class="id" title="notation">notin</span><span class="id" title="notation">`</span> <span class="id" title="var">_</span> |- <span class="id" title="var">_</span> ] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">gen</span> <span class="id" title="var">x</span>; <span class="id" title="var">cofinite</span><br/>
+&nbsp;&nbsp;| [ |- <span class="id" title="notation">exists</span> <span class="id" title="notation">(</span><span class="id" title="var">_</span> : <span class="id" title="abbreviation">atoms</span><span class="id" title="notation">),</span> <span class="id" title="var">_</span> ] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">pick_fresh_do</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="keyword">fun</span> <span class="id" title="var">L</span> =&gt; <span class="id" title="tactic">exists</span> <span class="id" title="var">L</span>)<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">solve_by_invert</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| [ <span class="id" title="var">H</span> : ?<span class="id" title="var">T</span> |- <span class="id" title="var">_</span> ] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">type</span> <span class="id" title="keyword">of</span> <span class="id" title="var">T</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="keyword">Prop</span> =&gt; <span class="id" title="tactic">solve</span> [<span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>]<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="keyword">Type</span> =&gt; <span class="id" title="tactic">solve</span> [<span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>]<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">find_intro</span> <span class="id" title="var">tac</span> <span class="id" title="var">term</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| [ |- <span class="id" title="keyword">forall</span> <span class="id" title="var">_</span> : ?<span class="id" title="var">T</span>, <span class="id" title="var">_</span> ] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">H</span> := <span class="id" title="tactic">fresh</span> "H" <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intro</span> <span class="id" title="var">H</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">type</span> <span class="id" title="keyword">of</span> <span class="id" title="var">H</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="keyword">context</span>[<span class="id" title="var">term</span>] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">tac</span> <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">_</span> =&gt; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">find_intro</span> <span class="id" title="var">tac</span> <span class="id" title="var">term</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;| [ |- <span class="id" title="var">_</span> ] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">fail</span> 1 "cannot find an induction target of " <span class="id" title="var">term</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "induction" "on" <span class="id" title="keyword">constr</span>(<span class="id" title="var">term</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">find_intro</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="keyword">fun</span> <span class="id" title="var">H</span> =&gt; <span class="id" title="tactic">induction</span> <span class="id" title="var">H</span>) <span class="id" title="var">term</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "dep" "induction" "on" <span class="id" title="keyword">constr</span>(<span class="id" title="var">term</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">find_intro</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="keyword">fun</span> <span class="id" title="var">H</span> =&gt; <span class="id" title="tactic">dependent</span> <span class="id" title="tactic">induction</span> <span class="id" title="var">H</span>) <span class="id" title="var">term</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">fold_not_under_forall</span> :=<br/>
+&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">repeat</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">H</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">n</span> : ?<span class="id" title="var">T</span>, @?<span class="id" title="var">x</span> <a class="idref" href="LibUtils.html#n"><span class="id" title="variable">n</span></a> |- <span class="id" title="var">_</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">type</span> <span class="id" title="keyword">of</span> <span class="id" title="var">H</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="keyword">context</span>[<span class="id" title="inductive">False</span>] =&gt; <span class="id" title="tactic">idtac</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">x</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="keyword">fun</span> <span class="id" title="var">n</span> : <span class="id" title="var">T</span> =&gt; ?<span class="id" title="var">b</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">not_n</span> := <span class="id" title="tactic">fresh</span> <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">b'''</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">constr</span>:(<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">n</span> : <span class="id" title="var">T</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">b</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">not_n</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">ltac</span>:(<span class="id" title="keyword">let</span> <span class="id" title="var">b'</span> := (<span class="id" title="tactic">eval</span> <span class="id" title="tactic">cbv</span> <span class="id" title="keyword">delta</span> [<span class="id" title="var">not_n</span>] <span class="id" title="tactic">in</span> <span class="id" title="var">not_n</span>) <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">b'</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="keyword">context</span> <span class="id" title="var">C</span>[?<span class="id" title="var">P</span> <span class="id" title="notation">-&gt;</span> <span class="id" title="inductive">False</span>] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">b''</span> := <span class="id" title="keyword">context</span> <span class="id" title="var">C</span>[<span class="id" title="notation">~</span> <span class="id" title="var">P</span>] <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">b''</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>) <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">tH'</span> := <span class="id" title="tactic">eval</span> <span class="id" title="var">cbn</span> <span class="id" title="keyword">beta</span> <span class="id" title="tactic">in</span> (<span class="id" title="keyword">forall</span> <span class="id" title="var">n</span> : <span class="id" title="var">T</span>, <span class="id" title="var">b'''</span> <a class="idref" href="LibUtils.html#n"><span class="id" title="variable">n</span></a>) <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">tH</span> := <span class="id" title="keyword">type</span> <span class="id" title="keyword">of</span> <span class="id" title="var">H</span> <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">change</span> <span class="id" title="var">tH</span> <span class="id" title="keyword">with</span> <span class="id" title="var">tH'</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">exvar</span> <span class="id" title="var">T</span> <span class="id" title="var">tac</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">x</span> := <span class="id" title="tactic">fresh</span> "x" <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;<span class="id" title="tactic">evar</span> (<span class="id" title="var">x</span> : <span class="id" title="var">T</span>);<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">x'</span> := <span class="id" title="tactic">eval</span> <span class="id" title="tactic">unfold</span> <span class="id" title="var">x</span> <span class="id" title="tactic">in</span> <span class="id" title="var">x</span> <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;<span class="id" title="tactic">clear</span> <span class="id" title="var">x</span>; <span class="id" title="var">tac</span> <span class="id" title="var">x'</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">exexec</span> <span class="id" title="var">lem</span> <span class="id" title="var">tac</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">type</span> <span class="id" title="keyword">of</span> <span class="id" title="var">lem</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">_</span> <span class="id" title="notation">/\</span> <span class="id" title="var">_</span> =&gt; <span class="id" title="var">exexec</span> <span class="id" title="keyword">constr</span>:(<span class="id" title="lemma">proj1</span> <span class="id" title="var">lem</span>) <span class="id" title="var">tac</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|| <span class="id" title="var">exexec</span> <span class="id" title="keyword">constr</span>:(<span class="id" title="lemma">proj2</span> <span class="id" title="var">lem</span>) <span class="id" title="var">tac</span><br/>
+&nbsp;&nbsp;| <span class="id" title="keyword">forall</span> <span class="id" title="var">_</span> : ?<span class="id" title="var">T</span>, <span class="id" title="var">_</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">exvar</span> <span class="id" title="var">T</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="keyword">fun</span> <span class="id" title="var">x'</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">type</span> <span class="id" title="keyword">of</span> (<span class="id" title="var">lem</span> <span class="id" title="var">x'</span>) <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="keyword">context</span>[<span class="id" title="var">_</span> <span class="id" title="notation">/\</span> <span class="id" title="var">_</span>] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">exexec</span> <span class="id" title="keyword">constr</span>:(<span class="id" title="var">lem</span> <span class="id" title="var">x'</span>) <span class="id" title="var">tac</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>)<br/>
+&nbsp;&nbsp;| <span class="id" title="var">_</span> =&gt; <span class="id" title="var">tac</span> <span class="id" title="var">lem</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "exrewrite" <span class="id" title="var">uconstr</span>(<span class="id" title="var">lem</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">exexec</span> <span class="id" title="var">lem</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="keyword">fun</span> <span class="id" title="var">l</span> =&gt; <span class="id" title="tactic">rewrite</span> <span class="id" title="var">l</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "eexrewrite" <span class="id" title="var">uconstr</span>(<span class="id" title="var">lem</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">exexec</span> <span class="id" title="var">lem</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="keyword">fun</span> <span class="id" title="var">l</span> =&gt; <span class="id" title="var">erewrite</span> <span class="id" title="var">l</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "exrewrite" "&lt;-" <span class="id" title="var">uconstr</span>(<span class="id" title="var">lem</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">exexec</span> <span class="id" title="var">lem</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="keyword">fun</span> <span class="id" title="var">l</span> =&gt; <span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">l</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "eexrewrite" "&lt;-" <span class="id" title="var">uconstr</span>(<span class="id" title="var">lem</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">exexec</span> <span class="id" title="var">lem</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="keyword">fun</span> <span class="id" title="var">l</span> =&gt; <span class="id" title="var">erewrite</span> &lt;- <span class="id" title="var">l</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "contextual" "apply" <span class="id" title="var">uconstr</span>(<span class="id" title="var">lem</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| [<span class="id" title="var">H</span> : ?<span class="id" title="var">P</span> |- <span class="id" title="var">_</span> ] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">type</span> <span class="id" title="keyword">of</span> <span class="id" title="var">P</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="keyword">Prop</span> =&gt; <span class="id" title="tactic">apply</span> <span class="id" title="var">lem</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="keyword">Type</span> =&gt; <span class="id" title="tactic">apply</span> <span class="id" title="var">lem</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "contextual" "eapply" <span class="id" title="var">uconstr</span>(<span class="id" title="var">lem</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| [<span class="id" title="var">H</span> : ?<span class="id" title="var">P</span> |- <span class="id" title="var">_</span> ] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">type</span> <span class="id" title="keyword">of</span> <span class="id" title="var">P</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="keyword">Prop</span> =&gt; <span class="id" title="tactic">eapply</span> <span class="id" title="var">lem</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="keyword">Type</span> =&gt; <span class="id" title="tactic">eapply</span> <span class="id" title="var">lem</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Tactics for list reassociation. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">non_dec_list</span> <span class="id" title="var">nat_list</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="keyword">rec</span> <span class="id" title="var">scan</span> <span class="id" title="var">nlist</span> <span class="id" title="var">p</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="var">nlist</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="constructor">nil</span> =&gt; <span class="id" title="tactic">idtac</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| ?<span class="id" title="var">h</span> <span class="id" title="notation">::</span> ?<span class="id" title="var">t</span> =&gt; <span class="id" title="keyword">match</span> <span class="id" title="var">h</span> <span class="id" title="keyword">with</span> <span class="id" title="keyword">context</span>[<span class="id" title="var">p</span>] =&gt; <span class="id" title="var">scan</span> <span class="id" title="var">t</span> <span class="id" title="var">h</span> <span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span> <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="var">nat_list</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| <span class="id" title="constructor">nil</span> =&gt; <span class="id" title="tactic">idtac</span><br/>
+&nbsp;&nbsp;| <span class="id" title="constructor">cons</span> ?<span class="id" title="var">h</span> ?<span class="id" title="var">t</span> =&gt; <span class="id" title="var">scan</span> <span class="id" title="var">t</span> <span class="id" title="var">h</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">_</span> =&gt; <span class="id" title="tactic">fail</span> "the given list is not non-decreasing " <span class="id" title="var">nat_list</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">reassoc_impl</span> <span class="id" title="var">lst</span> <span class="id" title="var">assoc</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="keyword">type</span> <span class="id" title="keyword">of</span> <span class="id" title="var">lst</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| <span class="id" title="inductive">list</span> ?<span class="id" title="var">T</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="keyword">rec</span> <span class="id" title="var">partition</span> <span class="id" title="var">l</span> <span class="id" title="var">cnt</span> <span class="id" title="var">target</span> <span class="id" title="var">cb</span> := <span class="comment">(*&nbsp;cnt&nbsp;&lt;=&nbsp;target&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="var">cnt</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">target</span> =&gt; <span class="id" title="var">cb</span> <span class="id" title="var">l</span> (@<span class="id" title="constructor">nil</span> <span class="id" title="var">T</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">_</span> =&gt; <span class="id" title="keyword">match</span> <span class="id" title="var">l</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| ?<span class="id" title="var">h</span> <span class="id" title="notation">::</span> ?<span class="id" title="var">t</span> =&gt; <span class="id" title="var">partition</span> <span class="id" title="var">t</span> (<span class="id" title="constructor">S</span> <span class="id" title="var">cnt</span>) <span class="id" title="var">target</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="keyword">fun</span> <span class="id" title="var">l'</span> <span class="id" title="var">ed</span> =&gt; <span class="id" title="var">cb</span> <span class="id" title="var">l'</span> (<span class="id" title="var">h</span> <span class="id" title="notation">::</span> <span class="id" title="var">ed</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span> <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="keyword">rec</span> <span class="id" title="var">scan</span> <span class="id" title="var">l</span> <span class="id" title="var">cnt</span> <span class="id" title="var">ac</span> <span class="id" title="var">cb</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="var">ac</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="constructor">nil</span> =&gt; <span class="id" title="var">cb</span> (<span class="id" title="var">l</span> <span class="id" title="notation">::</span> <span class="id" title="constructor">nil</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| ?<span class="id" title="var">target</span> <span class="id" title="notation">::</span> ?<span class="id" title="var">ac'</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">partition</span> <span class="id" title="var">l</span> <span class="id" title="var">cnt</span> <span class="id" title="var">target</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">ltac</span>:(<span class="id" title="keyword">fun</span> <span class="id" title="var">l'</span> <span class="id" title="var">p</span> =&gt; <span class="id" title="var">scan</span> <span class="id" title="var">l'</span> <span class="id" title="var">target</span> <span class="id" title="var">ac'</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="keyword">fun</span> <span class="id" title="var">l'</span> =&gt; <span class="id" title="var">cb</span> (<span class="id" title="var">p</span> <span class="id" title="notation">::</span> <span class="id" title="var">l'</span>)))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span> <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">scan</span> <span class="id" title="var">lst</span> 0 <span class="id" title="var">assoc</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="keyword">fun</span> <span class="id" title="var">l</span> =&gt; <span class="id" title="var">l</span>)<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">app_lists</span> <span class="id" title="var">lists</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="keyword">rec</span> <span class="id" title="var">appl</span> <span class="id" title="var">l</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="keyword">type</span> <span class="id" title="keyword">of</span> <span class="id" title="var">l</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="inductive">list</span> (<span class="id" title="inductive">list</span> ?<span class="id" title="var">T</span>) =&gt; <span class="id" title="keyword">lazymatch</span> <span class="id" title="var">l</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| ?<span class="id" title="var">h</span> <span class="id" title="notation">::</span> <span class="id" title="constructor">nil</span> =&gt; <span class="id" title="var">h</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| ?<span class="id" title="var">h</span> <span class="id" title="notation">::</span> ?<span class="id" title="var">t</span> =&gt; <span class="id" title="keyword">let</span> <span class="id" title="var">y</span> := <span class="id" title="var">appl</span> <span class="id" title="var">t</span> <span class="id" title="tactic">in</span> <span class="id" title="keyword">constr</span>:(<span class="id" title="var">h</span> <span class="id" title="notation">++</span> <span class="id" title="var">y</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="constructor">nil</span> =&gt; <span class="id" title="keyword">constr</span>:(@<span class="id" title="constructor">nil</span> <span class="id" title="var">T</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span> <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="keyword">rec</span> <span class="id" title="var">col</span> <span class="id" title="var">l</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="keyword">type</span> <span class="id" title="keyword">of</span> <span class="id" title="var">l</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="inductive">list</span> (<span class="id" title="inductive">list</span> (<span class="id" title="inductive">list</span> ?<span class="id" title="var">T</span>)) =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="var">l</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| ?<span class="id" title="var">h</span> <span class="id" title="notation">::</span> ?<span class="id" title="var">t</span> =&gt; <span class="id" title="keyword">let</span> <span class="id" title="var">x</span> := <span class="id" title="var">appl</span> <span class="id" title="var">h</span> <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">y</span> := <span class="id" title="var">col</span> <span class="id" title="var">t</span> <span class="id" title="tactic">in</span> <span class="id" title="keyword">constr</span>:(<span class="id" title="var">x</span> <span class="id" title="notation">::</span> <span class="id" title="var">y</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="constructor">nil</span> =&gt; <span class="id" title="keyword">constr</span>:(@<span class="id" title="constructor">nil</span> (<span class="id" title="inductive">list</span> <span class="id" title="var">T</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span> <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">x</span> := <span class="id" title="var">col</span> <span class="id" title="var">lists</span> <span class="id" title="tactic">in</span> <span class="id" title="var">appl</span> <span class="id" title="var">x</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">collect_list</span> <span class="id" title="var">apps</span> <span class="id" title="var">n</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="keyword">rec</span> <span class="id" title="var">col</span> <span class="id" title="var">ap</span> <span class="id" title="var">m</span> := <span class="id" title="keyword">lazymatch</span> <span class="id" title="keyword">constr</span>:(<span class="id" title="notation">(</span><span class="id" title="var">ap</span><span class="id" title="notation">,</span> <span class="id" title="var">m</span><span class="id" title="notation">)</span>) <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="notation">(</span>?<span class="id" title="var">l1</span> <span class="id" title="notation">++</span> ?<span class="id" title="var">l2</span><span class="id" title="notation">,</span> <span class="id" title="constructor">S</span> ?<span class="id" title="var">o</span><span class="id" title="notation">)</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">r</span> := <span class="id" title="var">col</span> <span class="id" title="var">l2</span> <span class="id" title="var">o</span> <span class="id" title="tactic">in</span> <span class="id" title="keyword">constr</span>:(<span class="id" title="var">l1</span> <span class="id" title="notation">::</span> <span class="id" title="var">r</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="notation">(</span><span class="id" title="var">_</span><span class="id" title="notation">,</span> 0<span class="id" title="notation">)</span> =&gt; <span class="id" title="keyword">constr</span>:(<span class="id" title="var">ap</span> <span class="id" title="notation">::</span> <span class="id" title="constructor">nil</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span> <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">col</span> <span class="id" title="var">apps</span> <span class="id" title="var">n</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+here comes the tactic that is going to reassociate the lists.
+<a name="lab7"></a><h1 class="section">it does following things:</h1>
+
+<a name="lab8"></a><h1 class="section">1. simplify environment into canonical form;</h1>
+
+<a name="lab9"></a><h1 class="section">2. find out a list that is the result of appending precisely N lists together;</h1>
+
+<a name="lab10"></a><h1 class="section">3. reassociate them according to ASSOC;</h1>
+
+<a name="lab11"></a><h1 class="section">4. prove the new one and the old one are the same by calling TAC.</h1>
+
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">doreassoc</span> <span class="id" title="var">n</span> <span class="id" title="var">assoc</span> <span class="id" title="var">tac</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="keyword">rec</span> <span class="id" title="var">all_at_most</span> <span class="id" title="var">l</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">l</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| ?<span class="id" title="var">h</span> <span class="id" title="notation">::</span> ?<span class="id" title="var">t</span> =&gt; <span class="id" title="keyword">match</span> <span class="id" title="var">n</span> <span class="id" title="keyword">with</span> <span class="id" title="keyword">context</span>[<span class="id" title="var">h</span>] =&gt; <span class="id" title="var">all_at_most</span> <span class="id" title="var">t</span> <span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="constructor">nil</span> =&gt; <span class="id" title="tactic">idtac</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">_</span> =&gt; <span class="id" title="tactic">fail</span> "the list has element greater than" <span class="id" title="var">n</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span> <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">all_at_most</span> <span class="id" title="var">assoc</span>; <span class="id" title="var">non_dec_list</span> <span class="id" title="var">assoc</span>; <span class="comment">(*&nbsp;input&nbsp;sanity&nbsp;checking&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="var">n</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| <span class="id" title="constructor">S</span> ?<span class="id" title="var">n'</span> =&gt; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">simpl_env</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| [  |- <span class="id" title="keyword">context</span>[?<span class="id" title="var">l</span> <span class="id" title="notation">++</span> ?<span class="id" title="var">ls</span>] ] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">colists</span> := <span class="id" title="var">collect_list</span> (<span class="id" title="var">l</span> <span class="id" title="notation">++</span> <span class="id" title="var">ls</span>) <span class="id" title="var">n'</span> <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">reac</span> := <span class="id" title="var">reassoc_impl</span> <span class="id" title="var">colists</span> <span class="id" title="var">assoc</span> <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">applist</span> := <span class="id" title="var">app_lists</span> <span class="id" title="var">reac</span> <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">expr</span> := <span class="id" title="keyword">constr</span>:(<span class="id" title="var">l</span> <span class="id" title="notation">++</span> <span class="id" title="var">ls</span>) <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">replace</span> <span class="id" title="var">expr</span> <span class="id" title="keyword">with</span> <span class="id" title="var">applist</span> <span class="id" title="tactic">by</span> <span class="id" title="var">tac</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|| <span class="id" title="tactic">fail</span> "unable to prove association holds:" <span class="id" title="var">expr</span> "=" <span class="id" title="var">applist</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "reassoc" <span class="id" title="keyword">constr</span>(<span class="id" title="var">n</span>) "with" <span class="id" title="keyword">constr</span>(<span class="id" title="var">c1</span>) "by" "[" <span class="id" title="var">tactic</span>(<span class="id" title="var">tac</span>) "]" :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">doreassoc</span> <span class="id" title="var">n</span> (<span class="id" title="var">c1</span> <span class="id" title="notation">::</span> <span class="id" title="constructor">nil</span>) <span class="id" title="keyword">ltac</span>:(<span class="id" title="var">tac</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "reassoc" <span class="id" title="keyword">constr</span>(<span class="id" title="var">n</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"with" <span class="id" title="keyword">constr</span>(<span class="id" title="var">c1</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">c2</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"by" "[" <span class="id" title="var">tactic</span>(<span class="id" title="var">tac</span>) "]" :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">doreassoc</span> <span class="id" title="var">n</span> (<span class="id" title="var">c1</span> <span class="id" title="notation">::</span> <span class="id" title="var">c2</span> <span class="id" title="notation">::</span> <span class="id" title="constructor">nil</span>) <span class="id" title="keyword">ltac</span>:(<span class="id" title="var">tac</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "reassoc" <span class="id" title="keyword">constr</span>(<span class="id" title="var">n</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"with" <span class="id" title="keyword">constr</span>(<span class="id" title="var">c1</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">c2</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">c3</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"by" "[" <span class="id" title="var">tactic</span>(<span class="id" title="var">tac</span>) "]" :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">doreassoc</span> <span class="id" title="var">n</span> (<span class="id" title="var">c1</span> <span class="id" title="notation">::</span> <span class="id" title="var">c2</span> <span class="id" title="notation">::</span> <span class="id" title="var">c3</span> <span class="id" title="notation">::</span> <span class="id" title="constructor">nil</span>) <span class="id" title="keyword">ltac</span>:(<span class="id" title="var">tac</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "reassoc" <span class="id" title="keyword">constr</span>(<span class="id" title="var">n</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"with" <span class="id" title="keyword">constr</span>(<span class="id" title="var">c1</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">c2</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">c3</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">c4</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"by" "[" <span class="id" title="var">tactic</span>(<span class="id" title="var">tac</span>) "]" :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">doreassoc</span> <span class="id" title="var">n</span> (<span class="id" title="var">c1</span> <span class="id" title="notation">::</span> <span class="id" title="var">c2</span> <span class="id" title="notation">::</span> <span class="id" title="var">c3</span> <span class="id" title="notation">::</span> <span class="id" title="var">c4</span> <span class="id" title="notation">::</span> <span class="id" title="constructor">nil</span>) <span class="id" title="keyword">ltac</span>:(<span class="id" title="var">tac</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "reassoc" <span class="id" title="keyword">constr</span>(<span class="id" title="var">n</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"with" <span class="id" title="keyword">constr</span>(<span class="id" title="var">c1</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">c2</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">c3</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">c4</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">c5</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"by" "[" <span class="id" title="var">tactic</span>(<span class="id" title="var">tac</span>) "]" :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">doreassoc</span> <span class="id" title="var">n</span> (<span class="id" title="var">c1</span> <span class="id" title="notation">::</span> <span class="id" title="var">c2</span> <span class="id" title="notation">::</span> <span class="id" title="var">c3</span> <span class="id" title="notation">::</span> <span class="id" title="var">c4</span> <span class="id" title="notation">::</span> <span class="id" title="var">c5</span> <span class="id" title="notation">::</span> <span class="id" title="constructor">nil</span>) <span class="id" title="keyword">ltac</span>:(<span class="id" title="var">tac</span>).<br/>
+
+<br/>
+<span class="comment">(*&nbsp;List&nbsp;Reassociation&nbsp;Ends&nbsp;Here.&nbsp;*)</span><br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">try_discharge</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">try</span> <span class="id" title="tactic">congruence</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">careful_unfold</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">autounfold</span> <span class="id" title="tactic">in</span> *;<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">fold</span> <span class="id" title="var">any</span> <span class="id" title="var">not</span>; <span class="id" title="var">fold_not_under_forall</span>. <span class="comment">(*&nbsp;we&nbsp;don't&nbsp;want&nbsp;to&nbsp;unfold&nbsp;not&nbsp;*)</span><br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">simplify</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> *; <span class="id" title="var">cbn</span> <span class="id" title="tactic">in</span> *; <span class="id" title="tactic">subst</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">careful_unfold</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+there occasionally will be cheap goals that can be discharged
+<a name="lab12"></a><h1 class="section">by direct application.</h1>
+
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">direct_app</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| [ <span class="id" title="var">H</span>: <span class="id" title="keyword">context</span>[<span class="id" title="var">_</span> <span class="id" title="notation">/\</span> ?<span class="id" title="var">G</span>] |- ?<span class="id" title="var">G</span> ] =&gt; <span class="id" title="tactic">apply</span> <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;| [ <span class="id" title="var">H</span>: <span class="id" title="keyword">context</span>[?<span class="id" title="var">G</span> <span class="id" title="notation">/\</span> <span class="id" title="var">_</span>] |- ?<span class="id" title="var">G</span> ] =&gt; <span class="id" title="tactic">apply</span> <span class="id" title="var">H</span>    <br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="var">destruct_eq</span>; <span class="id" title="var">destruct_all</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">progressive_destruction</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">destruct_eq</span> || <span class="id" title="var">destruct_logic</span><br/>
+&nbsp;&nbsp;|| (<span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| [ <span class="id" title="var">H</span> : <span class="id" title="notation">(</span><span class="id" title="var">_</span><span class="id" title="notation">,</span> <span class="id" title="var">_</span><span class="id" title="notation">)</span> <span class="id" title="notation">=</span> <span class="id" title="notation">(</span><span class="id" title="var">_</span><span class="id" title="notation">,</span> <span class="id" title="var">_</span><span class="id" title="notation">)</span> |- <span class="id" title="var">_</span> ] =&gt; <span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">clear</span> <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">congruence</span>; <span class="id" title="tactic">subst</span>)<br/>
+&nbsp;&nbsp;|| (<span class="id" title="var">clear_dups</span>; <span class="id" title="var">progressive_inversion</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">progressive_destructions</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="var">progressive_destruction</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">cleanup_inverted</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">seq_edestruct</span> <span class="id" title="var">lem</span> <span class="id" title="var">tac</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| |- ?<span class="id" title="var">G</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">edestruct</span> <span class="id" title="var">lem</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">progressive_destructions</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| |- <span class="id" title="var">G</span> =&gt; <span class="id" title="var">tac</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">_</span> =&gt; <span class="id" title="tactic">idtac</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "edestructs" <span class="id" title="keyword">constr</span>(<span class="id" title="var">lem</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">seq_edestruct</span> <span class="id" title="var">lem</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="tactic">idtac</span>); <span class="id" title="tactic">try</span> <span class="id" title="var">eassumption</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "edestructs" <span class="id" title="keyword">constr</span>(<span class="id" title="var">lem1</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">lem2</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">seq_edestruct</span> <span class="id" title="var">lem1</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="tactic">idtac</span>; <span class="id" title="var">seq_edestruct</span> <span class="id" title="var">lem2</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="tactic">idtac</span>));<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">try</span> <span class="id" title="var">eassumption</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "edestructs" <span class="id" title="keyword">constr</span>(<span class="id" title="var">lem1</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">lem2</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">lem3</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">seq_edestruct</span> <span class="id" title="var">lem1</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="tactic">idtac</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">seq_edestruct</span> <span class="id" title="var">lem2</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="tactic">idtac</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">seq_edestruct</span> <span class="id" title="var">lem3</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="tactic">idtac</span>)));<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">try</span> <span class="id" title="var">eassumption</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">tidy_up</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">simplify</span>; <span class="id" title="var">progressive_destructions</span>; <span class="id" title="var">simplify</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+These tactics are for further modifications such that routine tactic can
+<a name="lab13"></a><h1 class="section">be extended with further concepts that are not visible in this module.</h1>
+
+ *
+<a name="lab14"></a><h1 class="section">TODO: is there a better way to do injection?</h1>
+
+</div>
+<div class="code">
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">routine_subtac1</span> := <span class="id" title="tactic">idtac</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">routine_subtac2</span> := <span class="id" title="tactic">idtac</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The skeleton of decision procesure.
+<a name="lab15"></a><h1 class="section">unfortunately, the undecidability of this language is too complex</h1>
+
+<a name="lab16"></a><h1 class="section">to handle by tactics that solves purely logical problems.</h1>
+
+<a name="lab17"></a><h1 class="section">TODO: see where autorewrite can be applied.</h1>
+
+</div>
+<div class="code">
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">routine_impl</span> <span class="id" title="var">prep</span> <span class="id" title="var">tac</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>; <span class="id" title="tactic">try</span> <span class="id" title="var">cofinite</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">try</span> <span class="id" title="var">solve_by_invert</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">prep</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">tidy_up</span>;<br/>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;(repeat&nbsp;f_equal)&nbsp;is&nbsp;too&nbsp;aggressive.&nbsp;we&nbsp;might&nbsp;over&nbsp;do&nbsp;it.<br/>
+&nbsp;&nbsp;&nbsp;*&nbsp;the&nbsp;workaround&nbsp;is&nbsp;to&nbsp;trivial&nbsp;to&nbsp;solve&nbsp;goal&nbsp;heuristically&nbsp;and&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;*&nbsp;only&nbsp;repeat&nbsp;if&nbsp;we&nbsp;cannot&nbsp;solve&nbsp;the&nbsp;goal&nbsp;via&nbsp;cheap&nbsp;tactics.&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> (<span class="id" title="tactic">f_equal</span>; <span class="id" title="tactic">try</span> <span class="id" title="var">eassumption</span>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">congruence</span>);<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">try</span> <span class="id" title="var">direct_app</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> (<span class="id" title="tactic">split</span>; <span class="id" title="var">autounfold</span>; <span class="id" title="tactic">simpl</span>; <span class="id" title="var">cbn</span>; <span class="id" title="tactic">intros</span>);<br/>
+&nbsp;&nbsp;<span class="id" title="var">routine_subtac1</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">routine_subtac2</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">tac</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">routine_entry</span> <span class="id" title="var">prep</span> <span class="id" title="var">tac</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">routine_impl</span> <span class="id" title="var">prep</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="tactic">idtac</span>; <span class="id" title="var">tac</span>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">assumption</span>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">congruence</span>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">omega</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">eroutine_entry</span> <span class="id" title="var">prep</span> <span class="id" title="var">tac</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">routine_impl</span> <span class="id" title="var">prep</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="tactic">idtac</span>; <span class="id" title="var">tac</span>; <span class="id" title="tactic">try</span> <span class="id" title="var">eassumption</span>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">congruence</span>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">omega</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "routine" "by" <span class="id" title="var">tactic</span>(<span class="id" title="var">prep</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"hinted" <span class="id" title="var">tactic</span>(<span class="id" title="var">tac</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"at" <span class="id" title="var">int</span>(<span class="id" title="var">n</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">routine_entry</span> <span class="id" title="var">prep</span> <span class="id" title="var">tac</span>; <span class="id" title="tactic">auto</span> <span class="id" title="var">n</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "routine" "by" <span class="id" title="var">tactic</span>(<span class="id" title="var">prep</span>) "hinted" <span class="id" title="var">tactic</span>(<span class="id" title="var">tac</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">routine_entry</span> <span class="id" title="var">prep</span> <span class="id" title="var">tac</span>; <span class="id" title="tactic">auto</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "routine" "by" <span class="id" title="var">tactic</span>(<span class="id" title="var">prep</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"at" <span class="id" title="var">int</span>(<span class="id" title="var">n</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">routine_entry</span> <span class="id" title="var">prep</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="tactic">idtac</span>); <span class="id" title="tactic">auto</span> <span class="id" title="var">n</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "routine" "hinted" <span class="id" title="var">tactic</span>(<span class="id" title="var">tac</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"at" <span class="id" title="var">int</span>(<span class="id" title="var">n</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">routine_entry</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="tactic">idtac</span>) <span class="id" title="var">tac</span>; <span class="id" title="tactic">auto</span> <span class="id" title="var">n</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "routine" "hinted" <span class="id" title="var">tactic</span>(<span class="id" title="var">tac</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">routine</span> <span class="id" title="var">hinted</span> <span class="id" title="var">tac</span> <span class="id" title="tactic">at</span> 5.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "routine" "by" <span class="id" title="var">tactic</span>(<span class="id" title="var">prep</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">routine</span> <span class="id" title="tactic">by</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="tactic">idtac</span>; <span class="id" title="var">prep</span>) <span class="id" title="tactic">at</span> 5.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "routine" "at" <span class="id" title="var">int</span>(<span class="id" title="var">n</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">routine_entry</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="tactic">idtac</span>) <span class="id" title="keyword">ltac</span>:(<span class="id" title="tactic">idtac</span>); <span class="id" title="tactic">auto</span> <span class="id" title="var">n</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "routine" := <span class="id" title="var">routine</span> <span class="id" title="tactic">at</span> 5.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "eroutine" "by" <span class="id" title="var">tactic</span>(<span class="id" title="var">prep</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"hinted" <span class="id" title="var">tactic</span>(<span class="id" title="var">tac</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"at" <span class="id" title="var">int</span>(<span class="id" title="var">n</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">eroutine_entry</span> <span class="id" title="var">prep</span> <span class="id" title="var">tac</span>; <span class="id" title="tactic">eauto</span> <span class="id" title="var">n</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "eroutine" "by" <span class="id" title="var">tactic</span>(<span class="id" title="var">prep</span>) "hinted" <span class="id" title="var">tactic</span>(<span class="id" title="var">tac</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">eroutine_entry</span> <span class="id" title="var">prep</span> <span class="id" title="var">tac</span>; <span class="id" title="tactic">eauto</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "eroutine" "by" <span class="id" title="var">tactic</span>(<span class="id" title="var">prep</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"at" <span class="id" title="var">int</span>(<span class="id" title="var">n</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">eroutine_entry</span> <span class="id" title="var">prep</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="tactic">idtac</span>); <span class="id" title="tactic">eauto</span> <span class="id" title="var">n</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "eroutine" "hinted" <span class="id" title="var">tactic</span>(<span class="id" title="var">tac</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"at" <span class="id" title="var">int</span>(<span class="id" title="var">n</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">eroutine_entry</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="tactic">idtac</span>) <span class="id" title="var">tac</span>; <span class="id" title="tactic">eauto</span> <span class="id" title="var">n</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "eroutine" "hinted" <span class="id" title="var">tactic</span>(<span class="id" title="var">tac</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">eroutine</span> <span class="id" title="var">hinted</span> <span class="id" title="var">tac</span> <span class="id" title="tactic">at</span> 5.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "eroutine" "by" <span class="id" title="var">tactic</span>(<span class="id" title="var">prep</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">eroutine</span> <span class="id" title="tactic">by</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="tactic">idtac</span>; <span class="id" title="var">prep</span>) <span class="id" title="tactic">at</span> 5.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "eroutine" "at" <span class="id" title="var">int</span>(<span class="id" title="var">n</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">eroutine_entry</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="tactic">idtac</span>) <span class="id" title="keyword">ltac</span>:(<span class="id" title="tactic">idtac</span>); <span class="id" title="tactic">eauto</span> <span class="id" title="var">n</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "eroutine" := <span class="id" title="var">eroutine</span> <span class="id" title="tactic">at</span> 5.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+the point of this tactic is to switch goal to another one.
+<a name="lab18"></a><h1 class="section">consider a chain of implications: A =&gt; B, B =&gt; C,</h1>
+
+<a name="lab19"></a><h1 class="section">it's clear that implication is transitive relation.</h1>
+
+<a name="lab20"></a><h1 class="section">therefore, from A to C might be difficult,</h1>
+
+<a name="lab21"></a><h1 class="section">while if B is given, the two parts might be able to discharged by</h1>
+
+<a name="lab22"></a><h1 class="section">automated tactics.</h1>
+
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">prove_instead</span> <span class="id" title="var">trm</span> <span class="id" title="var">tac</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>; <span class="id" title="var">simplify</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">assert</span> <span class="id" title="var">trm</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| [ <span class="id" title="var">H</span> : <span class="id" title="var">trm</span> |- ?<span class="id" title="var">G</span> ] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">tac</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">_</span> =&gt; <span class="id" title="tactic">idtac</span> <span class="comment">(*&nbsp;we&nbsp;don't&nbsp;deal&nbsp;with&nbsp;trm&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "prove" <span class="id" title="keyword">constr</span>(<span class="id" title="var">trm</span>) "instead" "by[" <span class="id" title="var">tactic</span>(<span class="id" title="var">tac</span>) "]" :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">prove_instead</span> <span class="id" title="var">trm</span> <span class="id" title="var">tac</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "prove" <span class="id" title="keyword">constr</span>(<span class="id" title="var">trm</span>) "instead" :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">prove</span> <span class="id" title="var">trm</span> <span class="id" title="var">instead</span> <span class="id" title="tactic">by</span>[ <span class="id" title="var">routine</span> ].<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "eprove" <span class="id" title="keyword">constr</span>(<span class="id" title="var">trm</span>) "instead" :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">prove</span> <span class="id" title="var">trm</span> <span class="id" title="var">instead</span> <span class="id" title="tactic">by</span>[ <span class="id" title="var">eroutine</span> ].<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+try to prove a trm by routine, and then place it into context. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Tactic Notation</span> "induce" <span class="id" title="keyword">constr</span>(<span class="id" title="var">trm</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">assert</span> <span class="id" title="var">trm</span> <span class="id" title="tactic">by</span> <span class="id" title="var">routine</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+try to prove a trm by induction on ind 
+</div>
+<div class="code">
+<span class="id" title="keyword">Tactic Notation</span> "induce" <span class="id" title="keyword">constr</span>(<span class="id" title="var">trm</span>) "on" <span class="id" title="keyword">constr</span>(<span class="id" title="var">ind</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">assert</span> <span class="id" title="var">trm</span> <span class="id" title="tactic">by</span> (<span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <span class="id" title="var">ind</span>; <span class="id" title="var">routine</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "einduce" <span class="id" title="keyword">constr</span>(<span class="id" title="var">trm</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">assert</span> <span class="id" title="var">trm</span> <span class="id" title="tactic">by</span> <span class="id" title="var">eroutine</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "einduce" <span class="id" title="keyword">constr</span>(<span class="id" title="var">trm</span>) "on" <span class="id" title="keyword">constr</span>(<span class="id" title="var">ind</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">assert</span> <span class="id" title="var">trm</span> <span class="id" title="tactic">by</span> (<span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <span class="id" title="var">ind</span>; <span class="id" title="var">eroutine</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "reassoc" <span class="id" title="keyword">constr</span>(<span class="id" title="var">n</span>) "with" <span class="id" title="keyword">constr</span>(<span class="id" title="var">c1</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">reassoc</span> <span class="id" title="var">n</span> <span class="id" title="keyword">with</span> <span class="id" title="var">c1</span> <span class="id" title="tactic">by</span> [<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">app_assoc</span>; <span class="id" title="tactic">trivial</span>].<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "reassoc" <span class="id" title="keyword">constr</span>(<span class="id" title="var">n</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"with" <span class="id" title="keyword">constr</span>(<span class="id" title="var">c1</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">c2</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">reassoc</span> <span class="id" title="var">n</span> <span class="id" title="keyword">with</span> <span class="id" title="var">c1</span> <span class="id" title="var">c2</span> <span class="id" title="tactic">by</span> [<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">app_assoc</span>; <span class="id" title="tactic">trivial</span>].<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "reassoc" <span class="id" title="keyword">constr</span>(<span class="id" title="var">n</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"with" <span class="id" title="keyword">constr</span>(<span class="id" title="var">c1</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">c2</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">c3</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">reassoc</span> <span class="id" title="var">n</span> <span class="id" title="keyword">with</span> <span class="id" title="var">c1</span> <span class="id" title="var">c2</span> <span class="id" title="var">c3</span> <span class="id" title="tactic">by</span> [<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">app_assoc</span>; <span class="id" title="tactic">trivial</span>].<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "reassoc" <span class="id" title="keyword">constr</span>(<span class="id" title="var">n</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"with" <span class="id" title="keyword">constr</span>(<span class="id" title="var">c1</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">c2</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">c3</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">c4</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">reassoc</span> <span class="id" title="var">n</span> <span class="id" title="keyword">with</span> <span class="id" title="var">c1</span> <span class="id" title="var">c2</span> <span class="id" title="var">c3</span> <span class="id" title="var">c4</span> <span class="id" title="tactic">by</span> [<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">app_assoc</span>; <span class="id" title="tactic">trivial</span>].<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "reassoc" <span class="id" title="keyword">constr</span>(<span class="id" title="var">n</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"with" <span class="id" title="keyword">constr</span>(<span class="id" title="var">c1</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">c2</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">c3</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">c4</span>) <span class="id" title="keyword">constr</span>(<span class="id" title="var">c5</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">reassoc</span> <span class="id" title="var">n</span> <span class="id" title="keyword">with</span> <span class="id" title="var">c1</span> <span class="id" title="var">c2</span> <span class="id" title="var">c3</span> <span class="id" title="var">c4</span> <span class="id" title="var">c5</span> <span class="id" title="tactic">by</span> [<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">app_assoc</span>; <span class="id" title="tactic">trivial</span>].<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+PRIMITIVES 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="not_empty"><span class="id" title="definition">not_empty</span></a> {<span class="id" title="var">A</span> : <span class="id" title="keyword">Type</span>} (<span class="id" title="var">l</span> : <span class="id" title="inductive">list</span> <a class="idref" href="LibUtils.html#A"><span class="id" title="variable">A</span></a>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="LibUtils.html#l"><span class="id" title="variable">l</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| <span class="id" title="constructor">nil</span> =&gt; <span class="id" title="inductive">False</span><br/>
+&nbsp;&nbsp;| <span class="id" title="constructor">cons</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> =&gt; <span class="id" title="inductive">True</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+<span class="comment">(*&nbsp;Hint&nbsp;Unfold&nbsp;not_empty.&nbsp;*)</span><br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">invert_not_empty_impl</span> <span class="id" title="var">H</span> <span class="id" title="var">x</span> <span class="id" title="var">xs</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">type</span> <span class="id" title="keyword">of</span> <span class="id" title="var">H</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| <span class="id" title="keyword">context</span>[<a class="idref" href="LibUtils.html#not_empty"><span class="id" title="definition">not_empty</span></a> ?<span class="id" title="var">l</span>] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">l</span> <span class="id" title="keyword">as</span> [| <span class="id" title="var">x</span> <span class="id" title="var">xs</span>]; <span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span>; [<span class="id" title="var">contradiction</span> | <span class="id" title="tactic">idtac</span>]; <span class="id" title="tactic">clear</span> <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "invert_not_empty" <span class="id" title="var">hyp</span>(<span class="id" title="var">h</span>) <span class="id" title="var">ident</span>(<span class="id" title="var">x</span>) <span class="id" title="var">ident</span>(<span class="id" title="var">xs</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">invert_not_empty_impl</span> <span class="id" title="var">h</span> <span class="id" title="var">x</span> <span class="id" title="var">xs</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "invert_not_empty" <span class="id" title="var">hyp</span>(<span class="id" title="var">h</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">x</span> := <span class="id" title="tactic">fresh</span> "x" <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">xs</span> := <span class="id" title="tactic">fresh</span> "xs" <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">invert_not_empty</span> <span class="id" title="var">h</span> <span class="id" title="var">x</span> <span class="id" title="var">xs</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">invert_all_not_empty</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| [ <span class="id" title="var">H</span> : <span class="id" title="keyword">context</span>[<a class="idref" href="LibUtils.html#not_empty"><span class="id" title="definition">not_empty</span></a> <span class="id" title="var">_</span>] |- <span class="id" title="var">_</span> ] =&gt; <span class="id" title="var">invert_not_empty</span> <span class="id" title="var">H</span>; <span class="id" title="var">invert_all_not_empty</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">_</span> =&gt; <span class="id" title="tactic">idtac</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Tactic Notation</span> "invert_not_empty" := <span class="id" title="var">invert_all_not_empty</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="not_empty_relax"><span class="id" title="lemma">not_empty_relax</span></a> : <span class="id" title="keyword">forall</span> {<span class="id" title="var">A</span> : <span class="id" title="keyword">Type</span>} (<span class="id" title="var">l1</span> <span class="id" title="var">l</span> <span class="id" title="var">l2</span> : <span class="id" title="inductive">list</span> <a class="idref" href="LibUtils.html#A"><span class="id" title="variable">A</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="LibUtils.html#not_empty"><span class="id" title="definition">not_empty</span></a> <a class="idref" href="LibUtils.html#l"><span class="id" title="variable">l</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="LibUtils.html#not_empty"><span class="id" title="definition">not_empty</span></a> <a class="idref" href="LibUtils.html#d25722d08c5e669f66ae2b705b855780"><span class="id" title="notation">$</span></a> <a class="idref" href="LibUtils.html#l1"><span class="id" title="variable">l1</span></a> <span class="id" title="notation">++</span> <a class="idref" href="LibUtils.html#l"><span class="id" title="variable">l</span></a> <span class="id" title="notation">++</span> <a class="idref" href="LibUtils.html#l2"><span class="id" title="variable">l2</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">l1</span>; <span class="id" title="tactic">intros</span>; <span class="id" title="var">invert_not_empty</span>; <span class="id" title="tactic">simpl</span>; <span class="id" title="tactic">trivial</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab23"></a><h1 class="section">It's very painful that we will need to deal with two data types that</h1>
+
+<a name="lab24"></a><h1 class="section">are effectively lists, but we cannot use list directly, because we need</h1>
+
+<a name="lab25"></a><h1 class="section">to build mutual recursion.</h1>
+
+ 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="ListIso"><span class="id" title="record">ListIso</span></a> (<span class="id" title="var">elem</span> : <span class="id" title="keyword">Type</span>) (<span class="id" title="var">t</span> : <span class="id" title="keyword">Type</span>) :=<br/>
+&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="to_list"><span class="id" title="projection">to_list</span></a> : <a class="idref" href="LibUtils.html#t"><span class="id" title="variable">t</span></a> <span class="id" title="notation">-&gt;</span> <span class="id" title="inductive">list</span> <a class="idref" href="LibUtils.html#elem"><span class="id" title="variable">elem</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="from_list"><span class="id" title="projection">from_list</span></a> : <span class="id" title="inductive">list</span> <a class="idref" href="LibUtils.html#elem"><span class="id" title="variable">elem</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="LibUtils.html#t"><span class="id" title="variable">t</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="from_to_iso"><span class="id" title="projection">from_to_iso</span></a> : <span class="id" title="keyword">forall</span> (<span class="id" title="var">l</span> : <a class="idref" href="LibUtils.html#t"><span class="id" title="variable">t</span></a>), <a class="idref" href="LibUtils.html#from_list"><span class="id" title="method">from_list</span></a> <a class="idref" href="LibUtils.html#d25722d08c5e669f66ae2b705b855780"><span class="id" title="notation">$</span></a> <a class="idref" href="LibUtils.html#to_list"><span class="id" title="method">to_list</span></a> <a class="idref" href="LibUtils.html#l"><span class="id" title="variable">l</span></a> <span class="id" title="notation">=</span> <a class="idref" href="LibUtils.html#l"><span class="id" title="variable">l</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="to_from_iso"><span class="id" title="projection">to_from_iso</span></a> : <span class="id" title="keyword">forall</span> (<span class="id" title="var">l</span> : <span class="id" title="inductive">list</span> <a class="idref" href="LibUtils.html#elem"><span class="id" title="variable">elem</span></a>), <a class="idref" href="LibUtils.html#to_list"><span class="id" title="method">to_list</span></a> <a class="idref" href="LibUtils.html#d25722d08c5e669f66ae2b705b855780"><span class="id" title="notation">$</span></a> <a class="idref" href="LibUtils.html#from_list"><span class="id" title="method">from_list</span></a> <a class="idref" href="LibUtils.html#l"><span class="id" title="variable">l</span></a> <span class="id" title="notation">=</span> <a class="idref" href="LibUtils.html#l"><span class="id" title="variable">l</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;Operations&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="append"><span class="id" title="projection">append</span></a> : <a class="idref" href="LibUtils.html#t"><span class="id" title="variable">t</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="LibUtils.html#t"><span class="id" title="variable">t</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="LibUtils.html#t"><span class="id" title="variable">t</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="append_sound"><span class="id" title="projection">append_sound</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span>, <a class="idref" href="LibUtils.html#to_list"><span class="id" title="method">to_list</span></a> <a class="idref" href="LibUtils.html#d25722d08c5e669f66ae2b705b855780"><span class="id" title="notation">$</span></a> <a class="idref" href="LibUtils.html#append"><span class="id" title="method">append</span></a> <a class="idref" href="LibUtils.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="LibUtils.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">=</span> <a class="idref" href="LibUtils.html#to_list"><span class="id" title="method">to_list</span></a> <a class="idref" href="LibUtils.html#l1"><span class="id" title="variable">l1</span></a> <span class="id" title="notation">++</span> <a class="idref" href="LibUtils.html#to_list"><span class="id" title="method">to_list</span></a> <a class="idref" href="LibUtils.html#l2"><span class="id" title="variable">l2</span></a><br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="ListIsoProps"><span class="id" title="section">ListIsoProps</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="ListIsoProps.elem"><span class="id" title="variable">elem</span></a> : <span class="id" title="keyword">Type</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="ListIsoProps.t"><span class="id" title="variable">t</span></a> : <span class="id" title="keyword">Type</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="ListIsoProps.iso"><span class="id" title="variable">iso</span></a> : <a class="idref" href="LibUtils.html#ListIso"><span class="id" title="class">ListIso</span></a> <a class="idref" href="LibUtils.html#ListIsoProps.elem"><span class="id" title="variable">elem</span></a> <a class="idref" href="LibUtils.html#ListIsoProps.t"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <a name="append_complete"><span class="id" title="lemma">append_complete</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">forall</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span>, <a class="idref" href="LibUtils.html#append"><span class="id" title="method">append</span></a> (<a class="idref" href="LibUtils.html#from_list"><span class="id" title="method">from_list</span></a> <a class="idref" href="LibUtils.html#l1"><span class="id" title="variable">l1</span></a>) <a class="idref" href="LibUtils.html#d25722d08c5e669f66ae2b705b855780"><span class="id" title="notation">$</span></a> <a class="idref" href="LibUtils.html#from_list"><span class="id" title="method">from_list</span></a> <a class="idref" href="LibUtils.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">=</span> <a class="idref" href="LibUtils.html#from_list"><span class="id" title="method">from_list</span></a> <a class="idref" href="LibUtils.html#d25722d08c5e669f66ae2b705b855780"><span class="id" title="notation">$</span></a> <a class="idref" href="LibUtils.html#l1"><span class="id" title="variable">l1</span></a> <span class="id" title="notation">++</span> <a class="idref" href="LibUtils.html#l2"><span class="id" title="variable">l2</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">replace</span> (<a class="idref" href="LibUtils.html#append"><span class="id" title="method">append</span></a> (<a class="idref" href="LibUtils.html#from_list"><span class="id" title="method">from_list</span></a> <span class="id" title="var">l1</span>) <a class="idref" href="LibUtils.html#d25722d08c5e669f66ae2b705b855780"><span class="id" title="notation">$</span></a> <a class="idref" href="LibUtils.html#from_list"><span class="id" title="method">from_list</span></a> <span class="id" title="var">l2</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">with</span> (<a class="idref" href="LibUtils.html#from_list"><span class="id" title="method">from_list</span></a> <a class="idref" href="LibUtils.html#d25722d08c5e669f66ae2b705b855780"><span class="id" title="notation">$</span></a> <a class="idref" href="LibUtils.html#to_list"><span class="id" title="method">to_list</span></a> <a class="idref" href="LibUtils.html#d25722d08c5e669f66ae2b705b855780"><span class="id" title="notation">$</span></a> <a class="idref" href="LibUtils.html#append"><span class="id" title="method">append</span></a> (<a class="idref" href="LibUtils.html#from_list"><span class="id" title="method">from_list</span></a> <span class="id" title="var">l1</span>) <a class="idref" href="LibUtils.html#d25722d08c5e669f66ae2b705b855780"><span class="id" title="notation">$</span></a> <a class="idref" href="LibUtils.html#from_list"><span class="id" title="method">from_list</span></a> <span class="id" title="var">l2</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">f_equal</span>. <span class="id" title="tactic">rewrite</span> <a class="idref" href="LibUtils.html#append_sound"><span class="id" title="method">append_sound</span></a>. <span class="id" title="tactic">do</span> 2 <span class="id" title="tactic">rewrite</span> <a class="idref" href="LibUtils.html#to_from_iso"><span class="id" title="method">to_from_iso</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">rewrite</span> <a class="idref" href="LibUtils.html#from_to_iso"><span class="id" title="method">from_to_iso</span></a>. <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="LibUtils.html#ListIsoProps"><span class="id" title="section">ListIsoProps</span></a>.<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="LibUtils.html#append_complete"><span class="id" title="lemma">append_complete</span></a> {<span class="id" title="var">elem</span> <span class="id" title="var">t</span> <span class="id" title="var">iso</span>}.<br/>
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="ListIsoCond"><span class="id" title="record">ListIsoCond</span></a> (<span class="id" title="var">elem</span> : <span class="id" title="keyword">Type</span>) (<span class="id" title="var">t</span> : <span class="id" title="keyword">Type</span>) :=<br/>
+&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="to_list'"><span class="id" title="projection">to_list'</span></a> : <a class="idref" href="LibUtils.html#t"><span class="id" title="variable">t</span></a> <span class="id" title="notation">-&gt;</span> <span class="id" title="inductive">list</span> <a class="idref" href="LibUtils.html#elem"><span class="id" title="variable">elem</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="from_list'"><span class="id" title="projection">from_list'</span></a> : <span class="id" title="inductive">list</span> <a class="idref" href="LibUtils.html#elem"><span class="id" title="variable">elem</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="LibUtils.html#t"><span class="id" title="variable">t</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="cond"><span class="id" title="projection">cond</span></a> : <a class="idref" href="LibUtils.html#elem"><span class="id" title="variable">elem</span></a> <span class="id" title="notation">-&gt;</span> <span class="id" title="keyword">Prop</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="from_to_iso'"><span class="id" title="projection">from_to_iso'</span></a> : <span class="id" title="keyword">forall</span> (<span class="id" title="var">l</span> : <a class="idref" href="LibUtils.html#t"><span class="id" title="variable">t</span></a>), <a class="idref" href="LibUtils.html#from_list'"><span class="id" title="method">from_list'</span></a> <a class="idref" href="LibUtils.html#d25722d08c5e669f66ae2b705b855780"><span class="id" title="notation">$</span></a> <a class="idref" href="LibUtils.html#to_list'"><span class="id" title="method">to_list'</span></a> <a class="idref" href="LibUtils.html#l"><span class="id" title="variable">l</span></a> <span class="id" title="notation">=</span> <a class="idref" href="LibUtils.html#l"><span class="id" title="variable">l</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="to_from_iso'"><span class="id" title="projection">to_from_iso'</span></a> : <span class="id" title="keyword">forall</span> (<span class="id" title="var">l</span> : <span class="id" title="inductive">list</span> <a class="idref" href="LibUtils.html#elem"><span class="id" title="variable">elem</span></a>), <span class="id" title="inductive">Forall</span> <a class="idref" href="LibUtils.html#cond"><span class="id" title="method">cond</span></a> <a class="idref" href="LibUtils.html#l"><span class="id" title="variable">l</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="LibUtils.html#to_list'"><span class="id" title="method">to_list'</span></a> <a class="idref" href="LibUtils.html#d25722d08c5e669f66ae2b705b855780"><span class="id" title="notation">$</span></a> <a class="idref" href="LibUtils.html#from_list'"><span class="id" title="method">from_list'</span></a> <a class="idref" href="LibUtils.html#l"><span class="id" title="variable">l</span></a> <span class="id" title="notation">=</span> <a class="idref" href="LibUtils.html#l"><span class="id" title="variable">l</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="to_cond"><span class="id" title="projection">to_cond</span></a> : <span class="id" title="keyword">forall</span> (<span class="id" title="var">l</span> : <a class="idref" href="LibUtils.html#t"><span class="id" title="variable">t</span></a>), <span class="id" title="inductive">Forall</span> <a class="idref" href="LibUtils.html#cond"><span class="id" title="method">cond</span></a> (<a class="idref" href="LibUtils.html#to_list'"><span class="id" title="method">to_list'</span></a> <a class="idref" href="LibUtils.html#l"><span class="id" title="variable">l</span></a>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;Operations&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="append'"><span class="id" title="projection">append'</span></a> : <a class="idref" href="LibUtils.html#t"><span class="id" title="variable">t</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="LibUtils.html#t"><span class="id" title="variable">t</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="LibUtils.html#t"><span class="id" title="variable">t</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="append_sound'"><span class="id" title="projection">append_sound'</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span>, <a class="idref" href="LibUtils.html#to_list'"><span class="id" title="method">to_list'</span></a> <a class="idref" href="LibUtils.html#d25722d08c5e669f66ae2b705b855780"><span class="id" title="notation">$</span></a> <a class="idref" href="LibUtils.html#append'"><span class="id" title="method">append'</span></a> <a class="idref" href="LibUtils.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="LibUtils.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">=</span> <a class="idref" href="LibUtils.html#to_list'"><span class="id" title="method">to_list'</span></a> <a class="idref" href="LibUtils.html#l1"><span class="id" title="variable">l1</span></a> <span class="id" title="notation">++</span> <a class="idref" href="LibUtils.html#to_list'"><span class="id" title="method">to_list'</span></a> <a class="idref" href="LibUtils.html#l2"><span class="id" title="variable">l2</span></a><br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="ListIsoCondProps"><span class="id" title="section">ListIsoCondProps</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="ListIsoCondProps.elem"><span class="id" title="variable">elem</span></a> : <span class="id" title="keyword">Type</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="ListIsoCondProps.t"><span class="id" title="variable">t</span></a> : <span class="id" title="keyword">Type</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="ListIsoCondProps.iso"><span class="id" title="variable">iso</span></a> : <a class="idref" href="LibUtils.html#ListIsoCond"><span class="id" title="class">ListIsoCond</span></a> <a class="idref" href="LibUtils.html#ListIsoCondProps.elem"><span class="id" title="variable">elem</span></a> <a class="idref" href="LibUtils.html#ListIsoCondProps.t"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <a name="append_complete'"><span class="id" title="lemma">append_complete'</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">forall</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span>, <span class="id" title="inductive">Forall</span> <a class="idref" href="LibUtils.html#cond"><span class="id" title="method">cond</span></a> <a class="idref" href="LibUtils.html#l1"><span class="id" title="variable">l1</span></a> <span class="id" title="notation">-&gt;</span> <span class="id" title="inductive">Forall</span> <a class="idref" href="LibUtils.html#cond"><span class="id" title="method">cond</span></a> <a class="idref" href="LibUtils.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="LibUtils.html#append'"><span class="id" title="method">append'</span></a> (<a class="idref" href="LibUtils.html#from_list'"><span class="id" title="method">from_list'</span></a> <a class="idref" href="LibUtils.html#l1"><span class="id" title="variable">l1</span></a>) <a class="idref" href="LibUtils.html#d25722d08c5e669f66ae2b705b855780"><span class="id" title="notation">$</span></a> <a class="idref" href="LibUtils.html#from_list'"><span class="id" title="method">from_list'</span></a> <a class="idref" href="LibUtils.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">=</span> <a class="idref" href="LibUtils.html#from_list'"><span class="id" title="method">from_list'</span></a> <a class="idref" href="LibUtils.html#d25722d08c5e669f66ae2b705b855780"><span class="id" title="notation">$</span></a> <a class="idref" href="LibUtils.html#l1"><span class="id" title="variable">l1</span></a> <span class="id" title="notation">++</span> <a class="idref" href="LibUtils.html#l2"><span class="id" title="variable">l2</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">replace</span> (<a class="idref" href="LibUtils.html#append'"><span class="id" title="method">append'</span></a> (<a class="idref" href="LibUtils.html#from_list'"><span class="id" title="method">from_list'</span></a> <span class="id" title="var">l1</span>) <a class="idref" href="LibUtils.html#d25722d08c5e669f66ae2b705b855780"><span class="id" title="notation">$</span></a> <a class="idref" href="LibUtils.html#from_list'"><span class="id" title="method">from_list'</span></a> <span class="id" title="var">l2</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">with</span> (<a class="idref" href="LibUtils.html#from_list'"><span class="id" title="method">from_list'</span></a> <a class="idref" href="LibUtils.html#d25722d08c5e669f66ae2b705b855780"><span class="id" title="notation">$</span></a> <a class="idref" href="LibUtils.html#to_list'"><span class="id" title="method">to_list'</span></a> <a class="idref" href="LibUtils.html#d25722d08c5e669f66ae2b705b855780"><span class="id" title="notation">$</span></a> <a class="idref" href="LibUtils.html#append'"><span class="id" title="method">append'</span></a> (<a class="idref" href="LibUtils.html#from_list'"><span class="id" title="method">from_list'</span></a> <span class="id" title="var">l1</span>) <a class="idref" href="LibUtils.html#d25722d08c5e669f66ae2b705b855780"><span class="id" title="notation">$</span></a> <a class="idref" href="LibUtils.html#from_list'"><span class="id" title="method">from_list'</span></a> <span class="id" title="var">l2</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">f_equal</span>. <span class="id" title="tactic">rewrite</span> <a class="idref" href="LibUtils.html#append_sound'"><span class="id" title="method">append_sound'</span></a>. <span class="id" title="tactic">do</span> 2 <span class="id" title="tactic">try</span> <span class="id" title="tactic">rewrite</span> <a class="idref" href="LibUtils.html#to_from_iso'"><span class="id" title="method">to_from_iso'</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">all</span>:<span class="id" title="tactic">trivial</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">rewrite</span> <a class="idref" href="LibUtils.html#from_to_iso'"><span class="id" title="method">from_to_iso'</span></a>. <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="LibUtils.html#ListIsoCondProps"><span class="id" title="section">ListIsoCondProps</span></a>.<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="LibUtils.html#append_complete'"><span class="id" title="lemma">append_complete'</span></a> {<span class="id" title="var">elem</span> <span class="id" title="var">t</span> <span class="id" title="var">iso</span>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Following defines labels 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <a name="typ_label"><span class="id" title="inductive">typ_label</span></a> : <span class="id" title="keyword">Set</span> := <a name="typ_lab"><span class="id" title="constructor">typ_lab</span></a> (<span class="id" title="var">_</span> : <span class="id" title="inductive">nat</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Coercion</span> <a class="idref" href="LibUtils.html#typ_lab"><span class="id" title="constructor">typ_lab</span></a> <a class="idref" href="LibUtils.html#typ_lab"><span class="id" title="constructor">:</span></a> <a class="idref" href="LibUtils.html#typ_lab"><span class="id" title="constructor">nat</span></a> <a class="idref" href="LibUtils.html#typ_lab"><span class="id" title="constructor">&gt;-&gt;</span></a> <a class="idref" href="LibUtils.html#typ_lab"><span class="id" title="constructor">typ_label</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <a name="trm_label"><span class="id" title="inductive">trm_label</span></a> : <span class="id" title="keyword">Set</span> := <a name="trm_lab"><span class="id" title="constructor">trm_lab</span></a> (<span class="id" title="var">_</span> : <span class="id" title="inductive">nat</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Coercion</span> <a class="idref" href="LibUtils.html#trm_lab"><span class="id" title="constructor">trm_lab</span></a> <a class="idref" href="LibUtils.html#trm_lab"><span class="id" title="constructor">:</span></a> <a class="idref" href="LibUtils.html#trm_lab"><span class="id" title="constructor">nat</span></a> <a class="idref" href="LibUtils.html#trm_lab"><span class="id" title="constructor">&gt;-&gt;</span></a> <a class="idref" href="LibUtils.html#trm_lab"><span class="id" title="constructor">trm_label</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="EqDecTypLab"><span class="id" title="instance">EqDecTypLab</span></a> : <span class="id" title="class">EqDec_eq</span> <a class="idref" href="LibUtils.html#typ_label"><span class="id" title="inductive">typ_label</span></a> := { }.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">decide</span> <span class="id" title="var">equality</span>. <span class="id" title="tactic">apply</span> <span class="id" title="lemma">Nat.eq_dec</span>.<br/>
+<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="EqDecTrmLab"><span class="id" title="instance">EqDecTrmLab</span></a> : <span class="id" title="class">EqDec_eq</span> <a class="idref" href="LibUtils.html#trm_label"><span class="id" title="inductive">trm_label</span></a> := { }.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">decide</span> <span class="id" title="var">equality</span>. <span class="id" title="tactic">apply</span> <span class="id" title="lemma">Nat.eq_dec</span>.<br/>
+<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <a name="label"><span class="id" title="inductive">label</span></a> : <span class="id" title="keyword">Set</span> :=<br/>
+| <a name="label_typ"><span class="id" title="constructor">label_typ</span></a> : <a class="idref" href="LibUtils.html#typ_label"><span class="id" title="inductive">typ_label</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="LibUtils.html#label"><span class="id" title="inductive">label</span></a><br/>
+| <a name="label_trm"><span class="id" title="constructor">label_trm</span></a> : <a class="idref" href="LibUtils.html#trm_label"><span class="id" title="inductive">trm_label</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="LibUtils.html#label"><span class="id" title="inductive">label</span></a>.<br/>
+<span class="id" title="keyword">Hint Constructors</span> <a class="idref" href="LibUtils.html#label"><span class="id" title="inductive">label</span></a> : <span class="id" title="var">alg_def</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Coercion</span> <a class="idref" href="LibUtils.html#label_typ"><span class="id" title="constructor">label_typ</span></a> <a class="idref" href="LibUtils.html#label_typ"><span class="id" title="constructor">:</span></a> <a class="idref" href="LibUtils.html#label_typ"><span class="id" title="constructor">typ_label</span></a> <a class="idref" href="LibUtils.html#label_typ"><span class="id" title="constructor">&gt;-&gt;</span></a> <a class="idref" href="LibUtils.html#label_typ"><span class="id" title="constructor">label</span></a>.<br/>
+<span class="id" title="keyword">Coercion</span> <a class="idref" href="LibUtils.html#label_trm"><span class="id" title="constructor">label_trm</span></a> <a class="idref" href="LibUtils.html#label_trm"><span class="id" title="constructor">:</span></a> <a class="idref" href="LibUtils.html#label_trm"><span class="id" title="constructor">trm_label</span></a> <a class="idref" href="LibUtils.html#label_trm"><span class="id" title="constructor">&gt;-&gt;</span></a> <a class="idref" href="LibUtils.html#label_trm"><span class="id" title="constructor">label</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Following code assigns abilities to reason about assoc list
+    keyed by labels. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Module</span> <span class="id" title="keyword">Type</span> <a name="EqDecidableType"><span class="id" title="module">EqDecidableType</span></a> &lt;: <span class="id" title="module">UsualDecidableType</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Parameter</span> <a name="EqDecidableType.t"><span class="id" title="axiom">t</span></a> : <span class="id" title="keyword">Set</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Parameter</span> <a name="EqDecidableType.eq_dec"><span class="id" title="axiom">eq_dec</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> : <a class="idref" href="LibUtils.html#EqDecidableType.t"><span class="id" title="axiom">t</span></a>, <span class="id" title="notation">{</span><a class="idref" href="LibUtils.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">=</span> <a class="idref" href="LibUtils.html#y"><span class="id" title="variable">y</span></a><span class="id" title="notation">}</span> <span class="id" title="notation">+</span> <span class="id" title="notation">{</span><a class="idref" href="LibUtils.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">&lt;&gt;</span> <a class="idref" href="LibUtils.html#y"><span class="id" title="variable">y</span></a><span class="id" title="notation">}</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Include</span> <span class="id" title="module">HasUsualEq</span> &lt;+ <span class="id" title="module">UsualIsEq</span> &lt;+ <span class="id" title="module">UsualIsEqOrig</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="LibUtils.html#EqDecidableType"><span class="id" title="module">EqDecidableType</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <a name="Label"><span class="id" title="module">Label</span></a> &lt;: <a class="idref" href="LibUtils.html#EqDecidableType"><span class="id" title="module">EqDecidableType</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="Label.t"><span class="id" title="definition">t</span></a> := <a class="idref" href="LibUtils.html#label"><span class="id" title="inductive">label</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="Label.eq_dec"><span class="id" title="definition">eq_dec</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> : <a class="idref" href="LibUtils.html#Label.t"><span class="id" title="definition">t</span></a>, <span class="id" title="notation">{</span><a class="idref" href="LibUtils.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">=</span> <a class="idref" href="LibUtils.html#y"><span class="id" title="variable">y</span></a><span class="id" title="notation">}</span> <span class="id" title="notation">+</span> <span class="id" title="notation">{</span><a class="idref" href="LibUtils.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">&lt;&gt;</span> <a class="idref" href="LibUtils.html#y"><span class="id" title="variable">y</span></a><span class="id" title="notation">}</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">decide</span> <span class="id" title="var">equality</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">all</span>:<span class="id" title="tactic">destruct</span> (<span class="id" title="var">t0</span> <span class="id" title="notation">==</span> <span class="id" title="var">t1</span>); <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Include</span> <span class="id" title="module">HasUsualEq</span> &lt;+ <span class="id" title="module">UsualIsEq</span> &lt;+ <span class="id" title="module">UsualIsEqOrig</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="LibUtils.html#Label"><span class="id" title="module">Label</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <a name="LabelSetImpl"><span class="id" title="module">LabelSetImpl</span></a> &lt;: <span class="id" title="module">FSetExtra.WSfun</span> <a class="idref" href="LibUtils.html#Label"><span class="id" title="module">Label</span></a> := <span class="id" title="module">FSetExtra.Make</span> <a class="idref" href="LibUtils.html#Label"><span class="id" title="module">Label</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <a name="LabelSetNotin"><span class="id" title="module">LabelSetNotin</span></a> := <span class="id" title="module">FSetWeakNotin.Notin_fun</span> <a class="idref" href="LibUtils.html#Label"><span class="id" title="module">Label</span></a> <a class="idref" href="LibUtils.html#LabelSetImpl"><span class="id" title="module">LabelSetImpl</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <a name="LabelAssocList"><span class="id" title="module">LabelAssocList</span></a> := <span class="id" title="module">AssocList.Make</span> <a class="idref" href="LibUtils.html#Label"><span class="id" title="module">Label</span></a> <a class="idref" href="LibUtils.html#LabelSetImpl"><span class="id" title="module">LabelSetImpl</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Notation</span> <a name="lbinds"><span class="id" title="abbreviation">lbinds</span></a> := <a class="idref" href="LibUtils.html#binds"><span class="id" title="definition">LabelAssocList.binds</span></a>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="luniq"><span class="id" title="abbreviation">luniq</span></a> := <a class="idref" href="LibUtils.html#uniq"><span class="id" title="inductive">LabelAssocList.uniq</span></a>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="lmap"><span class="id" title="abbreviation">lmap</span></a> := <a class="idref" href="LibUtils.html#map"><span class="id" title="definition">LabelAssocList.map</span></a>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="ldom"><span class="id" title="abbreviation">ldom</span></a> := <a class="idref" href="LibUtils.html#dom"><span class="id" title="definition">LabelAssocList.dom</span></a>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="ladd"><span class="id" title="abbreviation">ladd</span></a> := <a class="idref" href="LibUtils.html#add"><span class="id" title="definition">LabelSetImpl.add</span></a>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="lempty"><span class="id" title="abbreviation">lempty</span></a> := <a class="idref" href="LibUtils.html#empty"><span class="id" title="definition">LabelSetImpl.empty</span></a>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="lget"><span class="id" title="abbreviation">lget</span></a> := <a class="idref" href="LibUtils.html#get"><span class="id" title="definition">LabelAssocList.get</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Notation</span> <a name="lIn"><span class="id" title="abbreviation">lIn</span></a> := <a class="idref" href="LibUtils.html#In"><span class="id" title="definition">LabelSetImpl.In</span></a>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="8f9fc40bc29f5f8d8c3e04d6f696daaa"><span class="id" title="notation">&quot;</span></a>x `lnotin` E" := (<span class="id" title="notation">~</span> <a class="idref" href="LibUtils.html#lIn"><span class="id" title="abbreviation">lIn</span></a> <span class="id" title="var">x</span> <span class="id" title="var">E</span>) (<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 70).<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Constructors</span> <a class="idref" href="LibUtils.html#luniq"><span class="id" title="inductive">luniq</span></a>.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;taken&nbsp;code&nbsp;from&nbsp;metalib&nbsp;to&nbsp;make&nbsp;life&nbsp;easier.&nbsp;*)</span><br/>
+
+<br/>
+<span class="id" title="keyword">Notation</span> <a name="luniq_one"><span class="id" title="abbreviation">luniq_one</span></a> := <a class="idref" href="LibUtils.html#uniq_one_1"><span class="id" title="lemma">LabelAssocList.uniq_one_1</span></a>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="luniq_cons"><span class="id" title="abbreviation">luniq_cons</span></a> := <a class="idref" href="LibUtils.html#uniq_cons_3"><span class="id" title="lemma">LabelAssocList.uniq_cons_3</span></a>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="luniq_app"><span class="id" title="abbreviation">luniq_app</span></a> := <a class="idref" href="LibUtils.html#uniq_app_4"><span class="id" title="lemma">LabelAssocList.uniq_app_4</span></a>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="luniq_map"><span class="id" title="abbreviation">luniq_map</span></a> := <a class="idref" href="LibUtils.html#uniq_map_2"><span class="id" title="lemma">LabelAssocList.uniq_map_2</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Notation</span> <a name="lbinds_one"><span class="id" title="abbreviation">lbinds_one</span></a> := <a class="idref" href="LibUtils.html#binds_one_3"><span class="id" title="lemma">LabelAssocList.binds_one_3</span></a>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="lbinds_cons"><span class="id" title="abbreviation">lbinds_cons</span></a> := <a class="idref" href="LibUtils.html#binds_cons_3"><span class="id" title="lemma">LabelAssocList.binds_cons_3</span></a>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="lbinds_app_l"><span class="id" title="abbreviation">lbinds_app_l</span></a> := <a class="idref" href="LibUtils.html#binds_app_2"><span class="id" title="lemma">LabelAssocList.binds_app_2</span></a>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="lbinds_app_r"><span class="id" title="abbreviation">lbinds_app_r</span></a> := <a class="idref" href="LibUtils.html#binds_app_3"><span class="id" title="lemma">LabelAssocList.binds_app_3</span></a>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="lbinds_map"><span class="id" title="abbreviation">lbinds_map</span></a> := <a class="idref" href="LibUtils.html#binds_map_2"><span class="id" title="lemma">LabelAssocList.binds_map_2</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Notation</span> <a name="lnotin_empty"><span class="id" title="abbreviation">lnotin_empty</span></a> := <a class="idref" href="LibUtils.html#notin_empty_1"><span class="id" title="lemma">LabelSetNotin.notin_empty_1</span></a>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="lnotin_add"><span class="id" title="abbreviation">lnotin_add</span></a> := <a class="idref" href="LibUtils.html#notin_add_3"><span class="id" title="lemma">LabelSetNotin.notin_add_3</span></a>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="lnotin_singleton"><span class="id" title="abbreviation">lnotin_singleton</span></a> := <a class="idref" href="LibUtils.html#notin_singleton_2"><span class="id" title="lemma">LabelSetNotin.notin_singleton_2</span></a>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="lnotin_union"><span class="id" title="abbreviation">lnotin_union</span></a> := <a class="idref" href="LibUtils.html#notin_union_3"><span class="id" title="lemma">LabelSetNotin.notin_union_3</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">solve_label_notin</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">try</span> <span class="id" title="var">eassumption</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">autorewrite</span> <span class="id" title="keyword">with</span> <span class="id" title="var">rewr_dom</span> <span class="id" title="tactic">in</span> *;<br/>
+&nbsp;&nbsp;<span class="id" title="var">LabelSetNotin.destruct_notin</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">first</span> [ <span class="id" title="tactic">apply</span> <a class="idref" href="LibUtils.html#lnotin_union"><span class="id" title="abbreviation">lnotin_union</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="tactic">apply</span> <a class="idref" href="LibUtils.html#lnotin_add"><span class="id" title="abbreviation">lnotin_add</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="tactic">apply</span> <a class="idref" href="LibUtils.html#lnotin_singleton"><span class="id" title="abbreviation">lnotin_singleton</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="tactic">apply</span> <a class="idref" href="LibUtils.html#lnotin_empty"><span class="id" title="abbreviation">lnotin_empty</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;];<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">try</span> <span class="id" title="tactic">tauto</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Extern</span> 1 (<span class="id" title="var">_</span> <a class="idref" href="LibUtils.html#8f9fc40bc29f5f8d8c3e04d6f696daaa"><span class="id" title="notation">`</span></a><a class="idref" href="LibUtils.html#8f9fc40bc29f5f8d8c3e04d6f696daaa"><span class="id" title="notation">lnotin</span></a><a class="idref" href="LibUtils.html#8f9fc40bc29f5f8d8c3e04d6f696daaa"><span class="id" title="notation">`</span></a> <span class="id" title="var">_</span>) =&gt;<br/>
+<span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+| [ |- ?<span class="id" title="var">l</span> <a class="idref" href="LibUtils.html#8f9fc40bc29f5f8d8c3e04d6f696daaa"><span class="id" title="notation">`</span></a><a class="idref" href="LibUtils.html#8f9fc40bc29f5f8d8c3e04d6f696daaa"><span class="id" title="notation">lnotin</span></a><a class="idref" href="LibUtils.html#8f9fc40bc29f5f8d8c3e04d6f696daaa"><span class="id" title="notation">`</span></a> <span class="id" title="var">_</span> ] =&gt; <span class="id" title="var">solve_label_notin</span><br/>
+<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Resolve</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">LabelSetImpl.add_1</span> <span class="id" title="var">LabelSetImpl.add_2</span> <span class="id" title="var">LabelSetImpl.remove_1</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">LabelSetImpl.remove_2</span> <span class="id" title="var">LabelSetImpl.singleton_2</span> <span class="id" title="var">LabelSetImpl.union_2</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">LabelSetImpl.union_3</span> <span class="id" title="var">LabelSetImpl.inter_3</span> <span class="id" title="var">LabelSetImpl.diff_3</span>.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;try&nbsp;to&nbsp;deal&nbsp;with&nbsp;uniq&nbsp;for&nbsp;labels.&nbsp;*)</span><br/>
+<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">luniq_one</span> <span class="id" title="var">luniq_cons</span> <span class="id" title="var">luniq_app</span> <span class="id" title="var">luniq_map</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">ldestruct_uniq</span> := <span class="id" title="var">LabelAssocList.destruct_uniq</span>.<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">lsolve_uniq</span> := <span class="id" title="var">LabelAssocList.solve_uniq</span>.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;TODO:&nbsp;this&nbsp;is&nbsp;purely&nbsp;wrong&nbsp;to&nbsp;have&nbsp;a&nbsp;timeout&nbsp;here.<br/>
+&nbsp;*&nbsp;however,&nbsp;solve_uniq&nbsp;calls&nbsp;fsetdec&nbsp;which&nbsp;might&nbsp;not&nbsp;come&nbsp;back&nbsp;in<br/>
+&nbsp;*&nbsp;near&nbsp;future.&nbsp;try&nbsp;to&nbsp;write&nbsp;another&nbsp;uniq&nbsp;solver.<br/>
+&nbsp;*)</span><br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">luniq_routine</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">try</span> <span class="id" title="var">ldestruct_uniq</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">try</span> <span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span> [ |- <a class="idref" href="LibUtils.html#luniq"><span class="id" title="abbreviation">luniq</span></a> <span class="id" title="var">_</span> ] =&gt; <span class="id" title="keyword">let</span> <span class="id" title="var">s</span> := <span class="id" title="var">TIMEOUT</span> <span class="id" title="tactic">in</span> <span class="id" title="var">timeout</span> <span class="id" title="var">s</span> <span class="id" title="var">lsolve_uniq</span> <span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">routine_subtac1</span> ::= <span class="id" title="var">luniq_routine</span>.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;OTHER&nbsp;HINTS&nbsp;*)</span><br/>
+
+<br/>
+<span class="comment">(*&nbsp;always&nbsp;try&nbsp;to&nbsp;invert&nbsp;on&nbsp;non-empty&nbsp;universal&nbsp;quantification&nbsp;on&nbsp;lists&nbsp;*)</span><br/>
+<span class="id" title="keyword">Hint Extern</span> 1 =&gt; <span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| [ <span class="id" title="var">H</span>: <span class="id" title="inductive">Forall</span> <span class="id" title="var">_</span> (<span class="id" title="var">_</span> <span class="id" title="notation">::</span> <span class="id" title="var">_</span>) |- <span class="id" title="var">_</span> ] =&gt; <span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">clear</span> <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;try&nbsp;to&nbsp;deal&nbsp;with&nbsp;uniq&nbsp;for&nbsp;atoms&nbsp;*)</span><br/>
+<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">uniq_one</span> <span class="id" title="var">uniq_cons</span> <span class="id" title="var">uniq_app</span> <span class="id" title="var">uniq_map</span> <span class="id" title="var">uniq_cons_1</span>.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;some&nbsp;easy&nbsp;stuff&nbsp;*)</span><br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="LAListProps"><span class="id" title="section">LAListProps</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="LAListProps.B"><span class="id" title="variable">B</span></a> : <span class="id" title="keyword">Type</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="LAListProps.T"><span class="id" title="variable">T</span></a> : <span class="id" title="keyword">Type</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">LIso</span> : <a class="idref" href="LibUtils.html#ListIso"><span class="id" title="class">ListIso</span></a> (<a class="idref" href="LibUtils.html#label"><span class="id" title="inductive">label</span></a> <span class="id" title="notation">*</span> <a class="idref" href="LibUtils.html#LAListProps.B"><span class="id" title="variable">B</span></a>) <a class="idref" href="LibUtils.html#LAListProps.T"><span class="id" title="variable">T</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="binds_witness"><span class="id" title="lemma">binds_witness</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> (<span class="id" title="var">b</span> : <a class="idref" href="LibUtils.html#LAListProps.B"><span class="id" title="variable">B</span></a>) <span class="id" title="var">l1</span> <span class="id" title="var">l2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="LibUtils.html#lbinds"><span class="id" title="abbreviation">lbinds</span></a> <a class="idref" href="LibUtils.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="LibUtils.html#b"><span class="id" title="variable">b</span></a> (<a class="idref" href="LibUtils.html#to_list"><span class="id" title="method">to_list</span></a> <a class="idref" href="LibUtils.html#d25722d08c5e669f66ae2b705b855780"><span class="id" title="notation">$</span></a> <a class="idref" href="LibUtils.html#append"><span class="id" title="method">append</span></a> <a class="idref" href="LibUtils.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="LibUtils.html#d25722d08c5e669f66ae2b705b855780"><span class="id" title="notation">$</span></a> <a class="idref" href="LibUtils.html#from_list"><span class="id" title="method">from_list</span></a> <a class="idref" href="LibUtils.html#d25722d08c5e669f66ae2b705b855780"><span class="id" title="notation">$</span></a> <span class="id" title="notation">(</span><a class="idref" href="LibUtils.html#a"><span class="id" title="variable">a</span></a><span class="id" title="notation">,</span> <a class="idref" href="LibUtils.html#b"><span class="id" title="variable">b</span></a><span class="id" title="notation">)</span> <span class="id" title="notation">::</span> <a class="idref" href="LibUtils.html#l2"><span class="id" title="variable">l2</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">rewrite</span> <a class="idref" href="LibUtils.html#append_sound"><span class="id" title="method">append_sound</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">remember</span> (<a class="idref" href="LibUtils.html#to_list"><span class="id" title="method">to_list</span></a> <span class="id" title="var">l1</span>) <span class="id" title="keyword">as</span> <span class="id" title="var">L</span>. <span class="id" title="tactic">generalize</span> <span class="id" title="var">L</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <span class="id" title="inductive">list</span>; <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">rewrite</span> <a class="idref" href="LibUtils.html#to_from_iso"><span class="id" title="method">to_from_iso</span></a>. <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">right</span>. <span class="id" title="tactic">trivial</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="LibUtils.html#LAListProps"><span class="id" title="section">LAListProps</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="binds_inv"><span class="id" title="lemma">binds_inv</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">B</span> <span class="id" title="var">a</span> (<span class="id" title="var">b</span> : <a class="idref" href="LibUtils.html#B"><span class="id" title="variable">B</span></a>) <span class="id" title="var">l</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="definition">binds</span> <a class="idref" href="LibUtils.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="LibUtils.html#b"><span class="id" title="variable">b</span></a> <a class="idref" href="LibUtils.html#l"><span class="id" title="variable">l</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">exists</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span><span class="id" title="notation">,</span> <a class="idref" href="LibUtils.html#l"><span class="id" title="variable">l</span></a> <span class="id" title="notation">=</span> <a class="idref" href="LibUtils.html#l1"><span class="id" title="variable">l1</span></a> <span class="id" title="notation">++</span> <span class="id" title="notation">(</span><a class="idref" href="LibUtils.html#a"><span class="id" title="variable">a</span></a><span class="id" title="notation">,</span> <a class="idref" href="LibUtils.html#b"><span class="id" title="variable">b</span></a><span class="id" title="notation">)</span> <span class="id" title="notation">::</span> <a class="idref" href="LibUtils.html#l2"><span class="id" title="variable">l2</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <span class="id" title="inductive">list</span>; <span class="id" title="var">routine</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="var">now</span> <span class="id" title="tactic">exists</span> <span class="id" title="constructor">nil</span>, <span class="id" title="var">H2</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">destruct</span> <span class="id" title="var">IHlist</span>; <span class="id" title="var">routine</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">now</span> <span class="id" title="tactic">exists</span> (<span class="id" title="notation">(</span><span class="id" title="var">a</span><span class="id" title="notation">,</span> <span class="id" title="var">h</span><span class="id" title="notation">)</span> <span class="id" title="notation">::</span> <span class="id" title="var">x</span>), <span class="id" title="var">H4</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;strange&nbsp;that&nbsp;this&nbsp;general&nbsp;law&nbsp;is&nbsp;not&nbsp;provided&nbsp;from&nbsp;the&nbsp;library&nbsp;*)</span><br/>
+<span class="id" title="keyword">Lemma</span> <a name="Forall_concat"><span class="id" title="lemma">Forall_concat</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">A</span> (<span class="id" title="var">l</span> <span class="id" title="var">l'</span> : <span class="id" title="inductive">list</span> <a class="idref" href="LibUtils.html#A"><span class="id" title="variable">A</span></a>) <span class="id" title="var">P</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="inductive">Forall</span> <a class="idref" href="LibUtils.html#P"><span class="id" title="variable">P</span></a> <a class="idref" href="LibUtils.html#l"><span class="id" title="variable">l</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="inductive">Forall</span> <a class="idref" href="LibUtils.html#P"><span class="id" title="variable">P</span></a> <a class="idref" href="LibUtils.html#l'"><span class="id" title="variable">l'</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="inductive">Forall</span> <a class="idref" href="LibUtils.html#P"><span class="id" title="variable">P</span></a> (<a class="idref" href="LibUtils.html#l"><span class="id" title="variable">l</span></a> <span class="id" title="notation">++</span> <a class="idref" href="LibUtils.html#l'"><span class="id" title="variable">l'</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>. <span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <span class="id" title="inductive">Forall</span>; <span class="id" title="var">routine</span>. <span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">Forall_concat</span>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

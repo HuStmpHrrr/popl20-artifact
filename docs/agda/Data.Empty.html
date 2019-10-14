@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+
+<html><head><meta charset="utf-8"/><title>Data.Empty</title><link href="Agda.css" rel="stylesheet"/></head><body><div class="navbar"><a class="active" href="Everything.html">Everything</a><a href="../index.html" style="float:right">Home</a></div><div class="main"><pre><a class="Comment" id="1">------------------------------------------------------------------------</a>
+<a class="Comment" id="74">-- The Agda standard library</a>
+<a class="Comment" id="103">--</a>
+<a class="Comment" id="106">-- Empty type</a>
+<a class="Comment" id="120">------------------------------------------------------------------------</a>
+
+<a class="Symbol" id="194">{-#</a> <a class="Keyword" id="198">OPTIONS</a> <a class="Option" id="206">--without-K</a> <a class="Option" id="218">--safe</a> <a class="Symbol" id="225">#-}</a>
+
+<a class="Keyword" id="230">module</a> <a class="Module" href="Data.Empty.html" id="237">Data.Empty</a> <a class="Keyword" id="248">where</a>
+
+<a class="Keyword" id="255">open</a> <a class="Keyword" id="260">import</a> <a class="Module" href="Level.html" id="267">Level</a>
+
+<a class="Keyword" id="274">data</a> <a id="⊥"></a><a class="Datatype" href="Data.Empty.html#279" id="279">⊥</a> <a class="Symbol" id="281">:</a> <a class="PrimitiveType" id="283">Set</a> <a class="Keyword" id="287">where</a>
+
+<a class="Symbol" id="294">{-#</a> <a class="Keyword" id="298">FOREIGN</a> GHC data AgdaEmpty <a class="Symbol" id="325">#-}</a>
+<a class="Symbol" id="329">{-#</a> <a class="Keyword" id="333">COMPILE</a> GHC <a class="Datatype" href="Data.Empty.html#279" id="345">⊥</a> = data MAlonzo.Code.Data.Empty.AgdaEmpty () <a class="Symbol" id="391">#-}</a>
+
+<a id="⊥-elim"></a><a class="Function" href="Data.Empty.html#396" id="396">⊥-elim</a> <a class="Symbol" id="403">:</a> <a class="Symbol" id="405">∀</a> <a class="Symbol" id="407">{</a><a class="Bound" href="Data.Empty.html#408" id="408">w</a><a class="Symbol" id="409">}</a> <a class="Symbol" id="411">{</a><a class="Bound" href="Data.Empty.html#412" id="412">Whatever</a> <a class="Symbol" id="421">:</a> <a class="PrimitiveType" id="423">Set</a> <a class="Bound" href="Data.Empty.html#408" id="427">w</a><a class="Symbol" id="428">}</a> <a class="Symbol" id="430">→</a> <a class="Datatype" href="Data.Empty.html#279" id="432">⊥</a> <a class="Symbol" id="434">→</a> <a class="Bound" href="Data.Empty.html#412" id="436">Whatever</a>
+<a class="Function" href="Data.Empty.html#396" id="445">⊥-elim</a> <a class="Symbol" id="452">()</a>
+</pre></div></body></html>

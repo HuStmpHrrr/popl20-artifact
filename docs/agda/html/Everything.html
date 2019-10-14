@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Everything</title><link rel="stylesheet" href="Agda.css"></head><body><pre><a id="1" class="Symbol">{-#</a> <a id="5" class="Keyword">OPTIONS</a> <a id="13" class="Option">--without-K</a> <a id="25" class="Option">--safe</a> <a id="32" class="Symbol">#-}</a>
+
+<a id="37" class="Comment">-- The Everything module of undecidability analysis</a>
+<a id="89" class="Comment">-- In Agda, we use first order de Bruijn indices to represent variables, that is, the</a>
+<a id="175" class="Comment">-- natural numbers.</a>
+<a id="195" class="Keyword">module</a> <a id="202" href="Everything.html" class="Module">Everything</a> <a id="213" class="Keyword">where</a>
+
+<a id="220" class="Comment">-- Subtyping problems of all following calculi are undecidable.  In this technical</a>
+<a id="303" class="Comment">-- work, our reduction proofs stop at F&lt;: deterministic (F&lt;:ᵈ), the undecidability of</a>
+<a id="389" class="Comment">-- which is justified by Pierce92.</a>
+
+<a id="425" class="Comment">-- F&lt;: F&lt;:⁻ F&lt;:ᵈ</a>
+<a id="442" class="Keyword">import</a> <a id="449" href="FsubMinus.html" class="Module">FsubMinus</a>
+
+<a id="460" class="Comment">-- D&lt;:</a>
+<a id="467" class="Comment">-- </a>
+<a id="471" class="Comment">-- The examination of D&lt;: is composed of the following files:</a>
+<a id="533" class="Keyword">import</a> <a id="540" href="DsubDef.html" class="Module">DsubDef</a> <a id="548" class="Comment">-- defines the syntax of D&lt;:.</a>
+<a id="578" class="Keyword">import</a> <a id="585" href="Dsub.html" class="Module">Dsub</a> <a id="590" class="Comment">-- defines the simplified subtyping judgment per Lemma 2 in the paper.</a>
+<a id="661" class="Keyword">import</a> <a id="668" href="DsubFull.html" class="Module">DsubFull</a> <a id="677" class="Comment">-- defines the original definition of D&lt;:.</a>
+<a id="720" class="Keyword">import</a> <a id="727" href="DsubEquivSimpler.html" class="Module">DsubEquivSimpler</a> <a id="744" class="Comment">-- defines D&lt;: normal form and shows that D&lt;: subtyping is undecidable.</a>
+<a id="816" class="Keyword">import</a> <a id="823" href="DsubNoTrans.html" class="Module">DsubNoTrans</a> <a id="835" class="Comment">-- shows that D&lt;: subtyping without transitivity remains undecidable.</a>
+<a id="905" class="Keyword">import</a> <a id="912" href="DsubTermUndec.html" class="Module">DsubTermUndec</a> <a id="926" class="Comment">-- shows that D&lt;: term typing is also undecidable.</a>
+
+<a id="978" class="Comment">-- other things</a>
+
+<a id="995" class="Comment">-- properties of F&lt;:⁻</a>
+<a id="1017" class="Keyword">import</a> <a id="1024" href="FsubMinus2.html" class="Module">FsubMinus2</a>
+</pre></body></html>

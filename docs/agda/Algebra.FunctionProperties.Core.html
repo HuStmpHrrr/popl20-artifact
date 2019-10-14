@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+
+<html><head><meta charset="utf-8"/><title>Algebra.FunctionProperties.Core</title><link href="Agda.css" rel="stylesheet"/></head><body><div class="navbar"><a class="active" href="Everything.html">Everything</a><a href="../index.html" style="float:right">Home</a></div><div class="main"><pre><a class="Comment" id="1">------------------------------------------------------------------------</a>
+<a class="Comment" id="74">-- The Agda standard library</a>
+<a class="Comment" id="103">--</a>
+<a class="Comment" id="106">-- Properties of functions, such as associativity and commutativity</a>
+<a class="Comment" id="174">------------------------------------------------------------------------</a>
+
+<a class="Comment" id="248">-- This file contains some core definitions which are reexported by</a>
+<a class="Comment" id="316">-- Algebra.FunctionProperties. They are placed here because</a>
+<a class="Comment" id="376">-- Algebra.FunctionProperties is a parameterised module, and some of</a>
+<a class="Comment" id="445">-- the parameters are irrelevant for these definitions.</a>
+
+<a class="Symbol" id="502">{-#</a> <a class="Keyword" id="506">OPTIONS</a> <a class="Option" id="514">--without-K</a> <a class="Option" id="526">--safe</a> <a class="Symbol" id="533">#-}</a>
+
+<a class="Keyword" id="538">module</a> <a class="Module" href="Algebra.FunctionProperties.Core.html" id="545">Algebra.FunctionProperties.Core</a> <a class="Keyword" id="577">where</a>
+
+<a class="Keyword" id="584">open</a> <a class="Keyword" id="589">import</a> <a class="Module" href="Level.html" id="596">Level</a>
+
+<a class="Comment" id="603">------------------------------------------------------------------------</a>
+<a class="Comment" id="676">-- Unary and binary operations</a>
+
+<a id="Op₁"></a><a class="Function" href="Algebra.FunctionProperties.Core.html#708" id="708">Op₁</a> <a class="Symbol" id="712">:</a> <a class="Symbol" id="714">∀</a> <a class="Symbol" id="716">{</a><a class="Bound" href="Algebra.FunctionProperties.Core.html#717" id="717">ℓ</a><a class="Symbol" id="718">}</a> <a class="Symbol" id="720">→</a> <a class="PrimitiveType" id="722">Set</a> <a class="Bound" href="Algebra.FunctionProperties.Core.html#717" id="726">ℓ</a> <a class="Symbol" id="728">→</a> <a class="PrimitiveType" id="730">Set</a> <a class="Bound" href="Algebra.FunctionProperties.Core.html#717" id="734">ℓ</a>
+<a class="Function" href="Algebra.FunctionProperties.Core.html#708" id="736">Op₁</a> <a class="Bound" href="Algebra.FunctionProperties.Core.html#740" id="740">A</a> <a class="Symbol" id="742">=</a> <a class="Bound" href="Algebra.FunctionProperties.Core.html#740" id="744">A</a> <a class="Symbol" id="746">→</a> <a class="Bound" href="Algebra.FunctionProperties.Core.html#740" id="748">A</a>
+
+<a id="Op₂"></a><a class="Function" href="Algebra.FunctionProperties.Core.html#751" id="751">Op₂</a> <a class="Symbol" id="755">:</a> <a class="Symbol" id="757">∀</a> <a class="Symbol" id="759">{</a><a class="Bound" href="Algebra.FunctionProperties.Core.html#760" id="760">ℓ</a><a class="Symbol" id="761">}</a> <a class="Symbol" id="763">→</a> <a class="PrimitiveType" id="765">Set</a> <a class="Bound" href="Algebra.FunctionProperties.Core.html#760" id="769">ℓ</a> <a class="Symbol" id="771">→</a> <a class="PrimitiveType" id="773">Set</a> <a class="Bound" href="Algebra.FunctionProperties.Core.html#760" id="777">ℓ</a>
+<a class="Function" href="Algebra.FunctionProperties.Core.html#751" id="779">Op₂</a> <a class="Bound" href="Algebra.FunctionProperties.Core.html#783" id="783">A</a> <a class="Symbol" id="785">=</a> <a class="Bound" href="Algebra.FunctionProperties.Core.html#783" id="787">A</a> <a class="Symbol" id="789">→</a> <a class="Bound" href="Algebra.FunctionProperties.Core.html#783" id="791">A</a> <a class="Symbol" id="793">→</a> <a class="Bound" href="Algebra.FunctionProperties.Core.html#783" id="795">A</a>
+</pre></div></body></html>

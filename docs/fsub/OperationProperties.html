@@ -1,0 +1,479 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="assets/resources/coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="assets/resources/coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="assets/resources/config.js"></script>
+<script type="text/javascript" src="assets/resources/coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../index.html"> Home </a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">OperationProperties</h1>
+
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Set Implicit Arguments</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="Definitions.html#"><span class="id" title="library">Definitions</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab4"></a><h1 class="section">Properties of Operations</h1>
+
+
+<div class="paragraph"> </div>
+
+    This file contains properties of characteristics and operations. They are very
+    much technical details so it usually should not concern readers. 
+ 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="LcOpenClosingProperties"><span class="id" title="section">LcOpenClosingProperties</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Notation</span> <a name="lc_relax"><span class="id" title="abbreviation">lc_relax</span></a> <span class="id" title="var">T</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">forall</span> (<span class="id" title="var">v</span> : <span class="id" title="var">T</span>) <span class="id" title="var">n</span> <span class="id" title="var">m</span>, <span class="id" title="method">lc_at</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a> <a class="idref" href="OperationProperties.html#v"><span class="id" title="variable">v</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a> <span class="id" title="notation">&lt;=</span> <a class="idref" href="OperationProperties.html#m"><span class="id" title="variable">m</span></a> <span class="id" title="notation">-&gt;</span> <span class="id" title="method">lc_at</span> <a class="idref" href="OperationProperties.html#m"><span class="id" title="variable">m</span></a> <a class="idref" href="OperationProperties.html#v"><span class="id" title="variable">v</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local Hint Extern</span> 1 =&gt; <span class="id" title="var">lia</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="lc_relax_avar"><span class="id" title="lemma">lc_relax_avar</span></a> : <a class="idref" href="OperationProperties.html#lc_relax"><span class="id" title="abbreviation">lc_relax</span></a> <a class="idref" href="Definitions.html#avar"><span class="id" title="inductive">avar</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span> <span class="id" title="keyword">using</span>. <span class="id" title="tactic">induction</span> 1; <span class="id" title="var">routine</span>. <span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">lc_relax_avar</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="lc_relax_typ"><span class="id" title="lemma">lc_relax_typ</span></a> : <a class="idref" href="OperationProperties.html#lc_relax"><span class="id" title="abbreviation">lc_relax</span></a> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span> <span class="id" title="keyword">using</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="var">gen</span> <span class="id" title="var">m</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">H</span>; <span class="id" title="var">eroutine</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">lc_relax_typ</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Notation</span> <a name="open_lc"><span class="id" title="abbreviation">open_lc</span></a> <span class="id" title="var">T</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">forall</span> (<span class="id" title="var">v</span> : <span class="id" title="var">T</span>) <span class="id" title="var">n</span> <span class="id" title="var">x</span>, <span class="id" title="method">lc_at</span> (<span class="id" title="constructor">S</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a>) <a class="idref" href="OperationProperties.html#v"><span class="id" title="variable">v</span></a> <span class="id" title="notation">-&gt;</span> <span class="id" title="method">lc_at</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a> (<span class="id" title="method">open_rec</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a> <a class="idref" href="OperationProperties.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="OperationProperties.html#v"><span class="id" title="variable">v</span></a>)).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="open_lc_avar"><span class="id" title="lemma">open_lc_avar</span></a> : <a class="idref" href="OperationProperties.html#open_lc"><span class="id" title="abbreviation">open_lc</span></a> <a class="idref" href="Definitions.html#avar"><span class="id" title="inductive">avar</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span> <span class="id" title="keyword">using</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="var">invert</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="var">destruct_eq</span>; <span class="id" title="var">routine</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="var">routine</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">open_lc_avar</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="open_lc_typ"><span class="id" title="lemma">open_lc_typ</span></a> : <a class="idref" href="OperationProperties.html#open_lc"><span class="id" title="abbreviation">open_lc</span></a> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span> <span class="id" title="keyword">using</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">dependent</span> <span class="id" title="tactic">induction</span> <span class="id" title="var">H</span>; <span class="id" title="var">routine</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">open_lc_typ</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Notation</span> <a name="open_lc_le"><span class="id" title="abbreviation">open_lc_le</span></a> <span class="id" title="var">T</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">forall</span> (<span class="id" title="var">v</span> : <span class="id" title="var">T</span>) <span class="id" title="var">n</span> <span class="id" title="var">m</span> <span class="id" title="var">x</span>, <span class="id" title="method">lc_at</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a> <a class="idref" href="OperationProperties.html#v"><span class="id" title="variable">v</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="OperationProperties.html#m"><span class="id" title="variable">m</span></a> <span class="id" title="notation">&gt;=</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a> <span class="id" title="notation">-&gt;</span> <span class="id" title="method">open_rec</span> <a class="idref" href="OperationProperties.html#m"><span class="id" title="variable">m</span></a> <a class="idref" href="OperationProperties.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="OperationProperties.html#v"><span class="id" title="variable">v</span></a> <span class="id" title="notation">=</span> <a class="idref" href="OperationProperties.html#v"><span class="id" title="variable">v</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="open_lc_le_avar"><span class="id" title="lemma">open_lc_le_avar</span></a> : <a class="idref" href="OperationProperties.html#open_lc_le"><span class="id" title="abbreviation">open_lc_le</span></a> <a class="idref" href="Definitions.html#avar"><span class="id" title="inductive">avar</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>. <span class="id" title="var">destr</span> <span class="id" title="var">on</span> <a class="idref" href="Definitions.html#avar"><span class="id" title="inductive">avar</span></a>; <span class="id" title="var">routine</span>. <span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="open_lc_le_typ"><span class="id" title="lemma">open_lc_le_typ</span></a> : <a class="idref" href="OperationProperties.html#open_lc_le"><span class="id" title="abbreviation">open_lc_le</span></a> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>; <span class="id" title="var">routine</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eapply</span> <a class="idref" href="OperationProperties.html#open_lc_le_avar"><span class="id" title="lemma">open_lc_le_avar</span></a>; <span class="id" title="var">eassumption</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">all</span>:<span class="id" title="var">ctx_app</span>; <span class="id" title="tactic">try</span> <span class="id" title="var">eassumption</span>; <span class="id" title="var">lia</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Notation</span> <a name="open_lc_inv"><span class="id" title="abbreviation">open_lc_inv</span></a> <span class="id" title="var">T</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">forall</span> (<span class="id" title="var">v</span> : <span class="id" title="var">T</span>) <span class="id" title="var">n</span> <span class="id" title="var">x</span>, <span class="id" title="method">lc_at</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a> (<span class="id" title="method">open_rec</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a> <a class="idref" href="OperationProperties.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="OperationProperties.html#v"><span class="id" title="variable">v</span></a>) <span class="id" title="notation">-&gt;</span> <span class="id" title="method">lc_at</span> (<span class="id" title="constructor">S</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a>) <a class="idref" href="OperationProperties.html#v"><span class="id" title="variable">v</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="open_lc_inv_avar"><span class="id" title="lemma">open_lc_inv_avar</span></a> : <a class="idref" href="OperationProperties.html#open_lc_inv"><span class="id" title="abbreviation">open_lc_inv</span></a> <a class="idref" href="Definitions.html#avar"><span class="id" title="inductive">avar</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span> <span class="id" title="keyword">using</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span>. <span class="id" title="var">invert</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">destruct</span> <span class="id" title="var">v</span>; <span class="id" title="var">routine</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">destruct</span> <span class="id" title="var">v</span>; <span class="id" title="var">routine</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">open_lc_inv_avar</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="open_lc_inv_typ"><span class="id" title="lemma">open_lc_inv_typ</span></a> : <a class="idref" href="OperationProperties.html#open_lc_inv"><span class="id" title="abbreviation">open_lc_inv</span></a> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span> <span class="id" title="keyword">using</span>. <span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>; <span class="id" title="var">eroutine</span>. <span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">open_lc_inv_typ</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Notation</span> <a name="open_left_inv"><span class="id" title="abbreviation">open_left_inv</span></a> <span class="id" title="var">T</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">forall</span> (<span class="id" title="var">v</span> : <span class="id" title="var">T</span>) <span class="id" title="var">n</span> <span class="id" title="var">x</span>, <span class="id" title="method">lc_at</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a> <a class="idref" href="OperationProperties.html#v"><span class="id" title="variable">v</span></a> <span class="id" title="notation">-&gt;</span> <span class="id" title="method">open_rec</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a> <a class="idref" href="OperationProperties.html#x"><span class="id" title="variable">x</span></a> (<span class="id" title="method">close_rec</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a> <a class="idref" href="OperationProperties.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="OperationProperties.html#v"><span class="id" title="variable">v</span></a>) <span class="id" title="notation">=</span> <a class="idref" href="OperationProperties.html#v"><span class="id" title="variable">v</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="open_left_inv_avar"><span class="id" title="lemma">open_left_inv_avar</span></a> : <a class="idref" href="OperationProperties.html#open_left_inv"><span class="id" title="abbreviation">open_left_inv</span></a> <a class="idref" href="Definitions.html#avar"><span class="id" title="inductive">avar</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span> <span class="id" title="keyword">using</span>. <span class="id" title="tactic">induction</span> 1; <span class="id" title="var">routine</span>. <span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">open_left_inv_avar</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="open_left_inv_typ"><span class="id" title="lemma">open_left_inv_typ</span></a> : <a class="idref" href="OperationProperties.html#open_left_inv"><span class="id" title="abbreviation">open_left_inv</span></a> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span> <span class="id" title="keyword">using</span>. <span class="id" title="tactic">induction</span> 1; <span class="id" title="var">routine</span>. <span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">open_left_inv_typ</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Notation</span> <a name="close_lc"><span class="id" title="abbreviation">close_lc</span></a> <span class="id" title="var">T</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">forall</span> (<span class="id" title="var">v</span> : <span class="id" title="var">T</span>) <span class="id" title="var">n</span> <span class="id" title="var">x</span>, <span class="id" title="method">lc_at</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a> <a class="idref" href="OperationProperties.html#v"><span class="id" title="variable">v</span></a> <span class="id" title="notation">-&gt;</span> <span class="id" title="method">lc_at</span> (<span class="id" title="constructor">S</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a>) (<span class="id" title="method">close_rec</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a> <a class="idref" href="OperationProperties.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="OperationProperties.html#v"><span class="id" title="variable">v</span></a>)).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="close_lc_avar"><span class="id" title="lemma">close_lc_avar</span></a> : <a class="idref" href="OperationProperties.html#close_lc"><span class="id" title="abbreviation">close_lc</span></a> <a class="idref" href="Definitions.html#avar"><span class="id" title="inductive">avar</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>. <span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <a class="idref" href="Definitions.html#avar"><span class="id" title="inductive">avar</span></a>; <span class="id" title="var">routine</span>. <span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">close_lc_avar</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="close_lc_typ"><span class="id" title="lemma">close_lc_typ</span></a> : <a class="idref" href="OperationProperties.html#close_lc"><span class="id" title="abbreviation">close_lc</span></a> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>. <span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>; <span class="id" title="var">routine</span>. <span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">close_lc_typ</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="OperationProperties.html#LcOpenClosingProperties"><span class="id" title="section">LcOpenClosingProperties</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="OpenFreshInj"><span class="id" title="section">OpenFreshInj</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="OpenFreshInj.z"><span class="id" title="variable">z</span></a> : <span class="id" title="abbreviation">atom</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Notation</span> <a name="fresh_inj"><span class="id" title="abbreviation">fresh_inj</span></a> <span class="id" title="var">T</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">forall</span> (<span class="id" title="var">x</span> <span class="id" title="var">y</span> : <span class="id" title="var">T</span>) <span class="id" title="var">k</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="OperationProperties.html#OpenFreshInj.z"><span class="id" title="variable">z</span></a> <span class="id" title="notation">`</span><span class="id" title="notation">notin</span><span class="id" title="notation">`</span> <span class="id" title="method">fv</span> <a class="idref" href="OperationProperties.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="OperationProperties.html#OpenFreshInj.z"><span class="id" title="variable">z</span></a> <span class="id" title="notation">`</span><span class="id" title="notation">notin</span><span class="id" title="notation">`</span> <span class="id" title="method">fv</span> <a class="idref" href="OperationProperties.html#y"><span class="id" title="variable">y</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="method">open_rec</span> <a class="idref" href="OperationProperties.html#k"><span class="id" title="variable">k</span></a> <a class="idref" href="OperationProperties.html#OpenFreshInj.z"><span class="id" title="variable">z</span></a> <a class="idref" href="OperationProperties.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">=</span> <span class="id" title="method">open_rec</span> <a class="idref" href="OperationProperties.html#k"><span class="id" title="variable">k</span></a> <a class="idref" href="OperationProperties.html#OpenFreshInj.z"><span class="id" title="variable">z</span></a> <a class="idref" href="OperationProperties.html#y"><span class="id" title="variable">y</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="OperationProperties.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">=</span> <a class="idref" href="OperationProperties.html#y"><span class="id" title="variable">y</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="open_fresh_inj_avar"><span class="id" title="lemma">open_fresh_inj_avar</span></a> : <a class="idref" href="OperationProperties.html#fresh_inj"><span class="id" title="abbreviation">fresh_inj</span></a> <a class="idref" href="Definitions.html#avar"><span class="id" title="inductive">avar</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span> <span class="id" title="keyword">using</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">destruct</span> <span class="id" title="var">x</span>, <span class="id" title="var">y</span>; <span class="id" title="var">routine</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local Hint Resolve</span> <span class="id" title="var">open_fresh_inj_avar</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local Ltac</span> <span class="id" title="var">boom</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">eroutine</span> <span class="id" title="tactic">by</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">idtac</span>; <span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| [ <span class="id" title="var">H</span> : <span class="id" title="var">_</span> <span class="id" title="notation">=</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="OperationProperties.html#OpenFreshInj.z"><span class="id" title="variable">z</span></a> ?<span class="id" title="var">t'</span> &vdash; <span class="id" title="var">_</span> ] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">t'</span>; <span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="open_fresh_inj_typ"><span class="id" title="lemma">open_fresh_inj_typ</span></a>: <a class="idref" href="OperationProperties.html#fresh_inj"><span class="id" title="abbreviation">fresh_inj</span></a> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span> <span class="id" title="keyword">using</span>. <span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>; <span class="id" title="var">boom</span>. <span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">open_fresh_inj_typ</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="OperationProperties.html#OpenFreshInj"><span class="id" title="section">OpenFreshInj</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="SubstFresh"><span class="id" title="section">SubstFresh</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="SubstFresh.x"><span class="id" title="variable">x</span></a> <a name="SubstFresh.y"><span class="id" title="variable">y</span></a> : <span class="id" title="abbreviation">var</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Notation</span> <a name="subst_fresh"><span class="id" title="abbreviation">subst_fresh</span></a> <span class="id" title="var">T</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">forall</span> <span class="id" title="var">t</span> : <span class="id" title="var">T</span>, <a class="idref" href="OperationProperties.html#SubstFresh.x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">`</span><span class="id" title="notation">notin</span><span class="id" title="notation">`</span> <span class="id" title="method">fv</span> <a class="idref" href="OperationProperties.html#t"><span class="id" title="variable">t</span></a> <span class="id" title="notation">-&gt;</span> <span class="id" title="method">substi</span> <a class="idref" href="OperationProperties.html#SubstFresh.x"><span class="id" title="variable">x</span></a> <a class="idref" href="OperationProperties.html#SubstFresh.y"><span class="id" title="variable">y</span></a> <a class="idref" href="OperationProperties.html#t"><span class="id" title="variable">t</span></a> <span class="id" title="notation">=</span> <a class="idref" href="OperationProperties.html#t"><span class="id" title="variable">t</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="subst_fresh_avar"><span class="id" title="lemma">subst_fresh_avar</span></a> : <a class="idref" href="OperationProperties.html#subst_fresh"><span class="id" title="abbreviation">subst_fresh</span></a> <a class="idref" href="Definitions.html#avar"><span class="id" title="inductive">avar</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span> <span class="id" title="keyword">using</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">destruct</span> <span class="id" title="var">t</span>; <span class="id" title="var">routine</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local Hint Resolve</span> <span class="id" title="var">subst_fresh_avar</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="subst_fresh_typ"><span class="id" title="lemma">subst_fresh_typ</span></a> : <a class="idref" href="OperationProperties.html#subst_fresh"><span class="id" title="abbreviation">subst_fresh</span></a> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span> <span class="id" title="keyword">using</span>. <span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>; <span class="id" title="var">routine</span>. <span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">subst_fresh_typ</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="OperationProperties.html#SubstFresh"><span class="id" title="section">SubstFresh</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="SubstOpenComm"><span class="id" title="section">SubstOpenComm</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="SubstOpenComm.x"><span class="id" title="variable">x</span></a> <a name="SubstOpenComm.y"><span class="id" title="variable">y</span></a> : <span class="id" title="abbreviation">var</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+z<span class="inlinecode"><span class="id" title="var">y</span>/<span class="id" title="var">x</span></span> 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="subst_fvar"><span class="id" title="definition">subst_fvar</span></a> (<span class="id" title="var">z</span> : <span class="id" title="abbreviation">var</span>) : <span class="id" title="abbreviation">var</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">if</span> <a class="idref" href="OperationProperties.html#z"><span class="id" title="variable">z</span></a> <span class="id" title="notation">==</span> <a class="idref" href="OperationProperties.html#SubstOpenComm.x"><span class="id" title="variable">x</span></a> <span class="id" title="keyword">then</span> <a class="idref" href="OperationProperties.html#SubstOpenComm.y"><span class="id" title="variable">y</span></a> <span class="id" title="keyword">else</span> <a class="idref" href="OperationProperties.html#z"><span class="id" title="variable">z</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Notation</span> <a name="subst_open_comm"><span class="id" title="abbreviation">subst_open_comm</span></a> <span class="id" title="var">T</span> <span class="id" title="var">u</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">forall</span> (<span class="id" title="var">t</span> : <span class="id" title="var">T</span>) (<span class="id" title="var">n</span> : <span class="id" title="inductive">nat</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="method">substi</span> <a class="idref" href="OperationProperties.html#SubstOpenComm.x"><span class="id" title="variable">x</span></a> <a class="idref" href="OperationProperties.html#SubstOpenComm.y"><span class="id" title="variable">y</span></a> (<span class="id" title="method">open_rec</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a> <span class="id" title="var">u</span> <a class="idref" href="OperationProperties.html#t"><span class="id" title="variable">t</span></a>) <span class="id" title="notation">=</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="method">open_rec</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a> (<a class="idref" href="OperationProperties.html#subst_fvar"><span class="id" title="definition">subst_fvar</span></a> <span class="id" title="var">u</span>) <span class="id" title="notation">$</span> <span class="id" title="method">substi</span> <a class="idref" href="OperationProperties.html#SubstOpenComm.x"><span class="id" title="variable">x</span></a> <a class="idref" href="OperationProperties.html#SubstOpenComm.y"><span class="id" title="variable">y</span></a> <a class="idref" href="OperationProperties.html#t"><span class="id" title="variable">t</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="subst_open_comm_avar"><span class="id" title="lemma">subst_open_comm_avar</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">u</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="OperationProperties.html#subst_open_comm"><span class="id" title="abbreviation">subst_open_comm</span></a> <a class="idref" href="Definitions.html#avar"><span class="id" title="inductive">avar</span></a> <a class="idref" href="OperationProperties.html#u"><span class="id" title="variable">u</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span> <span class="id" title="keyword">using</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">destruct</span> <span class="id" title="var">t</span>; <span class="id" title="var">routine</span> <span class="id" title="tactic">by</span> (<span class="id" title="tactic">unfold</span> <a class="idref" href="OperationProperties.html#subst_fvar"><span class="id" title="definition">subst_fvar</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">subst_open_comm_avar</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="subst_open_comm_typ"><span class="id" title="lemma">subst_open_comm_typ</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">u</span>, <a class="idref" href="OperationProperties.html#subst_open_comm"><span class="id" title="abbreviation">subst_open_comm</span></a> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a> <a class="idref" href="OperationProperties.html#u"><span class="id" title="variable">u</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span> <span class="id" title="keyword">using</span>. <span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>; <span class="id" title="var">routine</span>. <span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">subst_open_comm_typ</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="OperationProperties.html#SubstOpenComm"><span class="id" title="section">SubstOpenComm</span></a>.<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="OperationProperties.html#subst_fvar"><span class="id" title="definition">subst_fvar</span></a> <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">z</span>/.<br/>
+<span class="id" title="keyword">Hint Unfold</span> <a class="idref" href="OperationProperties.html#subst_fvar"><span class="id" title="definition">subst_fvar</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="SubstIntro"><span class="id" title="section">SubstIntro</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Notation</span> <a name="subst_intro"><span class="id" title="abbreviation">subst_intro</span></a> <span class="id" title="var">T</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">forall</span> <span class="id" title="var">x</span> <span class="id" title="var">u</span> (<span class="id" title="var">t</span> : <span class="id" title="var">T</span>) (<span class="id" title="var">n</span> : <span class="id" title="inductive">nat</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="OperationProperties.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">`</span><span class="id" title="notation">notin</span><span class="id" title="notation">`</span> <span class="id" title="method">fv</span> <a class="idref" href="OperationProperties.html#t"><span class="id" title="variable">t</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="method">open_rec</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a> <a class="idref" href="OperationProperties.html#u"><span class="id" title="variable">u</span></a> <a class="idref" href="OperationProperties.html#t"><span class="id" title="variable">t</span></a> <span class="id" title="notation">=</span> <span class="id" title="method">substi</span> <a class="idref" href="OperationProperties.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="OperationProperties.html#u"><span class="id" title="variable">u</span></a> <span class="id" title="notation">$</span> <span class="id" title="method">open_rec</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a> <a class="idref" href="OperationProperties.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="OperationProperties.html#t"><span class="id" title="variable">t</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local Hint Extern</span> 1 =&gt; <span class="id" title="var">exrewrite</span> <a class="idref" href="OperationProperties.html#subst_fresh_typ"><span class="id" title="lemma">subst_fresh_typ</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local Ltac</span> <span class="id" title="var">boom</span> := <span class="id" title="var">routine</span> <span class="id" title="tactic">by</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">exrewrite</span> <a class="idref" href="OperationProperties.html#subst_open_comm_typ"><span class="id" title="lemma">subst_open_comm_typ</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="subst_intro_typ"><span class="id" title="lemma">subst_intro_typ</span></a> : <a class="idref" href="OperationProperties.html#subst_intro"><span class="id" title="abbreviation">subst_intro</span></a> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span> <span class="id" title="keyword">using</span>. <span class="id" title="var">boom</span>. <span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="OperationProperties.html#SubstIntro"><span class="id" title="section">SubstIntro</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="SubstFvarProps"><span class="id" title="section">SubstFvarProps</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="SubstFvarProps.x"><span class="id" title="variable">x</span></a> <a name="SubstFvarProps.y"><span class="id" title="variable">y</span></a> <a name="SubstFvarProps.z"><span class="id" title="variable">z</span></a> : <span class="id" title="abbreviation">var</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="SubstFvarProps.T"><span class="id" title="variable">T</span></a> : <span class="id" title="keyword">Type</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">SubstT</span> : <span class="id" title="class">CanSubst</span> <a class="idref" href="OperationProperties.html#SubstFvarProps.T"><span class="id" title="variable">T</span></a>} {<span class="id" title="var">OpenT</span> : <span class="id" title="class">CanOpen</span> <a class="idref" href="OperationProperties.html#SubstFvarProps.T"><span class="id" title="variable">T</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="SubstFvarProps.t"><span class="id" title="variable">t</span></a> : <a class="idref" href="OperationProperties.html#SubstFvarProps.T"><span class="id" title="variable">T</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="open_substi_rewrite"><span class="id" title="lemma">open_substi_rewrite</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="OperationProperties.html#SubstFvarProps.z"><span class="id" title="variable">z</span></a> <span class="id" title="notation">`</span><span class="id" title="notation">notin</span><span class="id" title="notation">`</span> <span class="id" title="abbreviation">singleton</span> <a class="idref" href="OperationProperties.html#SubstFvarProps.x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">`</span><span class="id" title="notation">union</span><span class="id" title="notation">`</span> <span class="id" title="abbreviation">singleton</span> <a class="idref" href="OperationProperties.html#SubstFvarProps.y"><span class="id" title="variable">y</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="abbreviation">open</span> <a class="idref" href="OperationProperties.html#SubstFvarProps.z"><span class="id" title="variable">z</span></a> (<span class="id" title="method">substi</span> <a class="idref" href="OperationProperties.html#SubstFvarProps.x"><span class="id" title="variable">x</span></a> <a class="idref" href="OperationProperties.html#SubstFvarProps.y"><span class="id" title="variable">y</span></a> <a class="idref" href="OperationProperties.html#SubstFvarProps.t"><span class="id" title="variable">t</span></a>) <span class="id" title="notation">=</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="abbreviation">open</span> (<a class="idref" href="OperationProperties.html#subst_fvar"><span class="id" title="definition">subst_fvar</span></a> <a class="idref" href="OperationProperties.html#SubstFvarProps.x"><span class="id" title="variable">x</span></a> <a class="idref" href="OperationProperties.html#SubstFvarProps.y"><span class="id" title="variable">y</span></a> <a class="idref" href="OperationProperties.html#SubstFvarProps.z"><span class="id" title="variable">z</span></a>) (<span class="id" title="method">substi</span> <a class="idref" href="OperationProperties.html#SubstFvarProps.x"><span class="id" title="variable">x</span></a> <a class="idref" href="OperationProperties.html#SubstFvarProps.y"><span class="id" title="variable">y</span></a> <a class="idref" href="OperationProperties.html#SubstFvarProps.t"><span class="id" title="variable">t</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span> <span class="id" title="keyword">using</span>. <span class="id" title="var">routine</span>. <span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a name="SubstFvarProps.subst_open_comm"><span class="id" title="variable">subst_open_comm</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="method">substi</span> <a class="idref" href="OperationProperties.html#SubstFvarProps.x"><span class="id" title="variable">x</span></a> <a class="idref" href="OperationProperties.html#SubstFvarProps.y"><span class="id" title="variable">y</span></a> (<span class="id" title="abbreviation">open</span> <a class="idref" href="OperationProperties.html#SubstFvarProps.z"><span class="id" title="variable">z</span></a> <a class="idref" href="OperationProperties.html#SubstFvarProps.t"><span class="id" title="variable">t</span></a>) <span class="id" title="notation">=</span> <span class="id" title="abbreviation">open</span> (<a class="idref" href="OperationProperties.html#subst_fvar"><span class="id" title="definition">subst_fvar</span></a> <a class="idref" href="OperationProperties.html#SubstFvarProps.x"><span class="id" title="variable">x</span></a> <a class="idref" href="OperationProperties.html#SubstFvarProps.y"><span class="id" title="variable">y</span></a> <a class="idref" href="OperationProperties.html#SubstFvarProps.z"><span class="id" title="variable">z</span></a>) (<span class="id" title="method">substi</span> <a class="idref" href="OperationProperties.html#SubstFvarProps.x"><span class="id" title="variable">x</span></a> <a class="idref" href="OperationProperties.html#SubstFvarProps.y"><span class="id" title="variable">y</span></a> <a class="idref" href="OperationProperties.html#SubstFvarProps.t"><span class="id" title="variable">t</span></a>).<br/>
+
+<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="open_substi_rewrite2"><span class="id" title="lemma">open_substi_rewrite2</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="OperationProperties.html#SubstFvarProps.z"><span class="id" title="variable">z</span></a> <span class="id" title="notation">`</span><span class="id" title="notation">notin</span><span class="id" title="notation">`</span> <span class="id" title="abbreviation">singleton</span> <a class="idref" href="OperationProperties.html#SubstFvarProps.x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">`</span><span class="id" title="notation">union</span><span class="id" title="notation">`</span> <span class="id" title="abbreviation">singleton</span> <a class="idref" href="OperationProperties.html#SubstFvarProps.y"><span class="id" title="variable">y</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="abbreviation">open</span> <a class="idref" href="OperationProperties.html#SubstFvarProps.z"><span class="id" title="variable">z</span></a> (<span class="id" title="method">substi</span> <a class="idref" href="OperationProperties.html#SubstFvarProps.x"><span class="id" title="variable">x</span></a> <a class="idref" href="OperationProperties.html#SubstFvarProps.y"><span class="id" title="variable">y</span></a> <a class="idref" href="OperationProperties.html#SubstFvarProps.t"><span class="id" title="variable">t</span></a>) <span class="id" title="notation">=</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="method">substi</span> <a class="idref" href="OperationProperties.html#SubstFvarProps.x"><span class="id" title="variable">x</span></a> <a class="idref" href="OperationProperties.html#SubstFvarProps.y"><span class="id" title="variable">y</span></a> (<span class="id" title="abbreviation">open</span> <a class="idref" href="OperationProperties.html#SubstFvarProps.z"><span class="id" title="variable">z</span></a> <a class="idref" href="OperationProperties.html#SubstFvarProps.t"><span class="id" title="variable">t</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">rewrite</span> <a class="idref" href="OperationProperties.html#open_substi_rewrite"><span class="id" title="lemma">open_substi_rewrite</span></a> <span class="id" title="tactic">by</span> <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <a class="idref" href="OperationProperties.html#SubstFvarProps.subst_open_comm"><span class="id" title="variable">subst_open_comm</span></a>. <span class="id" title="tactic">trivial</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="OperationProperties.html#SubstFvarProps"><span class="id" title="section">SubstFvarProps</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">open_substi_transform</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &vdash; <span class="id" title="keyword">context</span>[?<span class="id" title="var">f</span> ?<span class="id" title="var">v</span> (<span class="id" title="method">substi</span> ?<span class="id" title="var">x</span> ?<span class="id" title="var">y</span> ?<span class="id" title="var">t</span>)] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="var">f</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="keyword">context</span>[<span class="id" title="abbreviation">open</span>] =&gt; <span class="id" title="tactic">idtac</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="var">v</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="keyword">context</span>[<a class="idref" href="OperationProperties.html#subst_fvar"><span class="id" title="definition">subst_fvar</span></a>] =&gt; <span class="id" title="tactic">fail</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">_</span> =&gt; <span class="id" title="tactic">idtac</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">replace</span> (<span class="id" title="var">f</span> <span class="id" title="var">v</span> (<span class="id" title="method">substi</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">t</span>)) <span class="id" title="keyword">with</span> (<span class="id" title="method">substi</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> (<span class="id" title="abbreviation">open</span> <span class="id" title="var">v</span> <span class="id" title="var">t</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> (<span class="id" title="tactic">rewrite</span> <a class="idref" href="OperationProperties.html#open_substi_rewrite"><span class="id" title="lemma">open_substi_rewrite</span></a>; <span class="id" title="tactic">auto</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="FvOpen"><span class="id" title="section">FvOpen</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Notation</span> <a name="fv_open"><span class="id" title="abbreviation">fv_open</span></a> <span class="id" title="var">T</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">forall</span> (<span class="id" title="var">v</span> : <span class="id" title="var">T</span>) <span class="id" title="var">x</span> <span class="id" title="var">n</span>, <span class="id" title="method">fv</span> (<span class="id" title="method">open_rec</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a> <a class="idref" href="OperationProperties.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="OperationProperties.html#v"><span class="id" title="variable">v</span></a>) <span class="id" title="notation">&subseteq;</span> <span class="id" title="abbreviation">singleton</span> <a class="idref" href="OperationProperties.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">\</span><span class="id" title="notation">u</span> <span class="id" title="method">fv</span> <a class="idref" href="OperationProperties.html#v"><span class="id" title="variable">v</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="fv_open_avar"><span class="id" title="lemma">fv_open_avar</span></a> : <a class="idref" href="OperationProperties.html#fv_open"><span class="id" title="abbreviation">fv_open</span></a> <a class="idref" href="Definitions.html#avar"><span class="id" title="inductive">avar</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <a class="idref" href="Definitions.html#avar"><span class="id" title="inductive">avar</span></a>; <span class="id" title="tactic">intros</span>; <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="var">progressive_destructions</span>; <span class="id" title="tactic">set</span> <span class="id" title="tactic">solve</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">set</span> <span class="id" title="tactic">solve</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">fv_open_avar</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local Ltac</span> <span class="id" title="var">union_pf</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="lemma">AtomSetProperties.union_subset_3</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">etransitivity</span>; <span class="id" title="tactic">try</span> <span class="id" title="var">eassumption</span>; <span class="id" title="tactic">set</span> <span class="id" title="tactic">solve</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local Ltac</span> <span class="id" title="var">fold_cls</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">fold_open_rec</span>; <span class="id" title="var">fold_fv</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="fv_open_typ"><span class="id" title="lemma">fv_open_typ</span></a> : <a class="idref" href="OperationProperties.html#fv_open"><span class="id" title="abbreviation">fv_open</span></a> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>; <span class="id" title="tactic">intros</span>; <span class="id" title="tactic">simpl</span>; <span class="id" title="tactic">set</span> <span class="id" title="tactic">solve</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="var">fold_cls</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">specialize</span> (<span class="id" title="var">IHtyp1</span> <span class="id" title="var">x</span> <span class="id" title="var">n</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">specialize</span> (<span class="id" title="var">IHtyp2</span> <span class="id" title="var">x</span> <span class="id" title="var">n</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">union_pf</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="var">fold_cls</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">specialize</span> (<span class="id" title="var">IHtyp1</span> <span class="id" title="var">x</span> <span class="id" title="var">n</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">specialize</span> (<span class="id" title="var">IHtyp2</span> <span class="id" title="var">x</span> (<span class="id" title="constructor">S</span> <span class="id" title="var">n</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">union_pf</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="OperationProperties.html#FvOpen"><span class="id" title="section">FvOpen</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="FvClose"><span class="id" title="section">FvClose</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Notation</span> <a name="fv_close_self"><span class="id" title="abbreviation">fv_close_self</span></a> <span class="id" title="var">T</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">forall</span> (<span class="id" title="var">v</span> : <span class="id" title="var">T</span>) <span class="id" title="var">x</span> <span class="id" title="var">n</span>, <a class="idref" href="OperationProperties.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">`</span><span class="id" title="notation">notin</span><span class="id" title="notation">`</span> <span class="id" title="method">fv</span> (<span class="id" title="method">close_rec</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a> <a class="idref" href="OperationProperties.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="OperationProperties.html#v"><span class="id" title="variable">v</span></a>)).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="fv_close_self_avar"><span class="id" title="lemma">fv_close_self_avar</span></a> : <a class="idref" href="OperationProperties.html#fv_close_self"><span class="id" title="abbreviation">fv_close_self</span></a> <a class="idref" href="Definitions.html#avar"><span class="id" title="inductive">avar</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>. <span class="id" title="tactic">intros</span>. <span class="id" title="tactic">destruct</span> <span class="id" title="var">v</span>; <span class="id" title="var">routine</span>. <span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">AtomSetProperties.not_in_union</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="fv_close_self_typ"><span class="id" title="lemma">fv_close_self_typ</span></a> : <a class="idref" href="OperationProperties.html#fv_close_self"><span class="id" title="abbreviation">fv_close_self</span></a> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>; <span class="id" title="tactic">intros</span>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="OperationProperties.html#fv_close_self_avar"><span class="id" title="lemma">fv_close_self_avar</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Ltac</span> <span class="id" title="var">pf_union</span> := <span class="id" title="tactic">apply</span> <span class="id" title="lemma">AtomSetProperties.not_in_union</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Notation</span> <a name="fv_close"><span class="id" title="abbreviation">fv_close</span></a> <span class="id" title="var">T</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">forall</span> (<span class="id" title="var">v</span> : <span class="id" title="var">T</span>) <span class="id" title="var">x</span> <span class="id" title="var">n</span>, <span class="id" title="method">fv</span> (<span class="id" title="method">close_rec</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a> <a class="idref" href="OperationProperties.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="OperationProperties.html#v"><span class="id" title="variable">v</span></a>) <span class="id" title="notation">&subseteq;</span> <span class="id" title="method">fv</span> <a class="idref" href="OperationProperties.html#v"><span class="id" title="variable">v</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="fv_close_avar"><span class="id" title="lemma">fv_close_avar</span></a> : <a class="idref" href="OperationProperties.html#fv_close"><span class="id" title="abbreviation">fv_close</span></a> <a class="idref" href="Definitions.html#avar"><span class="id" title="inductive">avar</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">destruct</span> <span class="id" title="var">v</span>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">destruct_eq</span>; <span class="id" title="tactic">set</span> <span class="id" title="tactic">solve</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Ltac</span> <span class="id" title="var">pf_union</span> ::= <span class="id" title="tactic">apply</span> <span class="id" title="lemma">AtomSetProperties.union_subset_3</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="fv_close_typ"><span class="id" title="lemma">fv_close_typ</span></a> : <a class="idref" href="OperationProperties.html#fv_close"><span class="id" title="abbreviation">fv_close</span></a> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>; <span class="id" title="tactic">intros</span>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <a class="idref" href="OperationProperties.html#fv_close_avar"><span class="id" title="lemma">fv_close_avar</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">specialize</span> (<span class="id" title="var">IHtyp1</span> <span class="id" title="var">x</span> <span class="id" title="var">n</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">specialize</span> (<span class="id" title="var">IHtyp2</span> <span class="id" title="var">x</span> <span class="id" title="var">n</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">pf_union</span>; <span class="id" title="tactic">set</span> <span class="id" title="tactic">solve</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">specialize</span> (<span class="id" title="var">IHtyp1</span> <span class="id" title="var">x</span> <span class="id" title="var">n</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">specialize</span> (<span class="id" title="var">IHtyp2</span> <span class="id" title="var">x</span> (<span class="id" title="constructor">S</span> <span class="id" title="var">n</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">pf_union</span>; <span class="id" title="tactic">set</span> <span class="id" title="tactic">solve</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Notation</span> <a name="fv_add_close"><span class="id" title="abbreviation">fv_add_close</span></a> <span class="id" title="var">T</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">forall</span> (<span class="id" title="var">v</span> : <span class="id" title="var">T</span>) <span class="id" title="var">x</span> (<span class="id" title="var">G</span> : <a class="idref" href="Definitions.html#env"><span class="id" title="abbreviation">env</span></a>) <span class="id" title="var">n</span>, <span class="id" title="method">fv</span> <a class="idref" href="OperationProperties.html#v"><span class="id" title="variable">v</span></a> <span class="id" title="notation">&subseteq;</span> <span class="id" title="abbreviation">add</span> <a class="idref" href="OperationProperties.html#x"><span class="id" title="variable">x</span></a> (<span class="id" title="definition">dom</span> <a class="idref" href="OperationProperties.html#G"><span class="id" title="variable">G</span></a>) <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="method">fv</span> (<span class="id" title="method">close_rec</span> <a class="idref" href="OperationProperties.html#n"><span class="id" title="variable">n</span></a> <a class="idref" href="OperationProperties.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="OperationProperties.html#v"><span class="id" title="variable">v</span></a>) <span class="id" title="notation">&subseteq;</span> <span class="id" title="definition">dom</span> <a class="idref" href="OperationProperties.html#G"><span class="id" title="variable">G</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="fv_add_close_avar"><span class="id" title="lemma">fv_add_close_avar</span></a> : <a class="idref" href="OperationProperties.html#fv_add_close"><span class="id" title="abbreviation">fv_add_close</span></a> <a class="idref" href="Definitions.html#avar"><span class="id" title="inductive">avar</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">destruct</span> <span class="id" title="var">v</span>; <span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">set</span> <span class="id" title="tactic">solve</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="var">destruct_eq</span>. <span class="id" title="tactic">set</span> <span class="id" title="tactic">solve</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">AtomSetProperties.add_union_singleton</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="axiom">AtomSetImpl.union_1</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">x</span> := <span class="id" title="var">a</span>) <span class="id" title="tactic">in</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <span class="id" title="axiom">AtomSetImpl.singleton_1</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">congruence</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="var">autounfold</span>. <span class="id" title="tactic">simpl</span>. <span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="axiom">AtomSetImpl.singleton_1</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H0</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">subst</span>. <span class="id" title="tactic">trivial</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <span class="id" title="axiom">AtomSetImpl.singleton_2</span>. <span class="id" title="tactic">trivial</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="fv_add_close_typ"><span class="id" title="lemma">fv_add_close_typ</span></a> : <a class="idref" href="OperationProperties.html#fv_add_close"><span class="id" title="abbreviation">fv_add_close</span></a> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>; <span class="id" title="tactic">intros</span>; <span class="id" title="tactic">set</span> <span class="id" title="tactic">solve</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <a class="idref" href="OperationProperties.html#fv_add_close_avar"><span class="id" title="lemma">fv_add_close_avar</span></a>. <span class="id" title="tactic">trivial</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">pf_union</span>; [<span class="id" title="tactic">apply</span> <span class="id" title="var">IHtyp1</span> | <span class="id" title="tactic">apply</span> <span class="id" title="var">IHtyp2</span>];<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">set</span> <span class="id" title="tactic">solve</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> *.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">pf_union</span>; [<span class="id" title="tactic">apply</span> <span class="id" title="var">IHtyp1</span> | <span class="id" title="tactic">apply</span> <span class="id" title="var">IHtyp2</span>];<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">set</span> <span class="id" title="tactic">solve</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="OperationProperties.html#FvClose"><span class="id" title="section">FvClose</span></a>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

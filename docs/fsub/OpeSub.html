@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="assets/resources/coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="assets/resources/coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="assets/resources/config.js"></script>
+<script type="text/javascript" src="assets/resources/coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../index.html"> Home </a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">OpeSub</h1>
+
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Set Implicit Arguments</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="Definitions.html#"><span class="id" title="library">Definitions</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="OperationProperties.html#"><span class="id" title="library">OperationProperties</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="StructuralProperties.html#"><span class="id" title="library">StructuralProperties</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab7"></a><h1 class="section">OPE<sub>&lt;:</sub></h1>
+
+
+<div class="paragraph"> </div>
+
+    This file defines the order-preserving sub-environment, or OPE<sub>&lt;:</sub>
+ and examines its properties. This file is very similar to the one in
+ D<sub>&lt;:</sub> and thus will not be discussed further.
+  
+</div>
+<div class="code">
+<span class="id" title="keyword">Reserved Notation</span> &quot;G1 ⊆&lt;⦂ G2" (<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 90).<br/>
+<span class="id" title="keyword">Inductive</span> <a name="ope_sub"><span class="id" title="inductive">ope_sub</span></a> : <a class="idref" href="Definitions.html#env"><span class="id" title="abbreviation">env</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="Definitions.html#env"><span class="id" title="abbreviation">env</span></a> <span class="id" title="notation">-&gt;</span> <span class="id" title="keyword">Prop</span> :=<br/>
+|  <a name="os_nil"><span class="id" title="constructor">os_nil</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="constructor">nil</span> <a class="idref" href="OpeSub.html#83c495a4feb2dc763da8868626992b14"><span class="id" title="notation">&subseteq;<sub>&lt;:</sub></span></a> <span class="id" title="constructor">nil</span><br/>
+| <a name="os_drop"><span class="id" title="constructor">os_drop</span></a> : <span class="id" title="keyword">forall</span> (<span class="id" title="var">G1</span> <span class="id" title="var">G2</span> : <a class="idref" href="Definitions.html#env"><span class="id" title="abbreviation">env</span></a>) (<span class="id" title="var">x</span> : <span class="id" title="abbreviation">atom</span>) (<span class="id" title="var">T</span> : <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="OpeSub.html#G2"><span class="id" title="variable">G2</span></a> <a class="idref" href="OpeSub.html#83c495a4feb2dc763da8868626992b14"><span class="id" title="notation">&subseteq;<sub>&lt;:</sub></span></a> <a class="idref" href="OpeSub.html#G1"><span class="id" title="variable">G1</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">(</span><a class="idref" href="OpeSub.html#x"><span class="id" title="variable">x</span></a><span class="id" title="notation">,</span> <a class="idref" href="OpeSub.html#T"><span class="id" title="variable">T</span></a><span class="id" title="notation">)</span> <span class="id" title="notation">::</span> <a class="idref" href="OpeSub.html#G2"><span class="id" title="variable">G2</span></a> <a class="idref" href="OpeSub.html#83c495a4feb2dc763da8868626992b14"><span class="id" title="notation">&subseteq;<sub>&lt;:</sub></span></a> <a class="idref" href="OpeSub.html#G1"><span class="id" title="variable">G1</span></a><br/>
+| <a name="os_keep"><span class="id" title="constructor">os_keep</span></a> : <span class="id" title="keyword">forall</span> (<span class="id" title="var">G1</span> <span class="id" title="var">G2</span> : <a class="idref" href="Definitions.html#env"><span class="id" title="abbreviation">env</span></a>) (<span class="id" title="var">x</span> : <span class="id" title="abbreviation">atom</span>) (<span class="id" title="var">T1</span> <span class="id" title="var">T2</span> : <a class="idref" href="Definitions.html#typ"><span class="id" title="inductive">typ</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="OpeSub.html#G2"><span class="id" title="variable">G2</span></a> <a class="idref" href="OpeSub.html#83c495a4feb2dc763da8868626992b14"><span class="id" title="notation">&subseteq;<sub>&lt;:</sub></span></a> <a class="idref" href="OpeSub.html#G1"><span class="id" title="variable">G1</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="OpeSub.html#G2"><span class="id" title="variable">G2</span></a> <a class="idref" href="Definitions.html#240c88fd3125b1e8e1d423a827d1aea7"><span class="id" title="notation">⊢</span></a><a class="idref" href="Definitions.html#240c88fd3125b1e8e1d423a827d1aea7"><span class="id" title="notation">F</span></a> <a class="idref" href="OpeSub.html#T1"><span class="id" title="variable">T1</span></a> <a class="idref" href="Definitions.html#240c88fd3125b1e8e1d423a827d1aea7"><span class="id" title="notation"><:</span></a> <a class="idref" href="OpeSub.html#T2"><span class="id" title="variable">T2</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">(</span><a class="idref" href="OpeSub.html#x"><span class="id" title="variable">x</span></a><span class="id" title="notation">,</span> <a class="idref" href="OpeSub.html#T1"><span class="id" title="variable">T1</span></a><span class="id" title="notation">)</span> <span class="id" title="notation">::</span> <a class="idref" href="OpeSub.html#G2"><span class="id" title="variable">G2</span></a> <a class="idref" href="OpeSub.html#83c495a4feb2dc763da8868626992b14"><span class="id" title="notation">&subseteq;<sub>&lt;:</sub></span></a> <span class="id" title="notation">(</span><a class="idref" href="OpeSub.html#x"><span class="id" title="variable">x</span></a><span class="id" title="notation">,</span> <a class="idref" href="OpeSub.html#T2"><span class="id" title="variable">T2</span></a><span class="id" title="notation">)</span> <span class="id" title="notation">::</span> <a class="idref" href="OpeSub.html#G1"><span class="id" title="variable">G1</span></a><br/>
+<span class="id" title="keyword">where</span> <a name="83c495a4feb2dc763da8868626992b14"><span class="id" title="notation">&quot;</span></a>G1 ⊆&lt;⦂ G2" := (<a class="idref" href="OpeSub.html#ope_sub"><span class="id" title="inductive">ope_sub</span></a> <span class="id" title="var">G2</span> <span class="id" title="var">G1</span>).<br/>
+<span class="id" title="keyword">Local Hint Constructors</span> <a class="idref" href="OpeSub.html#ope_sub"><span class="id" title="inductive">ope_sub</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="OpeProperties"><span class="id" title="section">OpeProperties</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="ope_sub_length"><span class="id" title="lemma">ope_sub_length</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">G1</span> <span class="id" title="var">G2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="OpeSub.html#G2"><span class="id" title="variable">G2</span></a> <a class="idref" href="OpeSub.html#83c495a4feb2dc763da8868626992b14"><span class="id" title="notation">&subseteq;<sub>&lt;:</sub></span></a> <a class="idref" href="OpeSub.html#G1"><span class="id" title="variable">G1</span></a> <span class="id" title="notation">-&gt;</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="definition">length</span> <a class="idref" href="OpeSub.html#G1"><span class="id" title="variable">G1</span></a> <span class="id" title="notation">&lt;=</span> <span class="id" title="definition">length</span> <a class="idref" href="OpeSub.html#G2"><span class="id" title="variable">G2</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <a class="idref" href="OpeSub.html#ope_sub"><span class="id" title="inductive">ope_sub</span></a>; <span class="id" title="var">routine</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">weaken_subty</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="ope_narrow_var"><span class="id" title="lemma">ope_narrow_var</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">forall</span> <span class="id" title="var">G</span> <span class="id" title="var">G'</span> <span class="id" title="var">x</span> <span class="id" title="var">T</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="OpeSub.html#G'"><span class="id" title="variable">G'</span></a> <a class="idref" href="OpeSub.html#83c495a4feb2dc763da8868626992b14"><span class="id" title="notation">&subseteq;<sub>&lt;:</sub></span></a> <a class="idref" href="OpeSub.html#G"><span class="id" title="variable">G</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="definition">binds</span> <a class="idref" href="OpeSub.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="OpeSub.html#T"><span class="id" title="variable">T</span></a> <a class="idref" href="OpeSub.html#G"><span class="id" title="variable">G</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">exists</span> <span class="id" title="var">T'</span><span class="id" title="notation">,</span> <span class="id" title="definition">binds</span> <a class="idref" href="OpeSub.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="OpeSub.html#T'"><span class="id" title="variable">T'</span></a> <a class="idref" href="OpeSub.html#G'"><span class="id" title="variable">G'</span></a> <span class="id" title="notation">/\</span> <span class="id" title="notation">(</span><a class="idref" href="OpeSub.html#G'"><span class="id" title="variable">G'</span></a> <a class="idref" href="Definitions.html#240c88fd3125b1e8e1d423a827d1aea7"><span class="id" title="notation">⊢</span></a><a class="idref" href="Definitions.html#240c88fd3125b1e8e1d423a827d1aea7"><span class="id" title="notation">F</span></a> <a class="idref" href="OpeSub.html#T'"><span class="id" title="variable">T'</span></a> <a class="idref" href="Definitions.html#240c88fd3125b1e8e1d423a827d1aea7"><span class="id" title="notation"><:</span></a> <a class="idref" href="OpeSub.html#T"><span class="id" title="variable">T</span></a><span class="id" title="notation">)</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <a class="idref" href="OpeSub.html#ope_sub"><span class="id" title="inductive">ope_sub</span></a>; <span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="var">routine</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <span class="id" title="var">IHope_sub</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">tidy_up</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eexists</span>; <span class="id" title="tactic">split</span>; <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">simpl_env</span>; <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="var">tidy_up</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">eexists</span>; <span class="id" title="tactic">split</span>; <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">simpl_env</span>; <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <span class="id" title="var">IHope_sub</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H0</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">tidy_up</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eexists</span>; <span class="id" title="tactic">split</span>; <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">simpl_env</span>; <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">subty_refl</span> <span class="id" title="var">subty_trans</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="ope_narrow_subty"><span class="id" title="lemma">ope_narrow_subty</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">G</span> <span class="id" title="var">T</span> <span class="id" title="var">U</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="OpeSub.html#G"><span class="id" title="variable">G</span></a> <a class="idref" href="Definitions.html#240c88fd3125b1e8e1d423a827d1aea7"><span class="id" title="notation">⊢</span></a><a class="idref" href="Definitions.html#240c88fd3125b1e8e1d423a827d1aea7"><span class="id" title="notation">F</span></a> <a class="idref" href="OpeSub.html#T"><span class="id" title="variable">T</span></a> <a class="idref" href="Definitions.html#240c88fd3125b1e8e1d423a827d1aea7"><span class="id" title="notation"><:</span></a> <a class="idref" href="OpeSub.html#U"><span class="id" title="variable">U</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">forall</span> <span class="id" title="var">G'</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="OpeSub.html#G'"><span class="id" title="variable">G'</span></a> <a class="idref" href="OpeSub.html#83c495a4feb2dc763da8868626992b14"><span class="id" title="notation">&subseteq;<sub>&lt;:</sub></span></a> <a class="idref" href="OpeSub.html#G"><span class="id" title="variable">G</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="OpeSub.html#G'"><span class="id" title="variable">G'</span></a> <a class="idref" href="Definitions.html#240c88fd3125b1e8e1d423a827d1aea7"><span class="id" title="notation">⊢</span></a><a class="idref" href="Definitions.html#240c88fd3125b1e8e1d423a827d1aea7"><span class="id" title="notation">F</span></a> <a class="idref" href="OpeSub.html#T"><span class="id" title="variable">T</span></a> <a class="idref" href="Definitions.html#240c88fd3125b1e8e1d423a827d1aea7"><span class="id" title="notation"><:</span></a> <a class="idref" href="OpeSub.html#U"><span class="id" title="variable">U</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <a class="idref" href="Definitions.html#subty"><span class="id" title="inductive">subty</span></a>; <span class="id" title="tactic">intros</span>; <span class="id" title="tactic">eauto</span> 4.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">eapply</span> <a class="idref" href="OpeSub.html#ope_narrow_var"><span class="id" title="lemma">ope_narrow_var</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span>; <span class="id" title="var">eroutine</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">eapply</span> <a class="idref" href="Definitions.html#st_all"><span class="id" title="constructor">st_all</span></a>. <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">cofinite</span>. <span class="id" title="var">eroutine</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">ope_narrow_subty</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="ope_sub_trans"><span class="id" title="lemma">ope_sub_trans</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">G1</span> <span class="id" title="var">G2</span> <span class="id" title="var">G3</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="OpeSub.html#G2"><span class="id" title="variable">G2</span></a> <a class="idref" href="OpeSub.html#83c495a4feb2dc763da8868626992b14"><span class="id" title="notation">&subseteq;<sub>&lt;:</sub></span></a> <a class="idref" href="OpeSub.html#G1"><span class="id" title="variable">G1</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="OpeSub.html#G3"><span class="id" title="variable">G3</span></a> <a class="idref" href="OpeSub.html#83c495a4feb2dc763da8868626992b14"><span class="id" title="notation">&subseteq;<sub>&lt;:</sub></span></a> <a class="idref" href="OpeSub.html#G2"><span class="id" title="variable">G2</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="OpeSub.html#G3"><span class="id" title="variable">G3</span></a> <a class="idref" href="OpeSub.html#83c495a4feb2dc763da8868626992b14"><span class="id" title="notation">&subseteq;<sub>&lt;:</sub></span></a> <a class="idref" href="OpeSub.html#G1"><span class="id" title="variable">G1</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="var">gen</span> <span class="id" title="var">G1</span>. <span class="id" title="tactic">induction</span> <span class="id" title="var">H0</span>; <span class="id" title="tactic">intros</span>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">invert</span> <span class="id" title="var">H1</span>; <span class="id" title="tactic">subst</span>; <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="ope_sub_refl"><span class="id" title="lemma">ope_sub_refl</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">G</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="OpeSub.html#G"><span class="id" title="variable">G</span></a> <a class="idref" href="OpeSub.html#83c495a4feb2dc763da8868626992b14"><span class="id" title="notation">&subseteq;<sub>&lt;:</sub></span></a> <a class="idref" href="OpeSub.html#G"><span class="id" title="variable">G</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>. <span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <a class="idref" href="Definitions.html#env"><span class="id" title="abbreviation">env</span></a>; <span class="id" title="var">routine</span>. <span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="ope_sub_nil"><span class="id" title="lemma">ope_sub_nil</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">G</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="OpeSub.html#G"><span class="id" title="variable">G</span></a> <a class="idref" href="OpeSub.html#83c495a4feb2dc763da8868626992b14"><span class="id" title="notation">&subseteq;<sub>&lt;:</sub></span></a> <span class="id" title="constructor">nil</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>. <span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <a class="idref" href="Definitions.html#env"><span class="id" title="abbreviation">env</span></a>; <span class="id" title="var">routine</span>. <span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="ope_sub_app"><span class="id" title="lemma">ope_sub_app</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">G</span> <span class="id" title="var">G1</span> <span class="id" title="var">G2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="OpeSub.html#G2"><span class="id" title="variable">G2</span></a> <a class="idref" href="OpeSub.html#83c495a4feb2dc763da8868626992b14"><span class="id" title="notation">&subseteq;<sub>&lt;:</sub></span></a> <a class="idref" href="OpeSub.html#G"><span class="id" title="variable">G</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="OpeSub.html#G1"><span class="id" title="variable">G1</span></a> <span class="id" title="notation">++</span> <a class="idref" href="OpeSub.html#G2"><span class="id" title="variable">G2</span></a> <a class="idref" href="OpeSub.html#83c495a4feb2dc763da8868626992b14"><span class="id" title="notation">&subseteq;<sub>&lt;:</sub></span></a> <a class="idref" href="OpeSub.html#G"><span class="id" title="variable">G</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>. <span class="id" title="tactic">induction</span> <span class="id" title="var">G1</span>; <span class="id" title="var">routine</span>. <span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="OpeSub.html#OpeProperties"><span class="id" title="section">OpeProperties</span></a>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

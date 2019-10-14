@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="assets/resources/coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="assets/resources/coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="assets/resources/config.js"></script>
+<script type="text/javascript" src="assets/resources/coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../index.html"> Home </a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">VarDef</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">StdSetup</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab1"></a><h1 class="section">Definition of Variables</h1>
+
+<div class="paragraph"> </div>
+
+ Variables are represented locally namelessly with cofinite quantification.  That
+    is, local names are represented by de Bruijn indices, while names in the contexts
+    are represented by free names. 
+ 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <a name="avar"><span class="id" title="inductive">avar</span></a> : <span class="id" title="keyword">Set</span> :=<br/>
+| <a name="avar_b"><span class="id" title="constructor">avar_b</span></a> : <span class="id" title="inductive">nat</span> <span class="id" title="notation">-&gt;</span> <a class="idref" href="VarDef.html#avar"><span class="id" title="inductive">avar</span></a><br/>
+| <a name="avar_f"><span class="id" title="constructor">avar_f</span></a> : <span class="id" title="abbreviation">var</span> <span class="id" title="notation">-&gt;</span> <a class="idref" href="VarDef.html#avar"><span class="id" title="inductive">avar</span></a>.<br/>
+<span class="id" title="keyword">Hint Constructors</span> <a class="idref" href="VarDef.html#avar"><span class="id" title="inductive">avar</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="EqAvar"><span class="id" title="instance">EqAvar</span></a> : <span class="id" title="class">EqDec_eq</span> <a class="idref" href="VarDef.html#avar"><span class="id" title="inductive">avar</span></a> := { }.<br/>
+<span class="id" title="keyword">Proof</span>. <span class="id" title="var">decide</span> <span class="id" title="var">equality</span>. <span class="id" title="tactic">apply</span> <span class="id" title="lemma">Nat.eq_dec</span>. <span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="fv_values"><span class="id" title="definition">fv_values</span></a> {<span class="id" title="var">T</span> : <span class="id" title="keyword">Type</span>} (<span class="id" title="var">f</span> : <a class="idref" href="VarDef.html#T"><span class="id" title="variable">T</span></a> <span class="id" title="notation">-&gt;</span> <span class="id" title="abbreviation">atoms</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">l</span> : <span class="id" title="inductive">list</span> (<span class="id" title="abbreviation">atom</span> <span class="id" title="notation">*</span> <a class="idref" href="VarDef.html#T"><span class="id" title="variable">T</span></a>)) : <span class="id" title="abbreviation">atoms</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="definition">fold_right</span> (<span class="id" title="keyword">fun</span> (<span class="id" title="var">b</span> : (<span class="id" title="abbreviation">atom</span> <span class="id" title="notation">*</span> <a class="idref" href="VarDef.html#T"><span class="id" title="variable">T</span></a>)) <span class="id" title="var">a</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="VarDef.html#a"><span class="id" title="variable">a</span></a> <span class="id" title="notation">\</span><span class="id" title="notation">u</span> <span class="id" title="keyword">let</span> (<span class="id" title="var">_</span>, <span class="id" title="var">t</span>) := <a class="idref" href="VarDef.html#b"><span class="id" title="variable">b</span></a> <span class="id" title="tactic">in</span> <a class="idref" href="VarDef.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="VarDef.html#t"><span class="id" title="variable">t</span></a>) <span class="id" title="notation">{}</span> <a class="idref" href="VarDef.html#l"><span class="id" title="variable">l</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="fv_unpack"><span class="id" title="lemma">fv_unpack</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">T</span> (<span class="id" title="var">f</span> : <a class="idref" href="VarDef.html#T"><span class="id" title="variable">T</span></a> <span class="id" title="notation">-&gt;</span> <span class="id" title="var">_</span>) <span class="id" title="var">e1</span> <span class="id" title="var">e2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="VarDef.html#fv_values"><span class="id" title="definition">fv_values</span></a> <a class="idref" href="VarDef.html#f"><span class="id" title="variable">f</span></a> (<a class="idref" href="VarDef.html#e1"><span class="id" title="variable">e1</span></a> <span class="id" title="notation">++</span> <a class="idref" href="VarDef.html#e2"><span class="id" title="variable">e2</span></a>) <span class="id" title="notation">[=]</span> <a class="idref" href="VarDef.html#fv_values"><span class="id" title="definition">fv_values</span></a> <a class="idref" href="VarDef.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="VarDef.html#e1"><span class="id" title="variable">e1</span></a> <span class="id" title="notation">`</span><span class="id" title="notation">union</span><span class="id" title="notation">`</span> <a class="idref" href="VarDef.html#fv_values"><span class="id" title="definition">fv_values</span></a> <a class="idref" href="VarDef.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="VarDef.html#e2"><span class="id" title="variable">e2</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <span class="id" title="inductive">list</span>; <span class="id" title="tactic">intros</span>. <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">set</span> <span class="id" title="tactic">solve</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="var">routine</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">rewrite</span> <span class="id" title="var">IHlist</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H2</span>. <span class="id" title="var">fsetdec</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">rewrite</span> <span class="id" title="var">IHlist</span>. <span class="id" title="var">fsetdec</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Rewrite</span> -&gt; <span class="id" title="lemma">dom_app</span> <a class="idref" href="VarDef.html#fv_unpack"><span class="id" title="lemma">fv_unpack</span></a> : <span class="id" title="var">meta_ext</span>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+
+<html><head><meta charset="utf-8"/><title>Agda.Primitive</title><link href="Agda.css" rel="stylesheet"/></head><body><div class="navbar"><a class="active" href="Everything.html">Everything</a><a href="../index.html" style="float:right">Home</a></div><div class="main"><pre><a class="Comment" id="1">-- The Agda primitives (preloaded).</a>
+
+<a class="Symbol" id="38">{-#</a> <a class="Keyword" id="42">OPTIONS</a> <a class="Option" id="50">--without-K</a> <a class="Symbol" id="62">#-}</a>
+
+<a class="Keyword" id="67">module</a> <a class="Module" href="Agda.Primitive.html" id="74">Agda.Primitive</a> <a class="Keyword" id="89">where</a>
+
+<a class="Comment" id="96">------------------------------------------------------------------------</a>
+<a class="Comment" id="169">-- Universe levels</a>
+<a class="Comment" id="188">------------------------------------------------------------------------</a>
+
+<a class="Keyword" id="262">infixl</a> <a class="Number" id="269">6</a> <a class="Primitive Operator" href="Agda.Primitive.html#657" id="271">_⊔_</a>
+
+<a class="Comment" id="276">-- Level is the first thing we need to define.</a>
+<a class="Comment" id="323">-- The other postulates can only be checked if built-in Level is known.</a>
+
+<a class="Keyword" id="396">postulate</a>
+  <a id="Level"></a><a class="Postulate" href="Agda.Primitive.html#408" id="408">Level</a> <a class="Symbol" id="414">:</a> <a class="PrimitiveType" id="416">Set</a>
+
+<a class="Comment" id="421">-- MAlonzo compiles Level to (). This should be safe, because it is</a>
+<a class="Comment" id="489">-- not possible to pattern match on levels.</a>
+
+<a class="Symbol" id="534">{-#</a> <a class="Keyword" id="538">COMPILE</a> GHC <a class="Postulate" href="Agda.Primitive.html#408" id="550">Level</a> = type () <a class="Symbol" id="566">#-}</a>
+<a class="Symbol" id="570">{-#</a> <a class="Keyword" id="574">BUILTIN</a> LEVEL <a class="Postulate" href="Agda.Primitive.html#408" id="588">Level</a> <a class="Symbol" id="594">#-}</a>
+
+<a class="Keyword" id="599">postulate</a>
+  <a id="lzero"></a><a class="Postulate" href="Agda.Primitive.html#611" id="611">lzero</a> <a class="Symbol" id="617">:</a> <a class="Postulate" href="Agda.Primitive.html#408" id="619">Level</a>
+  <a id="lsuc"></a><a class="Postulate" href="Agda.Primitive.html#627" id="627">lsuc</a>  <a class="Symbol" id="633">:</a> <a class="Symbol" id="635">(</a><a class="Bound" href="Agda.Primitive.html#636" id="636">ℓ</a> <a class="Symbol" id="638">:</a> <a class="Postulate" href="Agda.Primitive.html#408" id="640">Level</a><a class="Symbol" id="645">)</a> <a class="Symbol" id="647">→</a> <a class="Postulate" href="Agda.Primitive.html#408" id="649">Level</a>
+  <a id="_⊔_"></a><a class="Postulate Operator" href="Agda.Primitive.html#657" id="657">_⊔_</a>   <a class="Symbol" id="663">:</a> <a class="Symbol" id="665">(</a><a class="Bound" href="Agda.Primitive.html#666" id="666">ℓ₁</a> <a class="Bound" href="Agda.Primitive.html#669" id="669">ℓ₂</a> <a class="Symbol" id="672">:</a> <a class="Postulate" href="Agda.Primitive.html#408" id="674">Level</a><a class="Symbol" id="679">)</a> <a class="Symbol" id="681">→</a> <a class="Postulate" href="Agda.Primitive.html#408" id="683">Level</a>
+
+<a class="Symbol" id="690">{-#</a> <a class="Keyword" id="694">BUILTIN</a> LEVELZERO <a class="Primitive" href="Agda.Primitive.html#611" id="712">lzero</a> <a class="Symbol" id="718">#-}</a>
+<a class="Symbol" id="722">{-#</a> <a class="Keyword" id="726">BUILTIN</a> LEVELSUC  <a class="Primitive" href="Agda.Primitive.html#627" id="744">lsuc</a>  <a class="Symbol" id="750">#-}</a>
+<a class="Symbol" id="754">{-#</a> <a class="Keyword" id="758">BUILTIN</a> LEVELMAX  <a class="Primitive Operator" href="Agda.Primitive.html#657" id="776">_⊔_</a>   <a class="Symbol" id="782">#-}</a>
+</pre></div></body></html>

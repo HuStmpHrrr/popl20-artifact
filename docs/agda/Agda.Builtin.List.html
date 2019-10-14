@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+
+<html><head><meta charset="utf-8"/><title>Agda.Builtin.List</title><link href="Agda.css" rel="stylesheet"/></head><body><div class="navbar"><a class="active" href="Everything.html">Everything</a><a href="../index.html" style="float:right">Home</a></div><div class="main"><pre><a class="Symbol" id="1">{-#</a> <a class="Keyword" id="5">OPTIONS</a> <a class="Option" id="13">--without-K</a> <a class="Symbol" id="25">#-}</a>
+
+<a class="Keyword" id="30">module</a> <a class="Module" href="Agda.Builtin.List.html" id="37">Agda.Builtin.List</a> <a class="Keyword" id="55">where</a>
+
+<a class="Keyword" id="62">infixr</a> <a class="Number" id="69">5</a> <a class="InductiveConstructor Operator" href="Agda.Builtin.List.html#132" id="71">_∷_</a>
+<a class="Keyword" id="75">data</a> <a id="List"></a><a class="Datatype" href="Agda.Builtin.List.html#80" id="80">List</a> <a class="Symbol" id="85">{</a><a class="Bound" href="Agda.Builtin.List.html#86" id="86">a</a><a class="Symbol" id="87">}</a> <a class="Symbol" id="89">(</a><a class="Bound" href="Agda.Builtin.List.html#90" id="90">A</a> <a class="Symbol" id="92">:</a> <a class="PrimitiveType" id="94">Set</a> <a class="Bound" href="Agda.Builtin.List.html#86" id="98">a</a><a class="Symbol" id="99">)</a> <a class="Symbol" id="101">:</a> <a class="PrimitiveType" id="103">Set</a> <a class="Bound" href="Agda.Builtin.List.html#86" id="107">a</a> <a class="Keyword" id="109">where</a>
+  <a id="List.[]"></a><a class="InductiveConstructor" href="Agda.Builtin.List.html#117" id="117">[]</a>  <a class="Symbol" id="121">:</a> <a class="Datatype" href="Agda.Builtin.List.html#80" id="123">List</a> <a class="Bound" href="Agda.Builtin.List.html#90" id="128">A</a>
+  <a id="List._∷_"></a><a class="InductiveConstructor Operator" href="Agda.Builtin.List.html#132" id="132">_∷_</a> <a class="Symbol" id="136">:</a> <a class="Symbol" id="138">(</a><a class="Bound" href="Agda.Builtin.List.html#139" id="139">x</a> <a class="Symbol" id="141">:</a> <a class="Bound" href="Agda.Builtin.List.html#90" id="143">A</a><a class="Symbol" id="144">)</a> <a class="Symbol" id="146">(</a><a class="Bound" href="Agda.Builtin.List.html#147" id="147">xs</a> <a class="Symbol" id="150">:</a> <a class="Datatype" href="Agda.Builtin.List.html#80" id="152">List</a> <a class="Bound" href="Agda.Builtin.List.html#90" id="157">A</a><a class="Symbol" id="158">)</a> <a class="Symbol" id="160">→</a> <a class="Datatype" href="Agda.Builtin.List.html#80" id="162">List</a> <a class="Bound" href="Agda.Builtin.List.html#90" id="167">A</a>
+
+<a class="Symbol" id="170">{-#</a> <a class="Keyword" id="174">BUILTIN</a> LIST <a class="Datatype" href="Agda.Builtin.List.html#80" id="187">List</a> <a class="Symbol" id="192">#-}</a>
+
+<a class="Symbol" id="197">{-#</a> <a class="Keyword" id="201">COMPILE</a> UHC <a class="Datatype" href="Agda.Builtin.List.html#80" id="213">List</a> = data __LIST__ (__NIL__ | __CONS__) <a class="Symbol" id="255">#-}</a>
+<a class="Symbol" id="259">{-#</a> <a class="Keyword" id="263">COMPILE</a> JS  <a class="Datatype" href="Agda.Builtin.List.html#80" id="275">List</a> = function(x,v) {
+  if (x.length &lt; 1) { return v["[]"](); } else { return v["_∷_"](x[0], x.slice(1)); }
+} <a class="Symbol" id="386">#-}</a>
+<a class="Symbol" id="390">{-#</a> <a class="Keyword" id="394">COMPILE</a> JS <a class="InductiveConstructor" href="Agda.Builtin.List.html#117" id="405">[]</a> = Array() <a class="Symbol" id="418">#-}</a>
+<a class="Symbol" id="422">{-#</a> <a class="Keyword" id="426">COMPILE</a> JS <a class="InductiveConstructor Operator" href="Agda.Builtin.List.html#132" id="437">_∷_</a> = function (x) { return function(y) { return Array(x).concat(y); }; } <a class="Symbol" id="511">#-}</a>
+</pre></div></body></html>

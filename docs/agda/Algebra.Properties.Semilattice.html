@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+
+<html><head><meta charset="utf-8"/><title>Algebra.Properties.Semilattice</title><link href="Agda.css" rel="stylesheet"/></head><body><div class="navbar"><a class="active" href="Everything.html">Everything</a><a href="../index.html" style="float:right">Home</a></div><div class="main"><pre><a class="Comment" id="1">------------------------------------------------------------------------</a>
+<a class="Comment" id="74">-- The Agda standard library</a>
+<a class="Comment" id="103">--</a>
+<a class="Comment" id="106">-- Some derivable properties</a>
+<a class="Comment" id="135">------------------------------------------------------------------------</a>
+
+<a class="Symbol" id="209">{-#</a> <a class="Keyword" id="213">OPTIONS</a> <a class="Option" id="221">--without-K</a> <a class="Option" id="233">--safe</a> <a class="Symbol" id="240">#-}</a>
+
+<a class="Keyword" id="245">open</a> <a class="Keyword" id="250">import</a> <a class="Module" href="Algebra.html" id="257">Algebra</a>
+
+<a class="Keyword" id="266">module</a> <a class="Module" href="Algebra.Properties.Semilattice.html" id="273">Algebra.Properties.Semilattice</a> <a class="Symbol" id="304">{</a><a class="Bound" href="Algebra.Properties.Semilattice.html#305" id="305">l₁</a> <a class="Bound" href="Algebra.Properties.Semilattice.html#308" id="308">l₂</a><a class="Symbol" id="310">}</a> <a class="Symbol" id="312">(</a><a class="Bound" href="Algebra.Properties.Semilattice.html#313" id="313">L</a> <a class="Symbol" id="315">:</a> <a class="Record" href="Algebra.html#1830" id="317">Semilattice</a> <a class="Bound" href="Algebra.Properties.Semilattice.html#305" id="329">l₁</a> <a class="Bound" href="Algebra.Properties.Semilattice.html#308" id="332">l₂</a><a class="Symbol" id="334">)</a> <a class="Keyword" id="336">where</a>
+
+<a class="Keyword" id="343">open</a> <a class="Module" href="Algebra.html#1830" id="348">Semilattice</a> <a class="Bound" href="Algebra.Properties.Semilattice.html#313" id="360">L</a>
+<a class="Keyword" id="362">open</a> <a class="Keyword" id="367">import</a> <a class="Module" href="Algebra.Structures.html" id="374">Algebra.Structures</a>
+<a class="Keyword" id="393">open</a> <a class="Keyword" id="398">import</a> <a class="Module" href="Relation.Binary.html" id="405">Relation.Binary</a>
+<a class="Keyword" id="421">import</a> <a class="Module" href="Relation.Binary.Construct.NaturalOrder.Left.html" id="428">Relation.Binary.Construct.NaturalOrder.Left</a> <a class="Symbol" id="472">as</a> <a class="Module" id="475">LeftNaturalOrder</a>
+<a class="Keyword" id="492">import</a> <a class="Module" href="Relation.Binary.Lattice.html" id="499">Relation.Binary.Lattice</a> <a class="Symbol" id="523">as</a> <a class="Module" id="526">R</a>
+<a class="Keyword" id="528">import</a> <a class="Module" href="Relation.Binary.Properties.Poset.html" id="535">Relation.Binary.Properties.Poset</a> <a class="Symbol" id="568">as</a> <a class="Module" id="571">R</a>
+<a class="Keyword" id="573">open</a> <a class="Keyword" id="578">import</a> <a class="Module" href="Relation.Binary.EqReasoning.html" id="585">Relation.Binary.EqReasoning</a> <a class="Function" href="Algebra.Structures.html#935" id="613">setoid</a>
+<a class="Keyword" id="620">open</a> <a class="Keyword" id="625">import</a> <a class="Module" href="Function.html" id="632">Function</a>
+<a class="Keyword" id="641">open</a> <a class="Keyword" id="646">import</a> <a class="Module" href="Data.Product.html" id="653">Data.Product</a>
+
+<a class="Comment" id="667">------------------------------------------------------------------------</a>
+<a class="Comment" id="740">-- Every semilattice can be turned into a poset via the left natural</a>
+<a class="Comment" id="809">-- order.</a>
+
+<a id="poset"></a><a class="Function" href="Algebra.Properties.Semilattice.html#820" id="820">poset</a> <a class="Symbol" id="826">:</a> <a class="Record" href="Relation.Binary.html#3546" id="828">Poset</a> <a class="Symbol" id="834">_</a> <a class="Symbol" id="836">_</a> <a class="Symbol" id="838">_</a>
+<a class="Function" href="Algebra.Properties.Semilattice.html#820" id="840">poset</a> <a class="Symbol" id="846">=</a> <a class="Function" href="Relation.Binary.Construct.NaturalOrder.Left.html#4925" id="848">LeftNaturalOrder.poset</a> <a class="Field Operator" href="Algebra.html#1940" id="871">_≈_</a> <a class="Field Operator" href="Algebra.html#1974" id="875">_∧_</a> <a class="Field" href="Algebra.html#2006" id="879">isSemilattice</a>
+
+<a class="Keyword" id="894">open</a> <a class="Module" href="Relation.Binary.html#3546" id="899">Poset</a> <a class="Function" href="Algebra.Properties.Semilattice.html#820" id="905">poset</a> <a class="Keyword" id="911">using</a> <a class="Symbol" id="917">(</a>_≤_<a class="Symbol" id="921">;</a> isPartialOrder<a class="Symbol" id="937">)</a>
+
+<a class="Comment" id="940">------------------------------------------------------------------------</a>
+<a class="Comment" id="1013">-- Every algebraic semilattice can be turned into an order-theoretic one.</a>
+
+<a id="isOrderTheoreticMeetSemilattice"></a><a class="Function" href="Algebra.Properties.Semilattice.html#1088" id="1088">isOrderTheoreticMeetSemilattice</a> <a class="Symbol" id="1120">:</a> <a class="Record" href="Relation.Binary.Lattice.html#3980" id="1122">R.IsMeetSemilattice</a> <a class="Field Operator" href="Algebra.html#1940" id="1142">_≈_</a> <a class="Function Operator" href="Relation.Binary.html#3685" id="1146">_≤_</a> <a class="Field Operator" href="Algebra.html#1974" id="1150">_∧_</a>
+<a class="Function" href="Algebra.Properties.Semilattice.html#1088" id="1154">isOrderTheoreticMeetSemilattice</a> <a class="Symbol" id="1186">=</a> <a class="Keyword" id="1188">record</a>
+  <a class="Symbol" id="1197">{</a> <a class="Field" id="1199">isPartialOrder</a> <a class="Symbol" id="1214">=</a> <a class="Function" href="Relation.Binary.html#3721" id="1216">isPartialOrder</a>
+  <a class="Symbol" id="1233">;</a> <a class="Field" id="1235">infimum</a>        <a class="Symbol" id="1250">=</a> <a class="Function" href="Relation.Binary.Construct.NaturalOrder.Left.html#3375" id="1252">LeftNaturalOrder.infimum</a> <a class="Field Operator" href="Algebra.html#1940" id="1277">_≈_</a> <a class="Field Operator" href="Algebra.html#1974" id="1281">_∧_</a> <a class="Field" href="Algebra.html#2006" id="1285">isSemilattice</a>
+  <a class="Symbol" id="1301">}</a>
+
+<a id="orderTheoreticMeetSemilattice"></a><a class="Function" href="Algebra.Properties.Semilattice.html#1304" id="1304">orderTheoreticMeetSemilattice</a> <a class="Symbol" id="1334">:</a> <a class="Record" href="Relation.Binary.Lattice.html#4692" id="1336">R.MeetSemilattice</a> <a class="Symbol" id="1354">_</a> <a class="Symbol" id="1356">_</a> <a class="Symbol" id="1358">_</a>
+<a class="Function" href="Algebra.Properties.Semilattice.html#1304" id="1360">orderTheoreticMeetSemilattice</a> <a class="Symbol" id="1390">=</a> <a class="Keyword" id="1392">record</a>
+  <a class="Symbol" id="1401">{</a> <a class="Field" id="1403">isMeetSemilattice</a> <a class="Symbol" id="1421">=</a> <a class="Function" href="Algebra.Properties.Semilattice.html#1088" id="1423">isOrderTheoreticMeetSemilattice</a> <a class="Symbol" id="1455">}</a>
+
+<a id="isOrderTheoreticJoinSemilattice"></a><a class="Function" href="Algebra.Properties.Semilattice.html#1458" id="1458">isOrderTheoreticJoinSemilattice</a> <a class="Symbol" id="1490">:</a> <a class="Record" href="Relation.Binary.Lattice.html#1149" id="1492">R.IsJoinSemilattice</a> <a class="Field Operator" href="Algebra.html#1940" id="1512">_≈_</a> <a class="Symbol" id="1516">(</a><a class="Function" href="Function.html#1572" id="1517">flip</a> <a class="Function Operator" href="Relation.Binary.html#3685" id="1522">_≤_</a><a class="Symbol" id="1525">)</a> <a class="Field Operator" href="Algebra.html#1974" id="1527">_∧_</a>
+<a class="Function" href="Algebra.Properties.Semilattice.html#1458" id="1531">isOrderTheoreticJoinSemilattice</a> <a class="Symbol" id="1563">=</a> <a class="Keyword" id="1565">record</a>
+  <a class="Symbol" id="1574">{</a> <a class="Field" id="1576">isPartialOrder</a> <a class="Symbol" id="1591">=</a> <a class="Function" href="Relation.Binary.Properties.Poset.html#609" id="1593">R.invIsPartialOrder</a> <a class="Function" href="Algebra.Properties.Semilattice.html#820" id="1613">poset</a>
+  <a class="Symbol" id="1621">;</a> <a class="Field" id="1623">supremum</a>       <a class="Symbol" id="1638">=</a> <a class="Field" href="Relation.Binary.Lattice.html#4326" id="1640">R.IsMeetSemilattice.infimum</a>
+                       <a class="Function" href="Algebra.Properties.Semilattice.html#1088" id="1691">isOrderTheoreticMeetSemilattice</a>
+  <a class="Symbol" id="1725">}</a>
+
+<a id="orderTheoreticJoinSemilattice"></a><a class="Function" href="Algebra.Properties.Semilattice.html#1728" id="1728">orderTheoreticJoinSemilattice</a> <a class="Symbol" id="1758">:</a> <a class="Record" href="Relation.Binary.Lattice.html#1859" id="1760">R.JoinSemilattice</a> <a class="Symbol" id="1778">_</a> <a class="Symbol" id="1780">_</a> <a class="Symbol" id="1782">_</a>
+<a class="Function" href="Algebra.Properties.Semilattice.html#1728" id="1784">orderTheoreticJoinSemilattice</a> <a class="Symbol" id="1814">=</a> <a class="Keyword" id="1816">record</a>
+  <a class="Symbol" id="1825">{</a> <a class="Field" id="1827">isJoinSemilattice</a> <a class="Symbol" id="1845">=</a> <a class="Function" href="Algebra.Properties.Semilattice.html#1458" id="1847">isOrderTheoreticJoinSemilattice</a> <a class="Symbol" id="1879">}</a>
+</pre></div></body></html>

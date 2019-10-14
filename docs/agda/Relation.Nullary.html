@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+
+<html><head><meta charset="utf-8"/><title>Relation.Nullary</title><link href="Agda.css" rel="stylesheet"/></head><body><div class="navbar"><a class="active" href="Everything.html">Everything</a><a href="../index.html" style="float:right">Home</a></div><div class="main"><pre><a class="Comment" id="1">------------------------------------------------------------------------</a>
+<a class="Comment" id="74">-- The Agda standard library</a>
+<a class="Comment" id="103">--</a>
+<a class="Comment" id="106">-- Operations on nullary relations (like negation and decidability)</a>
+<a class="Comment" id="174">------------------------------------------------------------------------</a>
+
+<a class="Comment" id="248">-- Some operations on/properties of nullary relations, i.e. sets.</a>
+
+<a class="Symbol" id="315">{-#</a> <a class="Keyword" id="319">OPTIONS</a> <a class="Option" id="327">--without-K</a> <a class="Option" id="339">--safe</a> <a class="Symbol" id="346">#-}</a>
+
+<a class="Keyword" id="351">module</a> <a class="Module" href="Relation.Nullary.html" id="358">Relation.Nullary</a> <a class="Keyword" id="375">where</a>
+
+<a class="Keyword" id="382">open</a> <a class="Keyword" id="387">import</a> <a class="Module" href="Data.Empty.html" id="394">Data.Empty</a> <a class="Keyword" id="405">hiding</a> <a class="Symbol" id="412">(</a><a class="Function" href="Data.Empty.html#396" id="413">⊥-elim</a><a class="Symbol" id="419">)</a>
+<a class="Keyword" id="421">open</a> <a class="Keyword" id="426">import</a> <a class="Module" href="Data.Empty.Irrelevant.html" id="433">Data.Empty.Irrelevant</a>
+<a class="Keyword" id="455">open</a> <a class="Keyword" id="460">import</a> <a class="Module" href="Level.html" id="467">Level</a>
+
+<a class="Comment" id="474">-- Negation.</a>
+
+<a class="Keyword" id="488">infix</a> <a class="Number" id="494">3</a> <a class="Function Operator" href="Relation.Nullary.html#500" id="496">¬_</a>
+
+<a id="¬_"></a><a class="Function Operator" href="Relation.Nullary.html#500" id="500">¬_</a> <a class="Symbol" id="503">:</a> <a class="Symbol" id="505">∀</a> <a class="Symbol" id="507">{</a><a class="Bound" href="Relation.Nullary.html#508" id="508">ℓ</a><a class="Symbol" id="509">}</a> <a class="Symbol" id="511">→</a> <a class="PrimitiveType" id="513">Set</a> <a class="Bound" href="Relation.Nullary.html#508" id="517">ℓ</a> <a class="Symbol" id="519">→</a> <a class="PrimitiveType" id="521">Set</a> <a class="Bound" href="Relation.Nullary.html#508" id="525">ℓ</a>
+<a class="Function Operator" href="Relation.Nullary.html#500" id="527">¬</a> <a class="Bound" href="Relation.Nullary.html#529" id="529">P</a> <a class="Symbol" id="531">=</a> <a class="Bound" href="Relation.Nullary.html#529" id="533">P</a> <a class="Symbol" id="535">→</a> <a class="Datatype" href="Data.Empty.html#279" id="537">⊥</a>
+
+<a class="Comment" id="540">-- Decidable relations.</a>
+
+<a class="Keyword" id="565">data</a> <a id="Dec"></a><a class="Datatype" href="Relation.Nullary.html#570" id="570">Dec</a> <a class="Symbol" id="574">{</a><a class="Bound" href="Relation.Nullary.html#575" id="575">p</a><a class="Symbol" id="576">}</a> <a class="Symbol" id="578">(</a><a class="Bound" href="Relation.Nullary.html#579" id="579">P</a> <a class="Symbol" id="581">:</a> <a class="PrimitiveType" id="583">Set</a> <a class="Bound" href="Relation.Nullary.html#575" id="587">p</a><a class="Symbol" id="588">)</a> <a class="Symbol" id="590">:</a> <a class="PrimitiveType" id="592">Set</a> <a class="Bound" href="Relation.Nullary.html#575" id="596">p</a> <a class="Keyword" id="598">where</a>
+  <a id="Dec.yes"></a><a class="InductiveConstructor" href="Relation.Nullary.html#606" id="606">yes</a> <a class="Symbol" id="610">:</a> <a class="Symbol" id="612">(</a> <a class="Bound" href="Relation.Nullary.html#614" id="614">p</a> <a class="Symbol" id="616">:</a>   <a class="Bound" href="Relation.Nullary.html#579" id="620">P</a><a class="Symbol" id="621">)</a> <a class="Symbol" id="623">→</a> <a class="Datatype" href="Relation.Nullary.html#570" id="625">Dec</a> <a class="Bound" href="Relation.Nullary.html#579" id="629">P</a>
+  <a id="Dec.no"></a><a class="InductiveConstructor" href="Relation.Nullary.html#633" id="633">no</a>  <a class="Symbol" id="637">:</a> <a class="Symbol" id="639">(</a><a class="Bound" href="Relation.Nullary.html#640" id="640">¬p</a> <a class="Symbol" id="643">:</a> <a class="Function Operator" href="Relation.Nullary.html#500" id="645">¬</a> <a class="Bound" href="Relation.Nullary.html#579" id="647">P</a><a class="Symbol" id="648">)</a> <a class="Symbol" id="650">→</a> <a class="Datatype" href="Relation.Nullary.html#570" id="652">Dec</a> <a class="Bound" href="Relation.Nullary.html#579" id="656">P</a>
+
+<a class="Comment" id="659">-- Given an irrelevant proof of a decidable type, a proof can</a>
+<a class="Comment" id="721">-- be recomputed and subsequently used in relevant contexts.</a>
+<a id="recompute"></a><a class="Function" href="Relation.Nullary.html#782" id="782">recompute</a> <a class="Symbol" id="792">:</a> <a class="Symbol" id="794">∀</a> <a class="Symbol" id="796">{</a><a class="Bound" href="Relation.Nullary.html#797" id="797">a</a><a class="Symbol" id="798">}</a> <a class="Symbol" id="800">{</a><a class="Bound" href="Relation.Nullary.html#801" id="801">A</a> <a class="Symbol" id="803">:</a> <a class="PrimitiveType" id="805">Set</a> <a class="Bound" href="Relation.Nullary.html#797" id="809">a</a><a class="Symbol" id="810">}</a> <a class="Symbol" id="812">→</a> <a class="Datatype" href="Relation.Nullary.html#570" id="814">Dec</a> <a class="Bound" href="Relation.Nullary.html#801" id="818">A</a> <a class="Symbol" id="820">→</a> <a class="Symbol" id="822">.</a><a class="Bound" href="Relation.Nullary.html#801" id="823">A</a> <a class="Symbol" id="825">→</a> <a class="Bound" href="Relation.Nullary.html#801" id="827">A</a>
+<a class="Function" href="Relation.Nullary.html#782" id="829">recompute</a> <a class="Symbol" id="839">(</a><a class="InductiveConstructor" href="Relation.Nullary.html#606" id="840">yes</a> <a class="Bound" href="Relation.Nullary.html#844" id="844">x</a><a class="Symbol" id="845">)</a> <a class="Symbol" id="847">_</a> <a class="Symbol" id="849">=</a> <a class="Bound" href="Relation.Nullary.html#844" id="851">x</a>
+<a class="Function" href="Relation.Nullary.html#782" id="853">recompute</a> <a class="Symbol" id="863">(</a><a class="InductiveConstructor" href="Relation.Nullary.html#633" id="864">no</a> <a class="Bound" href="Relation.Nullary.html#867" id="867">¬p</a><a class="Symbol" id="869">)</a> <a class="Bound" href="Relation.Nullary.html#871" id="871">x</a> <a class="Symbol" id="873">=</a> <a class="Function" href="Data.Empty.Irrelevant.html#327" id="875">⊥-elim</a> <a class="Symbol" id="882">(</a><a class="Bound" href="Relation.Nullary.html#867" id="883">¬p</a> <a class="Bound" href="Relation.Nullary.html#871" id="886">x</a><a class="Symbol" id="887">)</a>
+</pre></div></body></html>

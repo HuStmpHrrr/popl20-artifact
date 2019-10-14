@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+
+<html><head><meta charset="utf-8"/><title>Category.Applicative</title><link href="Agda.css" rel="stylesheet"/></head><body><div class="navbar"><a class="active" href="Everything.html">Everything</a><a href="../index.html" style="float:right">Home</a></div><div class="main"><pre><a class="Comment" id="1">------------------------------------------------------------------------</a>
+<a class="Comment" id="74">-- The Agda standard library</a>
+<a class="Comment" id="103">--</a>
+<a class="Comment" id="106">-- Applicative functors</a>
+<a class="Comment" id="130">------------------------------------------------------------------------</a>
+
+<a class="Comment" id="204">-- Note that currently the applicative functor laws are not included</a>
+<a class="Comment" id="273">-- here.</a>
+
+<a class="Symbol" id="283">{-#</a> <a class="Keyword" id="287">OPTIONS</a> <a class="Option" id="295">--without-K</a> <a class="Option" id="307">--safe</a> <a class="Symbol" id="314">#-}</a>
+
+<a class="Keyword" id="319">module</a> <a class="Module" href="Category.Applicative.html" id="326">Category.Applicative</a> <a class="Keyword" id="347">where</a>
+
+<a class="Keyword" id="354">open</a> <a class="Keyword" id="359">import</a> <a class="Module" href="Data.Unit.html" id="366">Data.Unit</a>
+<a class="Keyword" id="376">open</a> <a class="Keyword" id="381">import</a> <a class="Module" href="Category.Applicative.Indexed.html" id="388">Category.Applicative.Indexed</a>
+
+<a id="RawApplicative"></a><a class="Function" href="Category.Applicative.html#418" id="418">RawApplicative</a> <a class="Symbol" id="433">:</a> <a class="Symbol" id="435">∀</a> <a class="Symbol" id="437">{</a><a class="Bound" href="Category.Applicative.html#438" id="438">f</a><a class="Symbol" id="439">}</a> <a class="Symbol" id="441">→</a> <a class="Symbol" id="443">(</a><a class="PrimitiveType" id="444">Set</a> <a class="Bound" href="Category.Applicative.html#438" id="448">f</a> <a class="Symbol" id="450">→</a> <a class="PrimitiveType" id="452">Set</a> <a class="Bound" href="Category.Applicative.html#438" id="456">f</a><a class="Symbol" id="457">)</a> <a class="Symbol" id="459">→</a> <a class="PrimitiveType" id="461">Set</a> <a class="Symbol" id="465">_</a>
+<a class="Function" href="Category.Applicative.html#418" id="467">RawApplicative</a> <a class="Bound" href="Category.Applicative.html#482" id="482">F</a> <a class="Symbol" id="484">=</a> <a class="Record" href="Category.Applicative.Indexed.html#634" id="486">RawIApplicative</a> <a class="Symbol" id="502">{</a><a class="Argument" id="503">I</a> <a class="Symbol" id="505">=</a> <a class="Record" href="Agda.Builtin.Unit.html#69" id="507">⊤</a><a class="Symbol" id="508">}</a> <a class="Symbol" id="510">(λ</a> <a class="Bound" href="Category.Applicative.html#513" id="513">_</a> <a class="Bound" href="Category.Applicative.html#515" id="515">_</a> <a class="Symbol" id="517">→</a> <a class="Bound" href="Category.Applicative.html#482" id="519">F</a><a class="Symbol" id="520">)</a>
+
+<a class="Keyword" id="523">module</a> <a id="RawApplicative"></a><a class="Module" href="Category.Applicative.html#530" id="530">RawApplicative</a> <a class="Symbol" id="545">{</a><a class="Bound" href="Category.Applicative.html#546" id="546">f</a><a class="Symbol" id="547">}</a> <a class="Symbol" id="549">{</a><a class="Bound" href="Category.Applicative.html#550" id="550">F</a> <a class="Symbol" id="552">:</a> <a class="PrimitiveType" id="554">Set</a> <a class="Bound" href="Category.Applicative.html#546" id="558">f</a> <a class="Symbol" id="560">→</a> <a class="PrimitiveType" id="562">Set</a> <a class="Bound" href="Category.Applicative.html#546" id="566">f</a><a class="Symbol" id="567">}</a>
+                      <a class="Symbol" id="591">(</a><a class="Bound" href="Category.Applicative.html#592" id="592">app</a> <a class="Symbol" id="596">:</a> <a class="Function" href="Category.Applicative.html#418" id="598">RawApplicative</a> <a class="Bound" href="Category.Applicative.html#550" id="613">F</a><a class="Symbol" id="614">)</a> <a class="Keyword" id="616">where</a>
+  <a class="Keyword" id="624">open</a> <a class="Module" href="Category.Applicative.Indexed.html#634" id="629">RawIApplicative</a> <a class="Bound" href="Category.Applicative.html#592" id="645">app</a> <a class="Keyword" id="649">public</a>
+</pre></div></body></html>

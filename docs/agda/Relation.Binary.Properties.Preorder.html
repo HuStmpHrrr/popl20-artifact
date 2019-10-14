@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+
+<html><head><meta charset="utf-8"/><title>Relation.Binary.Properties.Preorder</title><link href="Agda.css" rel="stylesheet"/></head><body><div class="navbar"><a class="active" href="Everything.html">Everything</a><a href="../index.html" style="float:right">Home</a></div><div class="main"><pre><a class="Comment" id="1">------------------------------------------------------------------------</a>
+<a class="Comment" id="74">-- The Agda standard library</a>
+<a class="Comment" id="103">--</a>
+<a class="Comment" id="106">-- Properties satisfied by preorders</a>
+<a class="Comment" id="143">------------------------------------------------------------------------</a>
+
+<a class="Symbol" id="217">{-#</a> <a class="Keyword" id="221">OPTIONS</a> <a class="Option" id="229">--without-K</a> <a class="Option" id="241">--safe</a> <a class="Symbol" id="248">#-}</a>
+
+<a class="Keyword" id="253">open</a> <a class="Keyword" id="258">import</a> <a class="Module" href="Relation.Binary.html" id="265">Relation.Binary</a>
+
+<a class="Keyword" id="282">module</a> <a class="Module" href="Relation.Binary.Properties.Preorder.html" id="289">Relation.Binary.Properties.Preorder</a>
+         <a class="Symbol" id="334">{</a><a class="Bound" href="Relation.Binary.Properties.Preorder.html#335" id="335">p₁</a> <a class="Bound" href="Relation.Binary.Properties.Preorder.html#338" id="338">p₂</a> <a class="Bound" href="Relation.Binary.Properties.Preorder.html#341" id="341">p₃</a><a class="Symbol" id="343">}</a> <a class="Symbol" id="345">(</a><a class="Bound" href="Relation.Binary.Properties.Preorder.html#346" id="346">P</a> <a class="Symbol" id="348">:</a> <a class="Record" href="Relation.Binary.html#1492" id="350">Preorder</a> <a class="Bound" href="Relation.Binary.Properties.Preorder.html#335" id="359">p₁</a> <a class="Bound" href="Relation.Binary.Properties.Preorder.html#338" id="362">p₂</a> <a class="Bound" href="Relation.Binary.Properties.Preorder.html#341" id="365">p₃</a><a class="Symbol" id="367">)</a> <a class="Keyword" id="369">where</a>
+
+<a class="Keyword" id="376">open</a> <a class="Keyword" id="381">import</a> <a class="Module" href="Function.html" id="388">Function</a>
+<a class="Keyword" id="397">open</a> <a class="Keyword" id="402">import</a> <a class="Module" href="Data.Product.html" id="409">Data.Product</a> <a class="Symbol" id="422">as</a> <a class="Module" id="425">Prod</a>
+
+<a class="Keyword" id="431">open</a> <a class="Module" href="Relation.Binary.html#1492" id="436">Relation.Binary.Preorder</a> <a class="Bound" href="Relation.Binary.Properties.Preorder.html#346" id="461">P</a>
+
+<a class="Comment" id="464">-- The inverse relation is also a preorder.</a>
+
+<a id="invIsPreorder"></a><a class="Function" href="Relation.Binary.Properties.Preorder.html#509" id="509">invIsPreorder</a> <a class="Symbol" id="523">:</a> <a class="Record" href="Relation.Binary.html#781" id="525">IsPreorder</a> <a class="Field Operator" href="Relation.Binary.html#1594" id="536">_≈_</a> <a class="Symbol" id="540">(</a><a class="Function" href="Function.html#1572" id="541">flip</a> <a class="Field Operator" href="Relation.Binary.html#1655" id="546">_∼_</a><a class="Symbol" id="549">)</a>
+<a class="Function" href="Relation.Binary.Properties.Preorder.html#509" id="551">invIsPreorder</a> <a class="Symbol" id="565">=</a> <a class="Keyword" id="567">record</a>
+  <a class="Symbol" id="576">{</a> <a class="Field" id="578">isEquivalence</a> <a class="Symbol" id="592">=</a> <a class="Function" href="Relation.Binary.html#985" id="594">isEquivalence</a>
+  <a class="Symbol" id="610">;</a> <a class="Field" id="612">reflexive</a>     <a class="Symbol" id="626">=</a> <a class="Function" href="Relation.Binary.html#1091" id="628">reflexive</a> <a class="Function Operator" href="Function.html#805" id="638">∘</a> <a class="Function" href="Relation.Binary.Core.html#5824" id="640">Eq.sym</a>
+  <a class="Symbol" id="649">;</a> <a class="Field" id="651">trans</a>         <a class="Symbol" id="665">=</a> <a class="Function" href="Function.html#1572" id="667">flip</a> <a class="Function" href="Relation.Binary.html#1121" id="672">trans</a>
+  <a class="Symbol" id="680">}</a>
+
+<a id="invPreorder"></a><a class="Function" href="Relation.Binary.Properties.Preorder.html#683" id="683">invPreorder</a> <a class="Symbol" id="695">:</a> <a class="Record" href="Relation.Binary.html#1492" id="697">Preorder</a> <a class="Bound" href="Relation.Binary.Properties.Preorder.html#335" id="706">p₁</a> <a class="Bound" href="Relation.Binary.Properties.Preorder.html#338" id="709">p₂</a> <a class="Bound" href="Relation.Binary.Properties.Preorder.html#341" id="712">p₃</a>
+<a class="Function" href="Relation.Binary.Properties.Preorder.html#683" id="715">invPreorder</a> <a class="Symbol" id="727">=</a> <a class="Keyword" id="729">record</a> <a class="Symbol" id="736">{</a> <a class="Field" id="738">isPreorder</a> <a class="Symbol" id="749">=</a> <a class="Function" href="Relation.Binary.Properties.Preorder.html#509" id="751">invIsPreorder</a> <a class="Symbol" id="765">}</a>
+
+<a class="Comment" id="768">------------------------------------------------------------------------</a>
+<a class="Comment" id="841">-- For every preorder there is an induced equivalence</a>
+
+<a id="InducedEquivalence"></a><a class="Function" href="Relation.Binary.Properties.Preorder.html#896" id="896">InducedEquivalence</a> <a class="Symbol" id="915">:</a> <a class="Record" href="Relation.Binary.html#1930" id="917">Setoid</a> <a class="Symbol" id="924">_</a> <a class="Symbol" id="926">_</a>
+<a class="Function" href="Relation.Binary.Properties.Preorder.html#896" id="928">InducedEquivalence</a> <a class="Symbol" id="947">=</a> <a class="Keyword" id="949">record</a>
+  <a class="Symbol" id="958">{</a> <a class="Field Operator" id="960">_≈_</a>           <a class="Symbol" id="974">=</a> <a class="Symbol" id="976">λ</a> <a class="Bound" href="Relation.Binary.Properties.Preorder.html#978" id="978">x</a> <a class="Bound" href="Relation.Binary.Properties.Preorder.html#980" id="980">y</a> <a class="Symbol" id="982">→</a> <a class="Bound" href="Relation.Binary.Properties.Preorder.html#978" id="984">x</a> <a class="Field Operator" href="Relation.Binary.html#1655" id="986">∼</a> <a class="Bound" href="Relation.Binary.Properties.Preorder.html#980" id="988">y</a> <a class="Function Operator" href="Data.Product.html#1389" id="990">×</a> <a class="Bound" href="Relation.Binary.Properties.Preorder.html#980" id="992">y</a> <a class="Field Operator" href="Relation.Binary.html#1655" id="994">∼</a> <a class="Bound" href="Relation.Binary.Properties.Preorder.html#978" id="996">x</a>
+  <a class="Symbol" id="1000">;</a> <a class="Field" id="1002">isEquivalence</a> <a class="Symbol" id="1016">=</a> <a class="Keyword" id="1018">record</a>
+    <a class="Symbol" id="1029">{</a> <a class="Field" id="1031">refl</a>  <a class="Symbol" id="1037">=</a> <a class="Symbol" id="1039">(</a><a class="Function" href="Relation.Binary.html#1198" id="1040">refl</a> <a class="InductiveConstructor Operator" href="Agda.Builtin.Sigma.html#139" id="1045">,</a> <a class="Function" href="Relation.Binary.html#1198" id="1047">refl</a><a class="Symbol" id="1051">)</a>
+    <a class="Symbol" id="1057">;</a> <a class="Field" id="1059">sym</a>   <a class="Symbol" id="1065">=</a> <a class="Function" href="Data.Product.html#2870" id="1067">swap</a>
+    <a class="Symbol" id="1076">;</a> <a class="Field" id="1078">trans</a> <a class="Symbol" id="1084">=</a> <a class="Function" href="Data.Product.html#2599" id="1086">Prod.zip</a> <a class="Function" href="Relation.Binary.html#1121" id="1095">trans</a> <a class="Symbol" id="1101">(</a><a class="Function" href="Function.html#1572" id="1102">flip</a> <a class="Function" href="Relation.Binary.html#1121" id="1107">trans</a><a class="Symbol" id="1112">)</a>
+    <a class="Symbol" id="1118">}</a>
+  <a class="Symbol" id="1122">}</a>
+</pre></div></body></html>

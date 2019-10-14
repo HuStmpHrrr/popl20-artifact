@@ -1,0 +1,5 @@
+name: undecidability-proofs
+depend: 
+include:
+  ../lib/agda-stdlib/src
+  .

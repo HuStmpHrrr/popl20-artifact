@@ -1,0 +1,1 @@
+-Q ../lib/coq-ext-lib/theories ExtLib -Q ../lib/metalib/Metalib Metalib -Q ../lib/Coq-Equations/theories Equations -I ../lib/Coq-Equations/src -Q . "" -R ../share ""

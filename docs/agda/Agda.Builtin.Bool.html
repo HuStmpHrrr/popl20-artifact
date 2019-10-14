@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+
+<html><head><meta charset="utf-8"/><title>Agda.Builtin.Bool</title><link href="Agda.css" rel="stylesheet"/></head><body><div class="navbar"><a class="active" href="Everything.html">Everything</a><a href="../index.html" style="float:right">Home</a></div><div class="main"><pre><a class="Symbol" id="1">{-#</a> <a class="Keyword" id="5">OPTIONS</a> <a class="Option" id="13">--without-K</a> <a class="Symbol" id="25">#-}</a>
+
+<a class="Keyword" id="30">module</a> <a class="Module" href="Agda.Builtin.Bool.html" id="37">Agda.Builtin.Bool</a> <a class="Keyword" id="55">where</a>
+
+<a class="Keyword" id="62">data</a> <a id="Bool"></a><a class="Datatype" href="Agda.Builtin.Bool.html#67" id="67">Bool</a> <a class="Symbol" id="72">:</a> <a class="PrimitiveType" id="74">Set</a> <a class="Keyword" id="78">where</a>
+  <a id="Bool.false"></a><a class="InductiveConstructor" href="Agda.Builtin.Bool.html#86" id="86">false</a> <a id="Bool.true"></a><a class="InductiveConstructor" href="Agda.Builtin.Bool.html#92" id="92">true</a> <a class="Symbol" id="97">:</a> <a class="Datatype" href="Agda.Builtin.Bool.html#67" id="99">Bool</a>
+
+<a class="Symbol" id="105">{-#</a> <a class="Keyword" id="109">BUILTIN</a> BOOL  <a class="Datatype" href="Agda.Builtin.Bool.html#67" id="123">Bool</a>  <a class="Symbol" id="129">#-}</a>
+<a class="Symbol" id="133">{-#</a> <a class="Keyword" id="137">BUILTIN</a> FALSE <a class="InductiveConstructor" href="Agda.Builtin.Bool.html#86" id="151">false</a> <a class="Symbol" id="157">#-}</a>
+<a class="Symbol" id="161">{-#</a> <a class="Keyword" id="165">BUILTIN</a> TRUE  <a class="InductiveConstructor" href="Agda.Builtin.Bool.html#92" id="179">true</a>  <a class="Symbol" id="185">#-}</a>
+
+<a class="Symbol" id="190">{-#</a> <a class="Keyword" id="194">COMPILE</a> UHC <a class="Datatype" href="Agda.Builtin.Bool.html#67" id="206">Bool</a> = data __BOOL__ (__FALSE__ | __TRUE__) <a class="Symbol" id="250">#-}</a>
+
+<a class="Symbol" id="255">{-#</a> <a class="Keyword" id="259">COMPILE</a> JS <a class="Datatype" href="Agda.Builtin.Bool.html#67" id="270">Bool</a>  = function (x,v) { return ((x)? v["true"]() : v["false"]()); } <a class="Symbol" id="339">#-}</a>
+<a class="Symbol" id="343">{-#</a> <a class="Keyword" id="347">COMPILE</a> JS <a class="InductiveConstructor" href="Agda.Builtin.Bool.html#86" id="358">false</a> = false <a class="Symbol" id="372">#-}</a>
+<a class="Symbol" id="376">{-#</a> <a class="Keyword" id="380">COMPILE</a> JS <a class="InductiveConstructor" href="Agda.Builtin.Bool.html#92" id="391">true</a>  = true  <a class="Symbol" id="405">#-}</a>
+</pre></div></body></html>

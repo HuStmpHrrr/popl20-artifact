@@ -1,0 +1,240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="assets/resources/coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="assets/resources/coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="assets/resources/config.js"></script>
+<script type="text/javascript" src="assets/resources/coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="https://amaurremi.github.io/dot-calculus/src/extensions/paths/">README</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">Lattice</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+Different formulation of bounded lattices, (L, 0, 1, ∨, ∧).
+<a name="lab26"></a><h1 class="section"> </h1>
+
+<a name="lab27"></a><h1 class="section">we can form algebraic lattices or order theoretic lattices.</h1>
+
+<a name="lab28"></a><h1 class="section"> </h1>
+
+<a name="lab29"></a><h1 class="section">not sure which one is better. we can try both.</h1>
+
+  
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">Coq.Classes.RelationClasses</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">Coq.Setoids.Setoid</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">Coq.Program.Tactics</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="InducedEquivalence"><span class="id" title="section">InducedEquivalence</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">A</span> : <span class="id" title="keyword">Type</span>} (<span class="id" title="var">relA</span> : <span class="id" title="definition">relation</span> <a class="idref" href="Lattice.html#A"><span class="id" title="variable">A</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="equiv"><span class="id" title="definition">equiv</span></a> (<span class="id" title="var">x</span> <span class="id" title="var">y</span> : <a class="idref" href="Lattice.html#InducedEquivalence.A"><span class="id" title="variable">A</span></a>) : <span class="id" title="keyword">Prop</span> := <a class="idref" href="Lattice.html#InducedEquivalence.relA"><span class="id" title="variable">relA</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="Lattice.html#y"><span class="id" title="variable">y</span></a> <span class="id" title="notation">/\</span> <a class="idref" href="Lattice.html#InducedEquivalence.relA"><span class="id" title="variable">relA</span></a> <a class="idref" href="Lattice.html#y"><span class="id" title="variable">y</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Unfold</span> <a class="idref" href="Lattice.html#equiv"><span class="id" title="definition">equiv</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Transparent</span> <a class="idref" href="Lattice.html#equiv"><span class="id" title="definition">equiv</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="InducedEquivalence"><span class="id" title="instance">InducedEquivalence</span></a> `(<span class="id" title="class">PreOrder</span> <a class="idref" href="Lattice.html#InducedEquivalence.A"><span class="id" title="variable">A</span></a> <a class="idref" href="Lattice.html#InducedEquivalence.relA"><span class="id" title="variable">relA</span></a>) : <span class="id" title="class">Equivalence</span> <a class="idref" href="Lattice.html#equiv"><span class="id" title="definition">equiv</span></a> := {}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">all</span>:<span class="id" title="var">autounfold</span>; <span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">split</span>; <span class="id" title="tactic">apply</span> <span class="id" title="definition">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">tauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="var">destruct_pairs</span>. <span class="id" title="tactic">split</span>; <span class="id" title="tactic">eapply</span> <span class="id" title="definition">transitivity</span>; <span class="id" title="var">eassumption</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="Lattice.html#InducedEquivalence"><span class="id" title="section">InducedEquivalence</span></a>.<br/>
+<span class="id" title="keyword">Hint Unfold</span> <a class="idref" href="Lattice.html#equiv"><span class="id" title="definition">equiv</span></a>.<br/>
+<span class="id" title="keyword">Hint Transparent</span> <a class="idref" href="Lattice.html#equiv"><span class="id" title="definition">equiv</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <a name="Algebraic"><span class="id" title="module">Algebraic</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Algebraic lattice 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Class</span> <a name="Algebraic.ALattice"><span class="id" title="record">ALattice</span></a> {<span class="id" title="var">C</span> : <span class="id" title="keyword">Type</span>} (<span class="id" title="var">eq</span> : <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a> <span class="id" title="notation">-&gt;</span> <span class="id" title="keyword">Prop</span>) `(<span class="id" title="var">equiv</span>: <span class="id" title="class">Equivalence</span> <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a> <a class="idref" href="Lattice.html#eq"><span class="id" title="variable">eq</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Algebraic.top"><span class="id" title="projection">top</span></a> : <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Algebraic.bot"><span class="id" title="projection">bot</span></a> : <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Algebraic.sup"><span class="id" title="projection">sup</span></a> : <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Algebraic.inf"><span class="id" title="projection">inf</span></a> : <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a>;<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="doc">
+laws 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Algebraic.top_bound"><span class="id" title="projection">top_bound</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">x</span>, <a class="idref" href="Lattice.html#eq"><span class="id" title="variable">eq</span></a> (<a class="idref" href="Lattice.html#inf"><span class="id" title="method">inf</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="Lattice.html#top"><span class="id" title="method">top</span></a>) <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Algebraic.bot_bound"><span class="id" title="projection">bot_bound</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">x</span>, <a class="idref" href="Lattice.html#eq"><span class="id" title="variable">eq</span></a> (<a class="idref" href="Lattice.html#sup"><span class="id" title="method">sup</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="Lattice.html#bot"><span class="id" title="method">bot</span></a>) <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Algebraic.sup_comm"><span class="id" title="projection">sup_comm</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span>, <a class="idref" href="Lattice.html#eq"><span class="id" title="variable">eq</span></a> (<a class="idref" href="Lattice.html#sup"><span class="id" title="method">sup</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="Lattice.html#y"><span class="id" title="variable">y</span></a>) (<a class="idref" href="Lattice.html#sup"><span class="id" title="method">sup</span></a> <a class="idref" href="Lattice.html#y"><span class="id" title="variable">y</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Algebraic.inf_comm"><span class="id" title="projection">inf_comm</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span>, <a class="idref" href="Lattice.html#eq"><span class="id" title="variable">eq</span></a> (<a class="idref" href="Lattice.html#inf"><span class="id" title="method">inf</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="Lattice.html#y"><span class="id" title="variable">y</span></a>) (<a class="idref" href="Lattice.html#inf"><span class="id" title="method">inf</span></a> <a class="idref" href="Lattice.html#y"><span class="id" title="variable">y</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a>);<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Algebraic.sup_assoc"><span class="id" title="projection">sup_assoc</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">z</span>, <a class="idref" href="Lattice.html#eq"><span class="id" title="variable">eq</span></a> (<a class="idref" href="Lattice.html#sup"><span class="id" title="method">sup</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a> (<a class="idref" href="Lattice.html#sup"><span class="id" title="method">sup</span></a> <a class="idref" href="Lattice.html#y"><span class="id" title="variable">y</span></a> <a class="idref" href="Lattice.html#z"><span class="id" title="variable">z</span></a>)) (<a class="idref" href="Lattice.html#sup"><span class="id" title="method">sup</span></a> (<a class="idref" href="Lattice.html#sup"><span class="id" title="method">sup</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="Lattice.html#y"><span class="id" title="variable">y</span></a>) <a class="idref" href="Lattice.html#z"><span class="id" title="variable">z</span></a>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Algebraic.inf_assoc"><span class="id" title="projection">inf_assoc</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">z</span>, <a class="idref" href="Lattice.html#eq"><span class="id" title="variable">eq</span></a> (<a class="idref" href="Lattice.html#inf"><span class="id" title="method">inf</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a> (<a class="idref" href="Lattice.html#inf"><span class="id" title="method">inf</span></a> <a class="idref" href="Lattice.html#y"><span class="id" title="variable">y</span></a> <a class="idref" href="Lattice.html#z"><span class="id" title="variable">z</span></a>)) (<a class="idref" href="Lattice.html#inf"><span class="id" title="method">inf</span></a> (<a class="idref" href="Lattice.html#inf"><span class="id" title="method">inf</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="Lattice.html#y"><span class="id" title="variable">y</span></a>) <a class="idref" href="Lattice.html#z"><span class="id" title="variable">z</span></a>);<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Algebraic.sup_absorb"><span class="id" title="projection">sup_absorb</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span>, <a class="idref" href="Lattice.html#eq"><span class="id" title="variable">eq</span></a> (<a class="idref" href="Lattice.html#sup"><span class="id" title="method">sup</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a> (<a class="idref" href="Lattice.html#inf"><span class="id" title="method">inf</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="Lattice.html#y"><span class="id" title="variable">y</span></a>)) <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Algebraic.inf_absorb"><span class="id" title="projection">inf_absorb</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span>, <a class="idref" href="Lattice.html#eq"><span class="id" title="variable">eq</span></a> (<a class="idref" href="Lattice.html#inf"><span class="id" title="method">inf</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a> (<a class="idref" href="Lattice.html#sup"><span class="id" title="method">sup</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="Lattice.html#y"><span class="id" title="variable">y</span></a>)) <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="Lattice.html#Algebraic"><span class="id" title="module">Algebraic</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <a name="Order"><span class="id" title="module">Order</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+A order theoretic lattice 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Class</span> <a name="Order.OLattice"><span class="id" title="record">OLattice</span></a> {<span class="id" title="var">C</span> : <span class="id" title="keyword">Type</span>} (<span class="id" title="var">pord</span> : <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a> <span class="id" title="notation">-&gt;</span> <span class="id" title="keyword">Prop</span>) `(<span class="id" title="var">po</span> : <span class="id" title="class">PreOrder</span> <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a> <a class="idref" href="Lattice.html#pord"><span class="id" title="variable">pord</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Order.top"><span class="id" title="projection">top</span></a> : <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Order.bot"><span class="id" title="projection">bot</span></a> : <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Order.sup"><span class="id" title="projection">sup</span></a> : <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Order.inf"><span class="id" title="projection">inf</span></a> : <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a>;<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="doc">
+laws 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Order.top_bound"><span class="id" title="projection">top_bound</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">x</span>, <a class="idref" href="Lattice.html#pord"><span class="id" title="variable">pord</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="Lattice.html#top"><span class="id" title="method">top</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Order.bot_bound"><span class="id" title="projection">bot_bound</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">x</span>, <a class="idref" href="Lattice.html#pord"><span class="id" title="variable">pord</span></a> <a class="idref" href="Lattice.html#bot"><span class="id" title="method">bot</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a>;<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Order.sup_I1"><span class="id" title="projection">sup_I1</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span>, <a class="idref" href="Lattice.html#pord"><span class="id" title="variable">pord</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a> (<a class="idref" href="Lattice.html#sup"><span class="id" title="method">sup</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="Lattice.html#y"><span class="id" title="variable">y</span></a>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Order.sup_I2"><span class="id" title="projection">sup_I2</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span>, <a class="idref" href="Lattice.html#pord"><span class="id" title="variable">pord</span></a> <a class="idref" href="Lattice.html#y"><span class="id" title="variable">y</span></a> (<a class="idref" href="Lattice.html#sup"><span class="id" title="method">sup</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="Lattice.html#y"><span class="id" title="variable">y</span></a>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Order.sup_E"><span class="id" title="projection">sup_E</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">z</span>, <a class="idref" href="Lattice.html#pord"><span class="id" title="variable">pord</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="Lattice.html#z"><span class="id" title="variable">z</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="Lattice.html#pord"><span class="id" title="variable">pord</span></a> <a class="idref" href="Lattice.html#y"><span class="id" title="variable">y</span></a> <a class="idref" href="Lattice.html#z"><span class="id" title="variable">z</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="Lattice.html#pord"><span class="id" title="variable">pord</span></a> (<a class="idref" href="Lattice.html#sup"><span class="id" title="method">sup</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="Lattice.html#y"><span class="id" title="variable">y</span></a>) <a class="idref" href="Lattice.html#z"><span class="id" title="variable">z</span></a>;<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Order.inf_E1"><span class="id" title="projection">inf_E1</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span>, <a class="idref" href="Lattice.html#pord"><span class="id" title="variable">pord</span></a> (<a class="idref" href="Lattice.html#inf"><span class="id" title="method">inf</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="Lattice.html#y"><span class="id" title="variable">y</span></a>) <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Order.inf_E2"><span class="id" title="projection">inf_E2</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span>, <a class="idref" href="Lattice.html#pord"><span class="id" title="variable">pord</span></a> (<a class="idref" href="Lattice.html#inf"><span class="id" title="method">inf</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="Lattice.html#y"><span class="id" title="variable">y</span></a>) <a class="idref" href="Lattice.html#y"><span class="id" title="variable">y</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="Order.inf_I"><span class="id" title="projection">inf_I</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">w</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span>, <a class="idref" href="Lattice.html#pord"><span class="id" title="variable">pord</span></a> <a class="idref" href="Lattice.html#w"><span class="id" title="variable">w</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="Lattice.html#pord"><span class="id" title="variable">pord</span></a> <a class="idref" href="Lattice.html#w"><span class="id" title="variable">w</span></a> <a class="idref" href="Lattice.html#y"><span class="id" title="variable">y</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="Lattice.html#pord"><span class="id" title="variable">pord</span></a> <a class="idref" href="Lattice.html#w"><span class="id" title="variable">w</span></a> (<a class="idref" href="Lattice.html#inf"><span class="id" title="method">inf</span></a> <a class="idref" href="Lattice.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="Lattice.html#y"><span class="id" title="variable">y</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="Lattice.html#Order"><span class="id" title="module">Order</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="OLatticeImpliesALattice"><span class="id" title="section">OLatticeImpliesALattice</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Import</span> <span class="id" title="var">Order</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">C</span> : <span class="id" title="keyword">Type</span>} (<span class="id" title="var">pord</span> : <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="Lattice.html#C"><span class="id" title="variable">C</span></a> <span class="id" title="notation">-&gt;</span> <span class="id" title="keyword">Prop</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<span class="id" title="var">po</span> : <span class="id" title="class">PreOrder</span> <a class="idref" href="Lattice.html#OLatticeImpliesALattice.C"><span class="id" title="variable">C</span></a> <a class="idref" href="Lattice.html#OLatticeImpliesALattice.pord"><span class="id" title="variable">pord</span></a>} `{<span class="id" title="var">ol</span> : @<a class="idref" href="Lattice.html#OLattice"><span class="id" title="class">OLattice</span></a> <a class="idref" href="Lattice.html#OLatticeImpliesALattice.C"><span class="id" title="variable">C</span></a> <a class="idref" href="Lattice.html#OLatticeImpliesALattice.pord"><span class="id" title="variable">pord</span></a> <a class="idref" href="Lattice.html#po"><span class="id" title="variable">po</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+It's derivable that order theoretic lattice implies algebraic lattice. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="OLattice_ALattice"><span class="id" title="instance">OLattice_ALattice</span></a> : <a class="idref" href="Lattice.html#ALattice"><span class="id" title="class">Algebraic.ALattice</span></a> (<a class="idref" href="Lattice.html#equiv"><span class="id" title="definition">equiv</span></a> <a class="idref" href="Lattice.html#OLatticeImpliesALattice.pord"><span class="id" title="variable">pord</span></a>) (<a class="idref" href="Lattice.html#InducedEquivalence"><span class="id" title="instance">InducedEquivalence</span></a> <span class="id" title="var">_</span> <a class="idref" href="Lattice.html#OLatticeImpliesALattice.po"><span class="id" title="variable">po</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Lattice.html#top"><span class="id" title="method">top</span></a> := <a class="idref" href="Lattice.html#top"><span class="id" title="method">top</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Lattice.html#bot"><span class="id" title="method">bot</span></a> := <a class="idref" href="Lattice.html#bot"><span class="id" title="method">bot</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Lattice.html#sup"><span class="id" title="method">sup</span></a> := <a class="idref" href="Lattice.html#sup"><span class="id" title="method">sup</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Lattice.html#inf"><span class="id" title="method">inf</span></a> := <a class="idref" href="Lattice.html#inf"><span class="id" title="method">inf</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">all</span>:<span class="id" title="var">autounfold</span>; <span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#inf_E1"><span class="id" title="method">inf_E1</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#inf_I"><span class="id" title="method">inf_I</span></a>; [<span class="id" title="tactic">apply</span> <span class="id" title="definition">reflexivity</span> | <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#top_bound"><span class="id" title="method">top_bound</span></a>].<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#sup_E"><span class="id" title="method">sup_E</span></a>; [<span class="id" title="tactic">apply</span> <span class="id" title="definition">reflexivity</span> | <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#bot_bound"><span class="id" title="method">bot_bound</span></a>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#sup_I1"><span class="id" title="method">sup_I1</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#sup_E"><span class="id" title="method">sup_E</span></a>; [<span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#sup_I2"><span class="id" title="method">sup_I2</span></a> | <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#sup_I1"><span class="id" title="method">sup_I1</span></a>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#sup_E"><span class="id" title="method">sup_E</span></a>; [<span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#sup_I2"><span class="id" title="method">sup_I2</span></a> | <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#sup_I1"><span class="id" title="method">sup_I1</span></a>].<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#inf_I"><span class="id" title="method">inf_I</span></a>; [<span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#inf_E2"><span class="id" title="method">inf_E2</span></a> | <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#inf_E1"><span class="id" title="method">inf_E1</span></a>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#inf_I"><span class="id" title="method">inf_I</span></a>; [<span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#inf_E2"><span class="id" title="method">inf_E2</span></a> | <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#inf_E1"><span class="id" title="method">inf_E1</span></a>].<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">repeat</span> <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#sup_E"><span class="id" title="method">sup_E</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="id" title="tactic">eapply</span> <span class="id" title="definition">transitivity</span>. <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#sup_I1"><span class="id" title="method">sup_I1</span></a>. <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#sup_I1"><span class="id" title="method">sup_I1</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="id" title="tactic">eapply</span> <span class="id" title="definition">transitivity</span>. <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#sup_I2"><span class="id" title="method">sup_I2</span></a>. <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#sup_I1"><span class="id" title="method">sup_I1</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#sup_I2"><span class="id" title="method">sup_I2</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">repeat</span> <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#sup_E"><span class="id" title="method">sup_E</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#sup_I1"><span class="id" title="method">sup_I1</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="id" title="tactic">eapply</span> <span class="id" title="definition">transitivity</span>. <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#sup_I1"><span class="id" title="method">sup_I1</span></a>. <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#sup_I2"><span class="id" title="method">sup_I2</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="id" title="tactic">eapply</span> <span class="id" title="definition">transitivity</span>. <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#sup_I2"><span class="id" title="method">sup_I2</span></a>. <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#sup_I2"><span class="id" title="method">sup_I2</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">repeat</span> <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#inf_I"><span class="id" title="method">inf_I</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#inf_E1"><span class="id" title="method">inf_E1</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="id" title="tactic">eapply</span> <span class="id" title="definition">transitivity</span>. <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#inf_E2"><span class="id" title="method">inf_E2</span></a>. <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#inf_E1"><span class="id" title="method">inf_E1</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="id" title="tactic">eapply</span> <span class="id" title="definition">transitivity</span>. <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#inf_E2"><span class="id" title="method">inf_E2</span></a>. <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#inf_E2"><span class="id" title="method">inf_E2</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">repeat</span> <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#inf_I"><span class="id" title="method">inf_I</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="id" title="tactic">eapply</span> <span class="id" title="definition">transitivity</span>. <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#inf_E1"><span class="id" title="method">inf_E1</span></a>. <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#inf_E1"><span class="id" title="method">inf_E1</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="id" title="tactic">eapply</span> <span class="id" title="definition">transitivity</span>. <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#inf_E1"><span class="id" title="method">inf_E1</span></a>. <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#inf_E2"><span class="id" title="method">inf_E2</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#inf_E2"><span class="id" title="method">inf_E2</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#sup_E"><span class="id" title="method">sup_E</span></a>; [<span class="id" title="tactic">apply</span> <span class="id" title="definition">reflexivity</span> | <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#inf_E1"><span class="id" title="method">inf_E1</span></a>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#sup_I1"><span class="id" title="method">sup_I1</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#inf_E1"><span class="id" title="method">inf_E1</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#inf_I"><span class="id" title="method">inf_I</span></a>; [<span class="id" title="tactic">apply</span> <span class="id" title="definition">reflexivity</span> | <span class="id" title="tactic">apply</span> <a class="idref" href="Lattice.html#sup_I1"><span class="id" title="method">sup_I1</span></a>].<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="Lattice.html#OLatticeImpliesALattice"><span class="id" title="section">OLatticeImpliesALattice</span></a>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="assets/resources/coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="assets/resources/coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="assets/resources/config.js"></script>
+<script type="text/javascript" src="assets/resources/coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="https://amaurremi.github.io/dot-calculus/src/extensions/paths/">README</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">ListRelations</h1>
+
+<div class="code">
+<span class="id" title="keyword">Set Implicit Arguments</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="LibUtils.html#"><span class="id" title="library">LibUtils</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">Coq.Lists.List</span>.<br/>
+<span class="id" title="keyword">Import</span> <span class="id" title="var">ListNotations</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">Metalib.Metatheory</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">Lia</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="MetaExt.html#"><span class="id" title="library">MetaExt</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Notation</span> <a name="included"><span class="id" title="abbreviation">included</span></a> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span> := (<span class="id" title="inductive">Forall</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">x</span> =&gt; <span class="id" title="definition">In</span> <a class="idref" href="ListRelations.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="var">l2</span>) <span class="id" title="var">l1</span>).<br/>
+<span class="id" title="keyword">Local Hint Constructors</span> <a class="idref" href="ListRelations.html#Forall"><span class="id" title="inductive">Forall</span></a>.<br/>
+<span class="id" title="keyword">Local Hint Resolve</span> <span class="id" title="var">in_or_app</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="Included"><span class="id" title="section">Included</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">A</span> : <span class="id" title="keyword">Type</span>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local Ltac</span> <span class="id" title="var">init</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>; <span class="id" title="tactic">repeat</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">Forall_forall</span> <span class="id" title="tactic">in</span> *; <span class="id" title="tactic">intros</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local Ltac</span> <span class="id" title="var">spec</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">H</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">x</span>, <span class="id" title="definition">In</span> <a class="idref" href="ListRelations.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="var">_</span> <span class="id" title="notation">-&gt;</span> <span class="id" title="var">_</span>, <span class="id" title="var">H'</span> : <span class="id" title="definition">In</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> |- <span class="id" title="var">_</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">specialize</span> (<span class="id" title="var">H</span> <span class="id" title="var">_</span> <span class="id" title="var">H'</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local Ltac</span> <span class="id" title="var">dang</span> := <span class="id" title="var">init</span>; <span class="id" title="var">spec</span>; <span class="id" title="tactic">auto</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="included_cons"><span class="id" title="lemma">included_cons</span></a> : <span class="id" title="keyword">forall</span> (<span class="id" title="var">l1</span> <span class="id" title="var">l2</span> : <span class="id" title="inductive">list</span> <a class="idref" href="ListRelations.html#Included.A"><span class="id" title="variable">A</span></a>) <span class="id" title="var">x</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#included"><span class="id" title="abbreviation">included</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#included"><span class="id" title="abbreviation">included</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> (<a class="idref" href="ListRelations.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">::</span> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>. <span class="id" title="var">dang</span>. <span class="id" title="tactic">right</span>; <span class="id" title="tactic">auto</span>. <span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="included_app1"><span class="id" title="lemma">included_app1</span></a> : <span class="id" title="keyword">forall</span> (<span class="id" title="var">l1</span> <span class="id" title="var">l2</span> <span class="id" title="var">l3</span> : <span class="id" title="inductive">list</span> <a class="idref" href="ListRelations.html#Included.A"><span class="id" title="variable">A</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#included"><span class="id" title="abbreviation">included</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#included"><span class="id" title="abbreviation">included</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> (<a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">++</span> <a class="idref" href="ListRelations.html#l3"><span class="id" title="variable">l3</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>. <span class="id" title="var">dang</span>. <span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="included_app2"><span class="id" title="lemma">included_app2</span></a> : <span class="id" title="keyword">forall</span> (<span class="id" title="var">l1</span> <span class="id" title="var">l2</span> <span class="id" title="var">l3</span> : <span class="id" title="inductive">list</span> <a class="idref" href="ListRelations.html#Included.A"><span class="id" title="variable">A</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#included"><span class="id" title="abbreviation">included</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l3"><span class="id" title="variable">l3</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#included"><span class="id" title="abbreviation">included</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> (<a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">++</span> <a class="idref" href="ListRelations.html#l3"><span class="id" title="variable">l3</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>. <span class="id" title="var">dang</span>. <span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="included_app3"><span class="id" title="lemma">included_app3</span></a> : <span class="id" title="keyword">forall</span> (<span class="id" title="var">l1</span> <span class="id" title="var">l2</span> <span class="id" title="var">l3</span> : <span class="id" title="inductive">list</span> <a class="idref" href="ListRelations.html#Included.A"><span class="id" title="variable">A</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#included"><span class="id" title="abbreviation">included</span></a> (<a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <span class="id" title="notation">++</span> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a>) <a class="idref" href="ListRelations.html#l3"><span class="id" title="variable">l3</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#included"><span class="id" title="abbreviation">included</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l3"><span class="id" title="variable">l3</span></a> <span class="id" title="notation">/\</span> <a class="idref" href="ListRelations.html#included"><span class="id" title="abbreviation">included</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <a class="idref" href="ListRelations.html#l3"><span class="id" title="variable">l3</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">init</span>. <span class="id" title="tactic">split</span>; <span class="id" title="tactic">intros</span>; <span class="id" title="tactic">apply</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">all</span>:<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">in_app_iff</span>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="ListRelations.html#Included"><span class="id" title="section">Included</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="OrderPreservingEmbeddings"><span class="id" title="section">OrderPreservingEmbeddings</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">A</span> : <span class="id" title="keyword">Type</span>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+l1 &lt;= l2 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Inductive</span> <a name="ope_list"><span class="id" title="inductive">ope_list</span></a> : <span class="id" title="inductive">list</span> <a class="idref" href="ListRelations.html#OrderPreservingEmbeddings.A"><span class="id" title="variable">A</span></a> <span class="id" title="notation">-&gt;</span> <span class="id" title="inductive">list</span> <a class="idref" href="ListRelations.html#OrderPreservingEmbeddings.A"><span class="id" title="variable">A</span></a> <span class="id" title="notation">-&gt;</span> <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;| <a name="ol_nil"><span class="id" title="constructor">ol_nil</span></a> : <a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <span class="id" title="constructor">nil</span> <span class="id" title="constructor">nil</span><br/>
+&nbsp;&nbsp;| <a name="ol_keep"><span class="id" title="constructor">ol_keep</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">x</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span>, <a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> (<a class="idref" href="ListRelations.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">::</span> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a>) (<a class="idref" href="ListRelations.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">::</span> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a>)<br/>
+&nbsp;&nbsp;| <a name="ol_drop"><span class="id" title="constructor">ol_drop</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">x</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span>, <a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> (<a class="idref" href="ListRelations.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">::</span> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Constructors</span> <a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local Ltac</span> <span class="id" title="var">ind_list</span> <span class="id" title="var">l</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">l</span>; <span class="id" title="tactic">intros</span>; <span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> *; <span class="id" title="tactic">auto</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="ope_list_refl"><span class="id" title="lemma">ope_list_refl</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">l</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>. <span class="id" title="var">ind_list</span> <span class="id" title="var">l</span>. <span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local Hint Resolve</span> <span class="id" title="var">ope_list_refl</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="ope_list_to_nil"><span class="id" title="lemma">ope_list_to_nil</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">l</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <span class="id" title="notation">[</span> <span class="id" title="notation">]</span> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>. <span class="id" title="var">ind_list</span> <span class="id" title="var">l</span>. <span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local Hint Resolve</span> <span class="id" title="var">ope_list_to_nil</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="ope_list_trans"><span class="id" title="lemma">ope_list_trans</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span> <span class="id" title="var">l3</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <a class="idref" href="ListRelations.html#l3"><span class="id" title="variable">l3</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l3"><span class="id" title="variable">l3</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">generalize</span> <span class="id" title="tactic">dependent</span> <span class="id" title="var">l1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">H0</span>; <span class="id" title="tactic">intros</span>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">subst</span>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="ope_list_append1"><span class="id" title="lemma">ope_list_append1</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> (<a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <span class="id" title="notation">++</span> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>. <span class="id" title="var">ind_list</span> <span class="id" title="var">l1</span>. <span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="ope_list_append2"><span class="id" title="lemma">ope_list_append2</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> (<a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <span class="id" title="notation">++</span> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>. <span class="id" title="var">ind_list</span> <span class="id" title="var">l1</span>. <span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="ope_list_implies_included"><span class="id" title="lemma">ope_list_implies_included</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#included"><span class="id" title="abbreviation">included</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> 1; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">all</span>: <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">Forall_forall</span> <span class="id" title="tactic">in</span> *; <span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">destruct</span> <span class="id" title="var">H0</span>; <span class="id" title="tactic">subst</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="id" title="tactic">left</span> | <span class="id" title="tactic">right</span>]; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">right</span>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="ope_list_length"><span class="id" title="lemma">ope_list_length</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="definition">length</span> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <span class="id" title="notation">&lt;=</span> <span class="id" title="definition">length</span> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>. <span class="id" title="tactic">induction</span> 1; <span class="id" title="tactic">simpl</span>; <span class="id" title="var">lia</span>. <span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="ope_list_decons"><span class="id" title="lemma">ope_list_decons</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">x</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> (<a class="idref" href="ListRelations.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">::</span> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a>) <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="var">remember</span> (<span class="id" title="var">x</span> <span class="id" title="notation">::</span> <span class="id" title="var">l1</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">revert</span> <span class="id" title="var">Heql</span>. <span class="id" title="var">revert</span> <span class="id" title="var">l1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">intros</span>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">congruence</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">inversion</span> <span class="id" title="var">Heql</span>; <span class="id" title="tactic">subst</span>. <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">subst</span>. <span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">IHope_list</span>. <span class="id" title="tactic">trivial</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local Hint Resolve</span> <span class="id" title="var">ope_list_decons</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="ope_list_inv"><span class="id" title="lemma">ope_list_inv</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">x</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> (<a class="idref" href="ListRelations.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">::</span> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a>) (<a class="idref" href="ListRelations.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">::</span> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a>) <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="var">remember</span> (<span class="id" title="var">x</span> <span class="id" title="notation">::</span> <span class="id" title="var">l1</span>). <span class="id" title="var">remember</span> (<span class="id" title="var">x</span> <span class="id" title="notation">::</span> <span class="id" title="var">l2</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">revert</span> <span class="id" title="var">Heql</span> <span class="id" title="var">Heql0</span>. <span class="id" title="var">revert</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">intros</span>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">congruence</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">Heql0</span>; <span class="id" title="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local Hint Resolve</span> <span class="id" title="var">ope_list_inv</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="ope_list_antisym"><span class="id" title="lemma">ope_list_antisym</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <span class="id" title="notation">=</span> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> 1; <span class="id" title="tactic">intros</span>; <span class="id" title="tactic">trivial</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">f_equal</span>; <span class="id" title="tactic">auto</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">IHope_list</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <a class="idref" href="ListRelations.html#ope_list_length"><span class="id" title="lemma">ope_list_length</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="ListRelations.html#ope_list_length"><span class="id" title="lemma">ope_list_length</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">H0</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H0</span>. <span class="id" title="var">lia</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="PreorderOpe"><span class="id" title="instance">PreorderOpe</span></a> : <span class="id" title="class">PreOrder</span> <a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="method">PreOrder_Reflexive</span> := <a class="idref" href="ListRelations.html#ope_list_refl"><span class="id" title="lemma">ope_list_refl</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="method">PreOrder_Transitive</span> := <a class="idref" href="ListRelations.html#ope_list_trans"><span class="id" title="lemma">ope_list_trans</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="PartialOrderOpe"><span class="id" title="instance">PartialOrderOpe</span></a> : @<span class="id" title="class">PartialOrder</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="instance">eq_equivalence</span> <span class="id" title="var">_</span> <a class="idref" href="ListRelations.html#PreorderOpe"><span class="id" title="instance">PreorderOpe</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{ }.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">split</span>; <span class="id" title="tactic">subst</span>; <span class="id" title="tactic">cbv</span>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">destruct</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="ListRelations.html#ope_list_antisym"><span class="id" title="lemma">ope_list_antisym</span></a>; <span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="ListRelations.html#OrderPreservingEmbeddings"><span class="id" title="section">OrderPreservingEmbeddings</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="DecMembership"><span class="id" title="section">DecMembership</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">A</span> : <span class="id" title="keyword">Type</span>} {<span class="id" title="var">eqA</span> : <span class="id" title="class">EqDec_eq</span> <a class="idref" href="ListRelations.html#A"><span class="id" title="variable">A</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="In_dec"><span class="id" title="definition">In_dec</span></a> (<span class="id" title="var">a</span> : <a class="idref" href="ListRelations.html#DecMembership.A"><span class="id" title="variable">A</span></a>) (<span class="id" title="var">l</span> : <span class="id" title="inductive">list</span> <a class="idref" href="ListRelations.html#DecMembership.A"><span class="id" title="variable">A</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;: <span class="id" title="notation">{</span> <span class="id" title="definition">In</span> <a class="idref" href="ListRelations.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a> <span class="id" title="notation">}</span> <span class="id" title="notation">+</span> <span class="id" title="notation">{</span> <span class="id" title="notation">~</span> <span class="id" title="definition">In</span> <a class="idref" href="ListRelations.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a> <span class="id" title="notation">}</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>. <span class="id" title="tactic">apply</span> <span class="id" title="lemma">in_dec</span>. <span class="id" title="tactic">apply</span> <a class="idref" href="ListRelations.html#DecMembership.eqA"><span class="id" title="variable">eqA</span></a>. <span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="In_remove"><span class="id" title="definition">In_remove</span></a> (<span class="id" title="var">a</span> : <a class="idref" href="ListRelations.html#DecMembership.A"><span class="id" title="variable">A</span></a>) (<span class="id" title="var">l</span> : <span class="id" title="inductive">list</span> <a class="idref" href="ListRelations.html#DecMembership.A"><span class="id" title="variable">A</span></a>) : <span class="id" title="inductive">list</span> <a class="idref" href="ListRelations.html#DecMembership.A"><span class="id" title="variable">A</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>. <span class="id" title="tactic">exact</span> (<span class="id" title="definition">List.remove</span> <a class="idref" href="ListRelations.html#DecMembership.eqA"><span class="id" title="variable">eqA</span></a> <span class="id" title="var">a</span> <span class="id" title="var">l</span>). <span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <a name="In_removed"><span class="id" title="lemma">In_removed</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">l</span>, <span class="id" title="notation">~</span><span class="id" title="definition">In</span> <a class="idref" href="ListRelations.html#a"><span class="id" title="variable">a</span></a> (<a class="idref" href="ListRelations.html#In_remove"><span class="id" title="definition">In_remove</span></a> <a class="idref" href="ListRelations.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="ListRelations.html#In_remove"><span class="id" title="definition">In_remove</span></a>. <span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="lemma">remove_In</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <a name="remove_length_invar"><span class="id" title="lemma">remove_length_invar</span></a> : <span class="id" title="keyword">forall</span> (<span class="id" title="var">a</span> : <a class="idref" href="ListRelations.html#DecMembership.A"><span class="id" title="variable">A</span></a>) <span class="id" title="var">l</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="definition">length</span> (<a class="idref" href="ListRelations.html#In_remove"><span class="id" title="definition">In_remove</span></a> <a class="idref" href="ListRelations.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a>) <span class="id" title="notation">&lt;=</span> <span class="id" title="definition">length</span> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">l</span>; <span class="id" title="tactic">simpl</span>; <span class="id" title="tactic">intros</span>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<a class="idref" href="ListRelations.html#DecMembership.eqA"><span class="id" title="variable">eqA</span></a> <span class="id" title="var">a</span> <span class="id" title="var">a0</span>); <span class="id" title="tactic">subst</span>; <span class="id" title="tactic">simpl</span>; <span class="id" title="var">lia</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <a name="remove_length"><span class="id" title="lemma">remove_length</span></a> : <span class="id" title="keyword">forall</span> (<span class="id" title="var">a</span> : <a class="idref" href="ListRelations.html#DecMembership.A"><span class="id" title="variable">A</span></a>) <span class="id" title="var">l</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="definition">In</span> <a class="idref" href="ListRelations.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="definition">length</span> (<a class="idref" href="ListRelations.html#In_remove"><span class="id" title="definition">In_remove</span></a> <a class="idref" href="ListRelations.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a>) <span class="id" title="notation">&lt;</span> <span class="id" title="definition">length</span> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">l</span>; <span class="id" title="tactic">simpl</span>; <span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">intuition</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">destruct</span> (<a class="idref" href="ListRelations.html#DecMembership.eqA"><span class="id" title="variable">eqA</span></a> <span class="id" title="var">a</span> <span class="id" title="var">a0</span>); <span class="id" title="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">pose</span> <span class="id" title="var">proof</span> (<a class="idref" href="ListRelations.html#remove_length_invar"><span class="id" title="lemma">remove_length_invar</span></a> <span class="id" title="var">a0</span> <span class="id" title="var">l</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">lia</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">destruct</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">congruence</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">specialize</span> (<span class="id" title="var">IHl</span> <span class="id" title="var">H</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>. <span class="id" title="var">lia</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="in_before_removal"><span class="id" title="lemma">in_before_removal</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">l</span> <span class="id" title="var">b</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="definition">In</span> <a class="idref" href="ListRelations.html#b"><span class="id" title="variable">b</span></a> (<a class="idref" href="ListRelations.html#In_remove"><span class="id" title="definition">In_remove</span></a> <a class="idref" href="ListRelations.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a>) <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="definition">In</span> <a class="idref" href="ListRelations.html#b"><span class="id" title="variable">b</span></a> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">l</span>; <span class="id" title="tactic">simpl</span>; <span class="id" title="tactic">intros</span>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<a class="idref" href="ListRelations.html#DecMembership.eqA"><span class="id" title="variable">eqA</span></a> <span class="id" title="var">a</span> <span class="id" title="var">a0</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">subst</span>. <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">destruct</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="eq_after_removal"><span class="id" title="lemma">eq_after_removal</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">l</span> <span class="id" title="var">b</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="definition">In</span> <a class="idref" href="ListRelations.html#b"><span class="id" title="variable">b</span></a> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">~</span><span class="id" title="definition">In</span> <a class="idref" href="ListRelations.html#b"><span class="id" title="variable">b</span></a> (<a class="idref" href="ListRelations.html#In_remove"><span class="id" title="definition">In_remove</span></a> <a class="idref" href="ListRelations.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a>) <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#a"><span class="id" title="variable">a</span></a> <span class="id" title="notation">=</span> <a class="idref" href="ListRelations.html#b"><span class="id" title="variable">b</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">l</span>; <span class="id" title="tactic">simpl</span>; <span class="id" title="tactic">intros</span>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="var">contradiction</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">destruct</span> (<a class="idref" href="ListRelations.html#DecMembership.eqA"><span class="id" title="variable">eqA</span></a> <span class="id" title="var">a</span> <span class="id" title="var">a0</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">subst</span>. <span class="id" title="tactic">destruct</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">destruct</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="id" title="tactic">subst</span>. <span class="id" title="var">exfalso</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H0</span>. <span class="id" title="tactic">left</span>. <span class="id" title="tactic">trivial</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* <span class="id" title="tactic">apply</span> <span class="id" title="var">IHl</span>; <span class="id" title="tactic">trivial</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intro</span> <span class="id" title="var">Contra</span>; <span class="id" title="tactic">apply</span> <span class="id" title="var">H0</span>. <span class="id" title="tactic">right</span>. <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">ope_list_refl</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Constructors</span> <a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="In_remove_ope_list"><span class="id" title="lemma">In_remove_ope_list</span></a> : <span class="id" title="keyword">forall</span> (<span class="id" title="var">x</span> : <a class="idref" href="ListRelations.html#DecMembership.A"><span class="id" title="variable">A</span></a>) <span class="id" title="var">l</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> (<a class="idref" href="ListRelations.html#In_remove"><span class="id" title="definition">In_remove</span></a> <a class="idref" href="ListRelations.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a>) <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">l</span>; <span class="id" title="tactic">intros</span>; <span class="id" title="tactic">simpl</span>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<a class="idref" href="ListRelations.html#DecMembership.eqA"><span class="id" title="variable">eqA</span></a> <span class="id" title="var">x</span> <span class="id" title="var">a</span>); <span class="id" title="tactic">simpl</span>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="not_ope_after_removal"><span class="id" title="lemma">not_ope_after_removal</span></a> : <span class="id" title="keyword">forall</span> (<span class="id" title="var">x</span> : <a class="idref" href="ListRelations.html#DecMembership.A"><span class="id" title="variable">A</span></a>) <span class="id" title="var">l</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="definition">In</span> <a class="idref" href="ListRelations.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">~</span><a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a> (<a class="idref" href="ListRelations.html#In_remove"><span class="id" title="definition">In_remove</span></a> <a class="idref" href="ListRelations.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">intro</span> <span class="id" title="var">Contra</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="ListRelations.html#ope_list_length"><span class="id" title="lemma">ope_list_length</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">Contra</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="ListRelations.html#remove_length"><span class="id" title="lemma">remove_length</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">lia</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="ListRelations.html#DecMembership"><span class="id" title="section">DecMembership</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="AtomLists"><span class="id" title="section">AtomLists</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <a name="remove_from_list"><span class="id" title="lemma">remove_from_list</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">l</span> <span class="id" title="var">S</span> <span class="id" title="var">S'</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="inductive">Forall</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">v</span> =&gt; <a class="idref" href="ListRelations.html#v"><span class="id" title="variable">v</span></a> <span class="id" title="notation">`</span><span class="id" title="notation">notin</span><span class="id" title="notation">`</span> <a class="idref" href="ListRelations.html#S"><span class="id" title="variable">S</span></a>) (<a class="idref" href="ListRelations.html#In_remove"><span class="id" title="definition">In_remove</span></a> <a class="idref" href="ListRelations.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a>) <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#S'"><span class="id" title="variable">S'</span></a> <span class="id" title="notation">[&lt;=]</span> <a class="idref" href="ListRelations.html#S"><span class="id" title="variable">S</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#a"><span class="id" title="variable">a</span></a> <span class="id" title="notation">`</span><span class="id" title="notation">notin</span><span class="id" title="notation">`</span> <a class="idref" href="ListRelations.html#S'"><span class="id" title="variable">S'</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="inductive">Forall</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">v</span> =&gt; <a class="idref" href="ListRelations.html#v"><span class="id" title="variable">v</span></a> <span class="id" title="notation">`</span><span class="id" title="notation">notin</span><span class="id" title="notation">`</span> <a class="idref" href="ListRelations.html#S'"><span class="id" title="variable">S'</span></a>) <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">l</span>; <span class="id" title="tactic">intros</span>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">change</span> (<span class="id" title="instance">EqDec_eq_of_X</span> <span class="id" title="var">a</span> <span class="id" title="var">a0</span>) <span class="id" title="keyword">with</span> (<span class="id" title="var">a</span> <span class="id" title="notation">==</span> <span class="id" title="var">a0</span>) <span class="id" title="tactic">in</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<span class="id" title="var">a</span> <span class="id" title="notation">==</span> <span class="id" title="var">a0</span>); <span class="id" title="tactic">subst</span>; <span class="id" title="tactic">trivial</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">set</span> <span class="id" title="tactic">solve</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">eapply</span> <span class="id" title="var">IHl</span>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<span class="id" title="var">a</span> <span class="id" title="notation">==</span> <span class="id" title="var">a0</span>); <span class="id" title="tactic">subst</span>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="ListRelations.html#AtomLists"><span class="id" title="section">AtomLists</span></a>.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;l1&nbsp;is&nbsp;a&nbsp;prefix&nbsp;of&nbsp;l2&nbsp;*)</span><br/>
+<span class="id" title="keyword">Inductive</span> <a name="prefix"><span class="id" title="inductive">prefix</span></a> {<span class="id" title="var">A</span>} : <span class="id" title="inductive">list</span> <span class="id" title="var">A</span> <span class="id" title="notation">-&gt;</span> <span class="id" title="inductive">list</span> <span class="id" title="var">A</span> <span class="id" title="notation">-&gt;</span> <span class="id" title="keyword">Prop</span> :=<br/>
+| <a name="pf_refl"><span class="id" title="constructor">pf_refl</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">l</span>, <a class="idref" href="ListRelations.html#prefix"><span class="id" title="inductive">prefix</span></a> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a><br/>
+| <a name="pf_cons"><span class="id" title="constructor">pf_cons</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span>, <a class="idref" href="ListRelations.html#prefix"><span class="id" title="inductive">prefix</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">-&gt;</span> <a class="idref" href="ListRelations.html#prefix"><span class="id" title="inductive">prefix</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> (<a class="idref" href="ListRelations.html#a"><span class="id" title="variable">a</span></a> <span class="id" title="notation">::</span> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a>).<br/>
+<span class="id" title="keyword">Local Hint Constructors</span> <a class="idref" href="ListRelations.html#prefix"><span class="id" title="inductive">prefix</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="PrefixProperties"><span class="id" title="section">PrefixProperties</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">A</span> : <span class="id" title="keyword">Type</span>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Implicit</span> <span class="id" title="keyword">Type</span> <span class="id" title="var">a</span> : <a class="idref" href="ListRelations.html#PrefixProperties.A"><span class="id" title="variable">A</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Implicit</span> <span class="id" title="keyword">Type</span> <span class="id" title="var">l</span> : <span class="id" title="inductive">list</span> <a class="idref" href="ListRelations.html#PrefixProperties.A"><span class="id" title="variable">A</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="prefix_to_app"><span class="id" title="lemma">prefix_to_app</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#prefix"><span class="id" title="inductive">prefix</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">exists</span> <span class="id" title="var">l</span><span class="id" title="notation">,</span> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">=</span> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a> <span class="id" title="notation">++</span> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> @<a class="idref" href="ListRelations.html#prefix"><span class="id" title="inductive">prefix</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">exists</span> <span class="id" title="constructor">nil</span>. <span class="id" title="var">easy</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="var">tidy_up</span>. <span class="id" title="tactic">eexists</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">instantiate</span> (1 := <span class="id" title="keyword">ltac</span>:(<span class="id" title="tactic">apply</span> <span class="id" title="constructor">cons</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>. <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="app_to_prefix"><span class="id" title="lemma">app_to_prefix</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span> <span class="id" title="var">l3</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <span class="id" title="notation">++</span> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">=</span> <a class="idref" href="ListRelations.html#l3"><span class="id" title="variable">l3</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#prefix"><span class="id" title="inductive">prefix</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <a class="idref" href="ListRelations.html#l3"><span class="id" title="variable">l3</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>. <span class="id" title="tactic">induction</span> <span class="id" title="var">l1</span>; <span class="id" title="var">routine</span>. <span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="prefix_iff_app"><span class="id" title="lemma">prefix_iff_app</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#prefix"><span class="id" title="inductive">prefix</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">&lt;-&gt;</span> <span class="id" title="notation">exists</span> <span class="id" title="var">l</span><span class="id" title="notation">,</span> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">=</span> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a> <span class="id" title="notation">++</span> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <a class="idref" href="ListRelations.html#prefix_to_app"><span class="id" title="lemma">prefix_to_app</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">intros</span>. <span class="id" title="var">tidy_up</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eapply</span> <a class="idref" href="ListRelations.html#app_to_prefix"><span class="id" title="lemma">app_to_prefix</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="prefix_nil"><span class="id" title="lemma">prefix_nil</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">l</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#prefix"><span class="id" title="inductive">prefix</span></a> <span class="id" title="constructor">nil</span> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>. <span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> <span class="id" title="inductive">list</span>; <span class="id" title="var">routine</span>. <span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="prefix_app"><span class="id" title="lemma">prefix_app</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">l'</span> <span class="id" title="var">l</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#prefix"><span class="id" title="inductive">prefix</span></a> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a> (<a class="idref" href="ListRelations.html#l'"><span class="id" title="variable">l'</span></a> <span class="id" title="notation">++</span> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>. <span class="id" title="tactic">induction</span> <span class="id" title="var">l'</span>; <span class="id" title="var">routine</span>. <span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">prefix_app</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="prefix_deapp"><span class="id" title="lemma">prefix_deapp</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span> <span class="id" title="var">l3</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#prefix"><span class="id" title="inductive">prefix</span></a> (<a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <span class="id" title="notation">++</span> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a>) <a class="idref" href="ListRelations.html#l3"><span class="id" title="variable">l3</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#prefix"><span class="id" title="inductive">prefix</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <a class="idref" href="ListRelations.html#l3"><span class="id" title="variable">l3</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>. <span class="id" title="var">dep</span> <span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> @<a class="idref" href="ListRelations.html#prefix"><span class="id" title="inductive">prefix</span></a>; <span class="id" title="tactic">eauto</span>. <span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="prefix_decons"><span class="id" title="lemma">prefix_decons</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#prefix"><span class="id" title="inductive">prefix</span></a> (<a class="idref" href="ListRelations.html#a"><span class="id" title="variable">a</span></a> <span class="id" title="notation">::</span> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a>) <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#prefix"><span class="id" title="inductive">prefix</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">eapply</span> <a class="idref" href="ListRelations.html#prefix_deapp"><span class="id" title="lemma">prefix_deapp</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">instantiate</span> (1 := <span class="id" title="constructor">cons</span> <span class="id" title="var">a</span> <span class="id" title="constructor">nil</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">trivial</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">prefix_decons</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="prefix_dom"><span class="id" title="lemma">prefix_dom</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">A</span> (<span class="id" title="var">l1</span> <span class="id" title="var">l2</span> : <span class="id" title="inductive">list</span> (<span class="id" title="abbreviation">var</span> <span class="id" title="notation">*</span> <a class="idref" href="ListRelations.html#A"><span class="id" title="variable">A</span></a>)),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#prefix"><span class="id" title="inductive">prefix</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="definition">dom</span> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <span class="id" title="notation">[&lt;=]</span> <span class="id" title="definition">dom</span> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> @<a class="idref" href="ListRelations.html#prefix"><span class="id" title="inductive">prefix</span></a>; <span class="id" title="var">routine</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="prefix_trans"><span class="id" title="lemma">prefix_trans</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span> <span class="id" title="var">l3</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#prefix"><span class="id" title="inductive">prefix</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#prefix"><span class="id" title="inductive">prefix</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <a class="idref" href="ListRelations.html#l3"><span class="id" title="variable">l3</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#prefix"><span class="id" title="inductive">prefix</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l3"><span class="id" title="variable">l3</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="var">gen</span> <span class="id" title="var">l3</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">H</span>; <span class="id" title="var">eroutine</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="PrefixPreOrder"><span class="id" title="instance">PrefixPreOrder</span></a> : <span class="id" title="class">PreOrder</span> (@<a class="idref" href="ListRelations.html#prefix"><span class="id" title="inductive">prefix</span></a> <a class="idref" href="ListRelations.html#PrefixProperties.A"><span class="id" title="variable">A</span></a>) := { }.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">exact</span> <a class="idref" href="ListRelations.html#pf_refl"><span class="id" title="constructor">pf_refl</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">exact</span> <a class="idref" href="ListRelations.html#prefix_trans"><span class="id" title="lemma">prefix_trans</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="ListRelations.html#PrefixProperties"><span class="id" title="section">PrefixProperties</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="OpeListProperties"><span class="id" title="section">OpeListProperties</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Constructors</span> <a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">ope_list_refl</span> <span class="id" title="var">ope_list_trans</span> <span class="id" title="var">ope_list_to_nil</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">A</span> : <span class="id" title="keyword">Type</span>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Implicit</span> <span class="id" title="keyword">Type</span> <span class="id" title="var">x</span> : <span class="id" title="abbreviation">var</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Implicit</span> <span class="id" title="keyword">Type</span> <span class="id" title="var">a</span> : <a class="idref" href="ListRelations.html#OpeListProperties.A"><span class="id" title="variable">A</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Implicit</span> <span class="id" title="keyword">Type</span> <span class="id" title="var">l</span> : <span class="id" title="inductive">list</span> (<span class="id" title="abbreviation">var</span> <span class="id" title="notation">*</span> <a class="idref" href="ListRelations.html#OpeListProperties.A"><span class="id" title="variable">A</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="prefix_is_ope_list"><span class="id" title="lemma">prefix_is_ope_list</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#prefix"><span class="id" title="inductive">prefix</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>. <span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> @<a class="idref" href="ListRelations.html#prefix"><span class="id" title="inductive">prefix</span></a>; <span class="id" title="var">routine</span>. <span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="ope_list_dom"><span class="id" title="lemma">ope_list_dom</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="definition">dom</span> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <span class="id" title="notation">[&lt;=]</span> <span class="id" title="definition">dom</span> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> @<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a>; <span class="id" title="tactic">set</span> <span class="id" title="tactic">solve</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">destruct_conjs</span>. <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">set</span> <span class="id" title="tactic">solve</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="ope_list_uniq"><span class="id" title="lemma">ope_list_uniq</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="inductive">uniq</span> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="inductive">uniq</span> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> @<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a>; <span class="id" title="var">routine</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">pose</span> <span class="id" title="var">proof</span> (<a class="idref" href="ListRelations.html#ope_list_dom"><span class="id" title="lemma">ope_list_dom</span></a> <span class="id" title="var">H1</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">set</span> <span class="id" title="tactic">solve</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="ope_list_witness_uniq_gen"><span class="id" title="lemma">ope_list_witness_uniq_gen</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">forall</span> <span class="id" title="var">l</span> <span class="id" title="var">l'</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a> <a class="idref" href="ListRelations.html#l'"><span class="id" title="variable">l'</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">forall</span> <span class="id" title="var">x</span> <span class="id" title="var">a1</span> <span class="id" title="var">a2</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span> <span class="id" title="var">l3</span> <span class="id" title="var">l4</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#l"><span class="id" title="variable">l</span></a> <span class="id" title="notation">=</span> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <span class="id" title="notation">++</span> <a class="idref" href="ListRelations.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">~</span> <a class="idref" href="ListRelations.html#a1"><span class="id" title="variable">a1</span></a> <span class="id" title="notation">++</span> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#l'"><span class="id" title="variable">l'</span></a> <span class="id" title="notation">=</span> <a class="idref" href="ListRelations.html#l3"><span class="id" title="variable">l3</span></a> <span class="id" title="notation">++</span> <a class="idref" href="ListRelations.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">~</span> <a class="idref" href="ListRelations.html#a2"><span class="id" title="variable">a2</span></a> <span class="id" title="notation">++</span> <a class="idref" href="ListRelations.html#l4"><span class="id" title="variable">l4</span></a> <span class="id" title="notation">-&gt;</span>                               <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="inductive">uniq</span> <a class="idref" href="ListRelations.html#l'"><span class="id" title="variable">l'</span></a> <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l3"><span class="id" title="variable">l3</span></a> <span class="id" title="notation">/\</span> <a class="idref" href="ListRelations.html#a1"><span class="id" title="variable">a1</span></a> <span class="id" title="notation">=</span> <a class="idref" href="ListRelations.html#a2"><span class="id" title="variable">a2</span></a> <span class="id" title="notation">/\</span> <a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <a class="idref" href="ListRelations.html#l4"><span class="id" title="variable">l4</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">on</span> @<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a>; <span class="id" title="tactic">intros</span>; <span class="id" title="var">destruct_conjs</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <span class="id" title="lemma">List.app_cons_not_nil</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">contradiction</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">destruct</span> <span class="id" title="var">l0</span>, <span class="id" title="var">l4</span>; <span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> *; <span class="id" title="var">progressive_inversions</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">repeat</span> <span class="id" title="tactic">split</span>; <span class="id" title="tactic">trivial</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="var">exfalso</span>. <span class="id" title="var">solve_uniq</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="var">exfalso</span>. <span class="id" title="tactic">pose</span> <span class="id" title="var">proof</span> (<a class="idref" href="ListRelations.html#ope_list_dom"><span class="id" title="lemma">ope_list_dom</span></a> <span class="id" title="var">H1</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">set</span> <span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> *. <span class="id" title="var">destruct_conjs</span>. <span class="id" title="tactic">set</span> <span class="id" title="tactic">solve</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="var">edestruct</span> <span class="id" title="var">IHope_list</span>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">reflexivity</span>; <span class="id" title="tactic">trivial</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">destruct_conjs</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">split</span>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">subst</span> <span class="id" title="var">l1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">l4</span>; <span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> *; <span class="id" title="var">progressive_inversions</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="var">exfalso</span>. <span class="id" title="tactic">pose</span> <span class="id" title="var">proof</span> (<a class="idref" href="ListRelations.html#ope_list_dom"><span class="id" title="lemma">ope_list_dom</span></a> <span class="id" title="var">H1</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">set</span> <span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> *. <span class="id" title="var">destruct_conjs</span>; <span class="id" title="tactic">set</span> <span class="id" title="tactic">solve</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="var">edestruct</span> <span class="id" title="var">IHope_list</span>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">reflexivity</span>; <span class="id" title="tactic">trivial</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">destruct_conjs</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="ope_list_witness_uniq"><span class="id" title="lemma">ope_list_witness_uniq</span></a> : <span class="id" title="keyword">forall</span> {<span class="id" title="var">x</span> <span class="id" title="var">a1</span> <span class="id" title="var">a2</span> <span class="id" title="var">l1</span> <span class="id" title="var">l2</span> <span class="id" title="var">l3</span> <span class="id" title="var">l4</span>},<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> (<a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <span class="id" title="notation">++</span> <a class="idref" href="ListRelations.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">~</span> <a class="idref" href="ListRelations.html#a1"><span class="id" title="variable">a1</span></a> <span class="id" title="notation">++</span> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a>) (<a class="idref" href="ListRelations.html#l3"><span class="id" title="variable">l3</span></a> <span class="id" title="notation">++</span> <a class="idref" href="ListRelations.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">~</span> <a class="idref" href="ListRelations.html#a2"><span class="id" title="variable">a2</span></a> <span class="id" title="notation">++</span> <a class="idref" href="ListRelations.html#l4"><span class="id" title="variable">l4</span></a>) <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="inductive">uniq</span> (<a class="idref" href="ListRelations.html#l3"><span class="id" title="variable">l3</span></a> <span class="id" title="notation">++</span> <a class="idref" href="ListRelations.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="notation">~</span> <a class="idref" href="ListRelations.html#a2"><span class="id" title="variable">a2</span></a> <span class="id" title="notation">++</span> <a class="idref" href="ListRelations.html#l4"><span class="id" title="variable">l4</span></a>) <span class="id" title="notation">-&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l1"><span class="id" title="variable">l1</span></a> <a class="idref" href="ListRelations.html#l3"><span class="id" title="variable">l3</span></a> <span class="id" title="notation">/\</span> <a class="idref" href="ListRelations.html#a1"><span class="id" title="variable">a1</span></a> <span class="id" title="notation">=</span> <a class="idref" href="ListRelations.html#a2"><span class="id" title="variable">a2</span></a> <span class="id" title="notation">/\</span> <a class="idref" href="ListRelations.html#ope_list"><span class="id" title="inductive">ope_list</span></a> <a class="idref" href="ListRelations.html#l2"><span class="id" title="variable">l2</span></a> <a class="idref" href="ListRelations.html#l4"><span class="id" title="variable">l4</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">eapply</span> <a class="idref" href="ListRelations.html#ope_list_witness_uniq_gen"><span class="id" title="lemma">ope_list_witness_uniq_gen</span></a>; <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="ListRelations.html#OpeListProperties"><span class="id" title="section">OpeListProperties</span></a>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

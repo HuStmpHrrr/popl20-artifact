@@ -1,0 +1,339 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="styling.css" type="text/css" />
+</head>
+<body>
+<h2 id="undecidability-of-d-and-its-decidable-fragments">Undecidability of D&lt;: and Its Decidable Fragments</h2>
+<p>The binary dependencies are</p>
+<ul>
+<li>Coq 8.8.2</li>
+<li>Agda 2.5.4.2</li>
+</ul>
+<p>Library dependencies are in <code>lib/</code> folder, which will be built automatically.</p>
+<p>For a recommended way to installing Coq and Agda, please refer to the end of this page.</p>
+<p>Dependencies are automatically built by</p>
+<pre class="shell"><code>make -B</code></pre>
+<p>This command will also build <code>dsub/</code> folder which contains the Coq proofs.</p>
+<p><code>fsub/</code> folder can be built by</p>
+<pre class="shell"><code>make fsub</code></pre>
+<p>The Agda proofs can be verified by</p>
+<pre class="shell"><code>cd agda/
+agda-2.5.4.2 Everything.agda</code></pre>
+<p>or by loading from Emacs.</p>
+<h2 id="correspondence-between-the-paper-and-formalization">Correspondence Between The Paper and Formalization</h2>
+<p>The formalization is done with a combination of Agda and Coq. The undecidability proofs are done in Agda (section 4) and the proofs of algorimic subtyping are done in Coq (section 5 and 6).</p>
+<p>The formalization is axiom-free, predicative and purely constructive.</p>
+<h3 id="folder-structure">Folder structure</h3>
+<p>The artifact consists of the following folders.</p>
+<ul>
+<li><a href="agda/Everything.html"><code>agda/</code></a> contains the undecidability proofs in Agda.</li>
+<li><a href="fsub/toc.html"><code>fsub/</code></a> contains the proofs of algorithmic subtyping of <code>F&lt;:</code> in Coq.</li>
+<li><a href="dsub/toc.html"><code>dsub/</code></a> contains the proofs of algorithmic subtyping of <code>D&lt;:</code> in Coq.</li>
+<li><code>lib/</code> contains external dependencies.</li>
+<li><code>share/</code> contains library specifically designed for this project.</li>
+</ul>
+<h3 id="structure-of-agda-proofs">Structure of Agda Proofs</h3>
+<p>The entry point is <a href="agda/Everything.html">Everything.agda</a>. The structure of the files are explained there.</p>
+<h3 id="structure-of-coq-proofs">Structure of Coq Proofs</h3>
+<p>There are Coq proofs in <a href="fsub/toc.html"><code>fsub/</code></a> and <a href="dsub/toc.html"><code>dsub/</code></a>, and the proofs are organized in the following ways:</p>
+<ul>
+<li><code>Definition.v</code> defines the abstract syntax and judgments of the calculus.</li>
+<li><code>OperationProperties.v</code>, <code>StructuralProperties.v</code> and <code>Misc.v</code> include necessary technical setup.</li>
+<li><code>OpeSub.v</code> defines <code>OPE&lt;:</code> and verifies its properties.</li>
+<li><code>StrongKernel.v</code> defines and verifies the properties of strong kernel.</li>
+</ul>
+<p>In <code>dsub/</code>, there are following additional files:</p>
+<ul>
+<li><code>Kernel.v</code> defines kernel D&lt;: and examines its properties.</li>
+<li><code>Step.v</code> defines step subtyping and examines its properties.</li>
+<li><code>Stareat.v</code> defines stare-at subtyping and examines its properties.</li>
+</ul>
+<h3 id="the-undecidability-proofs">The undecidability proofs</h3>
+<p>The paper made brief discussion on why <code>F&lt;:-</code> is undecidable. In the Agda proof, this is justified by reducing from <code>F&lt;:</code> deterministic, <code>F&lt;:d</code>, to <code>F&lt;:-</code>. <code>F&lt;:d</code> is an intermediate calculus in Pierce92, which was shown reducible from TCM, and therefore <code>F&lt;:d</code> is undecidable as well as <code>F&lt;:-</code>.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Theorem</th>
+<th>File</th>
+<th>Related Formalization</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td><a href="agda/DsubFull.html">DsubFull.agda</a></td>
+<td><a href="agda/DsubFull.html#2133"><code>&lt;:⇒&lt;:′</code></a> and <a href="agda/DsubFull.html#2958"><code>&lt;:′⇒&lt;:</code></a></td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td><a href="agda/FsubMinus.html">FsubMinus.agda</a></td>
+<td><a href="agda/FsubMinus.html#29141"><code>minus⇒deterministic</code></a> and <a href="agda/FsubMinus.html#29388"><code>deterministic⇒minus</code></a></td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td><a href="agda/DsubDef.html">DsubDef.agda</a></td>
+<td><a href="agda/DsubDef.html#8769"><code>contraInvertible</code></a></td>
+</tr>
+<tr class="even">
+<td></td>
+<td><a href="agda/DsubReduced.html">DsubReduced.agda</a></td>
+<td><a href="agda/DsubReduced.html#4239"><code>⟪⟫-contraEnv</code></a></td>
+</tr>
+<tr class="odd">
+<td>7, 8, 9</td>
+<td><a href="agda/DsubDef.html">DsubDef.agda</a></td>
+<td>under <a href="agda/DsubDef.html#9405"><code>module InvertibleProperties</code></a></td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td><a href="agda/DsubEquivSimpler.html">DsubEquivSimpler.agda</a></td>
+<td>under <a href="agda/DsubEquivSimpler.html#3706"><code>module SimplerTransitivity</code></a></td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td><a href="agda/DsubEquivSimpler.html">DsubEquivSimpler.agda</a></td>
+<td><a href="agda/DsubEquivSimpler.html#14605"><code>&lt;:⇒&lt;:″</code></a> and <a href="agda/DsubEquivSimpler.html#15057"><code>&lt;:″⇒&lt;:</code></a></td>
+</tr>
+<tr class="even">
+<td>12, 13</td>
+<td><a href="agda/DsubEquivSimpler.html">DsubEquivSimpler.agda</a></td>
+<td><a href="agda/DsubEquivSimpler.html#18497"><code>F&lt;:⇒D&lt;:</code></a> and <a href="agda/DsubEquivSimpler.html#18589"><code>D&lt;:⇒F&lt;:</code></a></td>
+</tr>
+<tr class="odd">
+<td>14</td>
+<td><a href="agda/DsubNoTrans.html">DsubNoTrans.agda</a></td>
+<td><a href="agda/DsubNoTrans.html#7080"><code>F&lt;:⇒D&lt;:</code></a> and <a href="agda/DsubNoTrans.html#7174"><code>D&lt;:⇒F&lt;:</code></a></td>
+</tr>
+<tr class="even">
+<td>15, 16</td>
+<td><a href="agda/DsubTermUndec.html">DsubTermUndec.agda</a></td>
+<td><a href="agda/DsubTermUndec.html#897"><code>F&lt;:⇒typing′</code></a> and <a href="agda/DsubTermUndec.html#1471"><code>typing⇒F&lt;:′</code></a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="kernel-d-and-step-subtyping">Kernel D&lt;: and Step subtyping</h3>
+<table>
+<colgroup>
+<col width="3%" />
+<col width="10%" />
+<col width="86%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Theorem</th>
+<th>File</th>
+<th>Related Formalization</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>17</td>
+<td><a href="dsub/Kernel.html">Kernel.v</a></td>
+<td><a href="dsub/Kernel.html#subtykn_sound"><code>subtykn_sound</code></a></td>
+</tr>
+<tr class="even">
+<td>18</td>
+<td><a href="dsub/Step.html">Step.v</a></td>
+<td><a href="dsub/Step.html#stp_subty_sound"><code>stp_subty_sound</code></a></td>
+</tr>
+<tr class="odd">
+<td>19</td>
+<td><a href="dsub/Step.html">Step.v</a></td>
+<td><a href="dsub/Step.html#stp_subty_terminates"><code>stp_subty_terminates</code></a></td>
+</tr>
+<tr class="even">
+<td>20</td>
+<td><a href="dsub/Kernel.html">Kernel.v</a></td>
+<td><a href="dsub/Kernel.html#subtykn_refl"><code>subtykn_refl</code></a></td>
+</tr>
+<tr class="odd">
+<td>21</td>
+<td><a href="dsub/Kernel.html">Kernel.v</a></td>
+<td><a href="dsub/Kernel.html#trans_on_top"><code>trans_on_top</code></a></td>
+</tr>
+<tr class="even">
+<td>22</td>
+<td><a href="dsub/Kernel.html">Kernel.v</a></td>
+<td><a href="dsub/Kernel.html#trans_on_bot"><code>trans_on_bot</code></a></td>
+</tr>
+<tr class="odd">
+<td>23</td>
+<td><a href="dsub/Kernel.html">Kernel.v</a></td>
+<td><a href="dsub/Kernel.html#exposure&#39;_to_subtykn"><code>exposure'_to_subtykn</code></a></td>
+</tr>
+<tr class="even">
+<td></td>
+<td><a href="dsub/Step.html">Step.v</a></td>
+<td><a href="dsub/Step.html#exposure_to_exposure&#39;"><code>exposure_to_exposure'</code></a>, <a href="dsub/Step.html#exposure&#39;_to_exposure"><code>exposure'_to_exposure</code></a></td>
+</tr>
+<tr class="odd">
+<td>24</td>
+<td><a href="dsub/Kernel.html">Kernel.v</a></td>
+<td><a href="dsub/Kernel.html#stp_subty_to_subtykn"><code>stp_subty_to_subtykn</code></a></td>
+</tr>
+<tr class="even">
+<td>25</td>
+<td><a href="dsub/Kernel.html">Kernel.v</a></td>
+<td><a href="dsub/Kernel.html#subtykn_to_stp_subty"><code>subtykn_to_stp_subty</code></a>, <a href="dsub/Kernel.html#subtykn_to_stp_subty&#39;"><code>subtykn_to_stp_subty'</code></a>, <a href="dsub/Kernel.html#stp_subty&#39;_to_stp_subty"><code>stp_subty'_to_stp_subty</code></a>, <a href="dsub/Kernel.html#subtykn&#39;_conversions"><code>subtykn'_conversions</code></a></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><a href="dsub/Step.html">Step.v</a></td>
+<td><a href="dsub/Step.html#exposure_strengthening"><code>exposure_strengthening</code></a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="strong-kernel-d-and-stare-at-subtyping">Strong Kernel D&lt;: and Stare-at subtyping</h3>
+<table>
+<colgroup>
+<col width="3%" />
+<col width="13%" />
+<col width="83%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Theorem</th>
+<th>File</th>
+<th>Related Formalization</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>26</td>
+<td><a href="dsub/StrongKernel.html">StrongKernel.v</a></td>
+<td><a href="dsub/StrongKernel.html#subtysk_refl"><code>subtysk_refl</code></a></td>
+</tr>
+<tr class="even">
+<td>27</td>
+<td><a href="dsub/StrongKernel.html">StrongKernel.v</a></td>
+<td><a href="dsub/StrongKernel.html#subtykn_to_subtysk"><code>subtykn_to_subtysk</code></a></td>
+</tr>
+<tr class="odd">
+<td>28, 32</td>
+<td><a href="dsub/StrongKernel.html">StrongKernel.v</a></td>
+<td><a href="dsub/StrongKernel.html#subtysk_sound"><code>subtysk_sound</code></a></td>
+</tr>
+<tr class="even">
+<td>29</td>
+<td><a href="dsub/OpeSub.html">OpeSub.v</a></td>
+<td><a href="dsub/OpeSub.html#ope_sub_refl"><code>ope_sub_refl</code></a></td>
+</tr>
+<tr class="odd">
+<td>30</td>
+<td><a href="dsub/OpeSub.html">OpeSub.v</a></td>
+<td><a href="dsub/OpeSub.html#ope_sub_trans"><code>ope_sub_trans</code></a></td>
+</tr>
+<tr class="even">
+<td>31</td>
+<td><a href="dsub/OpeSub.html">OpeSub.v</a></td>
+<td><a href="dsub/OpeSub.html#ope_narrow_subty"><code>ope_narrow_subty</code></a></td>
+</tr>
+<tr class="odd">
+<td>33</td>
+<td><a href="dsub/Step.html">Step.v</a></td>
+<td><a href="dsub/Step.html#revealing_gives_prefix"><code>revealing_gives_prefix</code></a></td>
+</tr>
+<tr class="even">
+<td>34, 35</td>
+<td><a href="dsub/Stareat.html">Stareat.v</a></td>
+<td><a href="dsub/Stareat.html#revealing_sound"><code>revealing_sound</code></a></td>
+</tr>
+<tr class="odd">
+<td>36</td>
+<td><a href="dsub/Stareat.html">Stareat.v</a></td>
+<td><a href="dsub/Stareat.html#revealing_preserves_wf"><code>revealing_preserves_wf</code></a></td>
+</tr>
+<tr class="even">
+<td>37</td>
+<td><a href="dsub/Stareat.html">Stareat.v</a></td>
+<td><a href="dsub/Stareat.html#upcast_sound"><code>upcast_sound</code></a>, <a href="dsub/Stareat.html#upcast_preserves_wf"><code>upcast_preserves_wf</code></a>, <a href="dsub/Stareat.html#downcast_sound"><code>downcast_sound</code></a>, <a href="dsub/Stareat.html#downcast_preserves_wf"><code>downcast_preserves_wf</code></a></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><a href="dsub/Step.html">Step.v</a></td>
+<td><a href="dsub/Step.html#upcast_gives_prefix"><code>upcast_gives_prefix</code></a>, <a href="dsub/Step.html#downcast_gives_prefix"><code>downcast_gives_prefix</code></a></td>
+</tr>
+<tr class="even">
+<td>38</td>
+<td><a href="dsub/Stareat.html">Stareat.v</a></td>
+<td><a href="dsub/Stareat.html#ope_sub_stareat_sound"><code>ope_sub_stareat_sound</code></a></td>
+</tr>
+<tr class="odd">
+<td>39</td>
+<td><a href="dsub/Stareat.html">Stareat.v</a></td>
+<td><a href="dsub/Stareat.html#bsubtyp_sound"><code>bsubtyp_sound</code></a></td>
+</tr>
+<tr class="even">
+<td>40</td>
+<td><a href="dsub/Stareat.html">Stareat.v</a></td>
+<td><a href="dsub/Stareat.html#revealing_terminates"><code>revealing_terminates</code></a></td>
+</tr>
+<tr class="odd">
+<td>41</td>
+<td><a href="dsub/Stareat.html">Stareat.v</a></td>
+<td><a href="dsub/Stareat.html#revealing_measure"><code>revealing_measure</code></a>, <a href="dsub/Stareat.html#upcast_decreases_measure"><code>upcast_decreases_measure</code></a>, and <a href="dsub/Stareat.html#downcast_decreases_measure"><code>downcast_decreases_measure</code></a></td>
+</tr>
+<tr class="even">
+<td>42</td>
+<td><a href="dsub/Stareat.html">Stareat.v</a></td>
+<td><a href="dsub/Stareat.html#stareat_terminates"><code>stareat_terminates</code></a></td>
+</tr>
+<tr class="odd">
+<td>43</td>
+<td><a href="dsub/StrongKernel.html">StrongKernel.v</a></td>
+<td><a href="dsub/StrongKernel.html#revealing_to_subtysk"><code>revealing_to_subtysk</code></a>, <a href="dsub/StrongKernel.html#exposure&#39;_to_subtysk"><code>exposure'_to_subtysk</code></a></td>
+</tr>
+<tr class="even">
+<td>44</td>
+<td><a href="dsub/StrongKernel.html">StrongKernel.v</a></td>
+<td><a href="dsub/StrongKernel.html#stareat_to_subtysk"><code>stareat_to_subtysk</code></a>, <a href="dsub/StrongKernel.html#stareat&#39;_to_subtysk"><code>stareat'_to_subtysk</code></a>, <a href="dsub/StrongKernel.html#stareat_to_stareat&#39;"><code>stareat_to_stareat'</code></a></td>
+</tr>
+<tr class="odd">
+<td>45</td>
+<td><a href="dsub/Step.html">Step.v</a></td>
+<td><a href="dsub/Step.html#stareat_strengthening"><code>stareat_strengthening</code></a></td>
+</tr>
+<tr class="even">
+<td>46</td>
+<td><a href="dsub/StrongKernel.html">StrongKernel.v</a></td>
+<td><a href="dsub/StrongKernel.html#subtysk_to_stareat"><code>subtysk_to_stareat</code></a>, <a href="dsub/StrongKernel.html#subtysk_to_stareat&#39;"><code>subtysk_to_stareat'</code></a>, <a href="dsub/StrongKernel.html#stareat&#39;_to_stareat"><code>stareat'_to_stareat</code></a>, <a href="dsub/StrongKernel.html#subtysk&#39;_conversions"><code>subtysk'_conversions</code></a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="proof-engineering">Proof engineering</h3>
+<p>To make formalization work, there are proof engineering details that are not exposed in the paper. They include:</p>
+<ul>
+<li>In Agda, names are modelled using De Bruijn indices.</li>
+<li>In Coq, names are modelled using cofinite quantification. Therefore, in addition to requiring a type being closed w.r.t. the context, well-formedness condition also requires that the types are locally closed.</li>
+<li>Some conclusions are results of equivalences of intermediate languages which are not mentioned in the paper.</li>
+<li>Step subtyping and Stare-at subtyping are modelled as program traces. In addition to every input/output, the relations also rely on a name store, very often represented by <code>L</code>, which means when a free name is drawn from a supply, the name must not be in <code>L</code>. This is a realistic treatment when free names are necessary in a program trace.</li>
+<li>There are theorems in the paper which require to count the steps of derivation. In this case, separate relations are defined. Each of such relations copies its corresponding original relation, and additionally has a step counter, usually represented by <code>n</code>. Then this relation is shown to be equivalent to the original one. That is, if the original relation is <code>R ⊆ X × Y</code>, then define <code>R′ ⊆ X × Y × ℕ</code>, such that <code>(x, y) ∈ R ⇔ ∃ n, (x, y, n) ∈ R′</code></li>
+</ul>
+<h2 id="binary-installation">Binary Installation</h2>
+<h3 id="installing-coq">Installing Coq</h3>
+<p>Please ensure that all related binaries can be found in <code>PATH</code>. If a binary is not found, please check your the <code>PATH</code> of your shell.</p>
+<p>To install Coq, it is recommended to install via opam2, which can be installed via</p>
+<pre class="shell"><code>sh &lt;(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)</code></pre>
+<p>Then the following script will create a switch with the proper compiler version and install Coq.</p>
+<pre class="shell"><code>opam switch create coq-8.8.2 4.05.0
+eval $(opam env)
+opam pin add coq 8.8.2</code></pre>
+<h3 id="install-agda">Install Agda</h3>
+<p>It is recommended to build Agda from source. To do so, one would need to install <code>stack</code>. This can be done via</p>
+<pre class="shell"><code>curl -sSL https://get.haskellstack.org/ | sh</code></pre>
+<p>Then the following script will use <code>stack</code> to install Agda in <code>.local/bin/</code>.</p>
+<pre class="shell"><code>git clone https://github.com/agda/agda
+cd agda
+git checkout release-2.5.4.2
+cp stack-8.4.4.yaml stack.yaml
+stack stall # it is going to take a while
+cp ~/.local/bin/agda ~/.local/bin/agda-2.5.4.2
+cp ~/.local/bin/agda-mode ~/.local/bin/agda-mode-2.5.4.2</code></pre>
+</body>
+</html>

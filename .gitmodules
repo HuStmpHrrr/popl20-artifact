@@ -1,0 +1,12 @@
+[submodule "lib/Coq-Equations"]
+	path = lib/Coq-Equations
+	url = https://github.com/mattam82/Coq-Equations
+[submodule "lib/coq-ext-lib"]
+	path = lib/coq-ext-lib
+	url = https://github.com/coq-ext-lib/coq-ext-lib
+[submodule "lib/metalib"]
+	path = lib/metalib
+	url = https://github.com/HuStmpHrrr/metalib
+[submodule "lib/agda-stdlib"]
+	path = lib/agda-stdlib
+	url = https://github.com/agda/agda-stdlib

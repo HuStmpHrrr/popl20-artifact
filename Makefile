@@ -37,5 +37,6 @@ deps: ${ALL_DEPS}
 
 CWD=$(shell pwd)
 clean:
+	find . -name '*.agdai' -exec rm {} +
+	for d in ${PROJECTS}; do cd ${CWD}; cd "$$d" && ${MAKE} clean; done
 	for d in ${ALL_DEPS}; do cd ${CWD}; cd "$$d" && ${MAKE} clean; done
-	cd agda/; rm *.agdai

@@ -18,16 +18,20 @@ lib/Coq-Equations: .submodules-pulled
 ${DEPS} share: .submodules-pulled
 	cd $@ && ${MAKE}
 
+docs/index.html:
+	cd docs && \
+	pandoc index.md -H include.html --no-highlight -T 'Undecidability of D<: and Its Decidable Fragments' -t html --css styling.css -o index.html
+
 docs:
-	cd dsub && make doc
-	cd fsub && make doc
+	cd dsub && ${MAKE} doc
+	cd fsub && ${MAKE} doc
 	cd agda && agda-2.5.4.2 --css Agda.css --html Everything.agda
 	mkdir -p docs
 	cp -Trf dsub/doc docs/dsub
 	cp -Trf fsub/doc docs/fsub
 	cp -Trf agda/html docs/agda
 	for f in docs/agda/*.html; do python process.py $$f; done
-	cd docs && pandoc index.md -t html --css styling.css -o index.html
+	make docs/index.html
 
 deps: ${ALL_DEPS}
 

@@ -4,12 +4,53 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
-  <title></title>
+  <title>Undecidability of D<: and Its Decidable Fragments – </title>
   <style type="text/css">code{white-space: pre;}</style>
   <link rel="stylesheet" href="styling.css" type="text/css" />
+  <script type="text/javascript" src="style.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script>
+   $(function () {
+       $("pre>code").parents("pre").each(function(_) {
+           var pre = this;
+           for (c of pre.children) {
+               c.classList.add(pre.className);
+           }
+       })
+   })
+  
+   $(function() {
+       var h1elem = $("h1")[0];
+       h1elem.classList.add("project_title");
+       var header = $(`<div id="header_wrap" class="outer">
+          <header class="inner">
+            
+              <a id="forkme_banner" href="https://github.com/pages-themes/slate">View on GitHub</a>
+            ${h1elem.outerHTML}          
+              <section id="downloads">
+                <a class="zip_download_link" href="https://github.com/pages-themes/slate/zipball/master">Download this project as a .zip file</a>
+                <a class="tar_download_link" href="https://github.com/pages-themes/slate/tarball/master">Download this project as a tar.gz file</a>
+              </section>
+            
+          </header>
+      </div>`);
+       var body = h1elem.parentNode;
+       h1elem.remove();
+       var sec = document.createElement("section");
+       sec.classList.add("inner");
+       sec.innerHTML = body.innerHTML;
+       body.innerHTML = '';
+       body.appendChild(header[0]);
+       body.appendChild(sec);
+   })
+  </script>
+  <link rel="stylesheet"
+        href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/default.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
 </head>
 <body>
-<h2 id="undecidability-of-d-and-its-decidable-fragments">Undecidability of D&lt;: and Its Decidable Fragments</h2>
+<h1 id="undecidability-of-d-and-its-decidable-fragments">Undecidability of D&lt;: and Its Decidable Fragments</h1>
 <p>The binary dependencies are</p>
 <ul>
 <li>Coq 8.8.2</li>
@@ -18,12 +59,12 @@
 <p>Library dependencies are in <code>lib/</code> folder, which will be built automatically.</p>
 <p>For a recommended way to installing Coq and Agda, please refer to the end of this page.</p>
 <p>Dependencies are automatically built by</p>
-<pre class="shell"><code>make -B</code></pre>
+<pre class="bash"><code>make -B</code></pre>
 <p>This command will also build <code>dsub/</code> folder which contains the Coq proofs.</p>
 <p><code>fsub/</code> folder can be built by</p>
-<pre class="shell"><code>make fsub</code></pre>
+<pre class="bash"><code>make fsub</code></pre>
 <p>The Agda proofs can be verified by</p>
-<pre class="shell"><code>cd agda/
+<pre class="bash"><code>cd agda/
 agda-2.5.4.2 Everything.agda</code></pre>
 <p>or by loading from Emacs.</p>
 <h2 id="correspondence-between-the-paper-and-formalization">Correspondence Between The Paper and Formalization</h2>
@@ -319,16 +360,16 @@ agda-2.5.4.2 Everything.agda</code></pre>
 <h3 id="installing-coq">Installing Coq</h3>
 <p>Please ensure that all related binaries can be found in <code>PATH</code>. If a binary is not found, please check your the <code>PATH</code> of your shell.</p>
 <p>To install Coq, it is recommended to install via opam2, which can be installed via</p>
-<pre class="shell"><code>sh &lt;(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)</code></pre>
+<pre class="bash"><code>sh &lt;(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)</code></pre>
 <p>Then the following script will create a switch with the proper compiler version and install Coq.</p>
-<pre class="shell"><code>opam switch create coq-8.8.2 4.05.0
+<pre class="bash"><code>opam switch create coq-8.8.2 4.05.0
 eval $(opam env)
 opam pin add coq 8.8.2</code></pre>
 <h3 id="install-agda">Install Agda</h3>
 <p>It is recommended to build Agda from source. To do so, one would need to install <code>stack</code>. This can be done via</p>
-<pre class="shell"><code>curl -sSL https://get.haskellstack.org/ | sh</code></pre>
+<pre class="bash"><code>curl -sSL https://get.haskellstack.org/ | sh</code></pre>
 <p>Then the following script will use <code>stack</code> to install Agda in <code>.local/bin/</code>.</p>
-<pre class="shell"><code>git clone https://github.com/agda/agda
+<pre class="bash"><code>git clone https://github.com/agda/agda
 cd agda
 git checkout release-2.5.4.2
 cp stack-8.4.4.yaml stack.yaml

@@ -1,4 +1,4 @@
-## Undecidability of D<: and Its Decidable Fragments
+# Undecidability of D<: and Its Decidable Fragments
 
 The binary dependencies are
 
@@ -12,7 +12,7 @@ page.
 
 Dependencies are automatically built by
 
-``` shell
+``` bash
 make -B
 ```
 
@@ -20,13 +20,13 @@ This command will also build `dsub/` folder which contains the Coq proofs.
 
 `fsub/` folder can be built by 
 
-``` shell
+``` bash
 make fsub
 ```
 
 The Agda proofs can be verified by
 
-``` shell
+``` bash
 cd agda/
 agda-2.5.4.2 Everything.agda
 ```
@@ -169,14 +169,14 @@ found, please check your the `PATH` of your shell.
 
 To install Coq, it is recommended to install via opam2, which can be installed via
 
-``` shell
+``` bash
 sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)
 ```
 
 Then the following script will create a switch with the proper compiler version and
 install Coq.
 
-``` shell
+``` bash
 opam switch create coq-8.8.2 4.05.0
 eval $(opam env)
 opam pin add coq 8.8.2
@@ -187,13 +187,13 @@ opam pin add coq 8.8.2
 It is recommended to build Agda from source. To do so, one would need to install
 `stack`. This can be done via
 
-``` shell
+``` bash
 curl -sSL https://get.haskellstack.org/ | sh
 ```
 
 Then the following script will use `stack` to install Agda in `.local/bin/`.
 
-``` shell
+``` bash
 git clone https://github.com/agda/agda
 cd agda
 git checkout release-2.5.4.2

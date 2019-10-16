@@ -6,7 +6,7 @@ Welcome to the homepage of our paper, Undecidability of D<: and Its Decidable Fr
 
 There are three ways to examine our artifact:
 
-* download and run our VirtualBox VM,
+* [download](https://mcgill-my.sharepoint.com/:u:/g/personal/zhong_s_hu_mail_mcgill_ca/EVBdTDWP2vdDguofJZa_3a4BA4LxTznaLdqlwDZnnV2fRA?e=wsU4oo) and run our VirtualBox VM,
 * clone our Github repository, or
 * directly download our artifact package.
 

@@ -556,7 +556,7 @@ form {
 }
 #downloads {
  position:absolute;
- width:210px;
+ width:315px;
  z-index:10;
  bottom:-40px;
  right:0;
@@ -588,6 +588,23 @@ form {
 .tar_download_link:hover {
  background:url(images/sprite_download.png) no-repeat top right
 }
+
+.vdi_download_link {
+ display:block;
+ float:right;
+ width:80px;
+ height:70px;
+ text-indent:-5000px;
+ overflow:hidden;
+ background-image:url(images/vdi_grey.png);
+ background-size:cover;
+ background-repeat:no-repeat;
+ background-position:center center; 
+}
+.vdi_download_link:hover {
+ background-image:url(images/vdi_blue.png);
+}
+
 #main_content_wrap {
  background:#f2f2f2;
  border-top:1px solid #111;

@@ -509,10 +509,10 @@ form {
  width:100%
 }
 .inner {
- padding-top: 40px;
  position:relative;
- max-width:800px;
+ max-width:850px;
  padding:20px 10px;
+ padding-top: 60px;
  margin:0 auto
 }
 #forkme_banner {

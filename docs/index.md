@@ -1,6 +1,18 @@
 # Undecidability of D<: and Its Decidable Fragments
 
-The binary dependencies are
+Welcome to the homepage of our paper, Undecidability of D<: and Its Decidable Fragments!
+
+## The Artifact
+
+There are three ways to examine our artifact:
+
+* download and run our VirtualBox VM,
+* clone our Github repository, or
+* directly download our artifact package.
+
+The easiest way is to simply run the Ubuntu VM!
+
+It is also possible to build from our source. The binary dependencies are
 
 * Coq 8.8.2
 * Agda 2.5.4.2

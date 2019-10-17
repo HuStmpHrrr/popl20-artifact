@@ -25,7 +25,7 @@
        var header = $(`<div id="header_wrap" class="outer">
           <header class="inner">
             
-              <a id="forkme_banner" href="https://github.com/HuStmpHrrr/popl20-artifact">View on GitHub</a>
+              <a id="forkme_banner" href="https://github.com/HuStmpHrrr/popl20-artifact">Fork on GitHub</a>
             ${h1elem.outerHTML}
             <h2 id="project_tagline">Jason Hu and Ondřej Lhoták</h2>
               <section id="downloads">
@@ -58,8 +58,8 @@
 <p>There are three ways to examine our artifact:</p>
 <ul>
 <li><a href="https://mcgill-my.sharepoint.com/:u:/g/personal/zhong_s_hu_mail_mcgill_ca/EVBdTDWP2vdDguofJZa_3a4BA4LxTznaLdqlwDZnnV2fRA?e=wsU4oo">download</a> and run our VirtualBox VM,</li>
-<li>clone our Github repository, or</li>
-<li>directly download our artifact package.</li>
+<li><a href="https://github.com/HuStmpHrrr/popl20-artifact">clone our Github repository</a>, or</li>
+<li>directly <a href="https://mcgill-my.sharepoint.com/:u:/g/personal/zhong_s_hu_mail_mcgill_ca/ERFMBwiNxtdLqqoIhgwB_yEB0UxpoK7MwiWf5YVqqLPeLg?e=GGclZ1">download</a> our artifact package.</li>
 </ul>
 <p>The easiest way is to simply run the Ubuntu VM!</p>
 <p>It is also possible to build from our source. The binary dependencies are</p>
@@ -362,14 +362,14 @@ agda-2.5.4.2 Everything.agda</code></pre>
 <p>To make formalization work, there are proof engineering details that are not exposed in the paper. They include:</p>
 <ul>
 <li>In Agda, names are modelled using De Bruijn indices.</li>
-<li>In Coq, names are modelled using cofinite quantification. Therefore, in addition to requiring a type being closed w.r.t. the context, well-formedness condition also requires that the types are locally closed.</li>
-<li>Some conclusions are results of equivalences of intermediate languages which are not mentioned in the paper.</li>
+<li>In Coq, names are modelled using locally nameless representation with cofinite quantification. Therefore, in addition to requiring a type being closed w.r.t. the context, well-formedness condition also requires that the types are locally closed.</li>
+<li>Some conclusions in the formalization are results of equivalences of intermediate languages which are not mentioned in the paper. For example, completeness theorems of kernel and strong kernel <code>D&lt;:</code> belong to this category.</li>
 <li>Step subtyping and Stare-at subtyping are modelled as program traces. In addition to every input/output, the relations also rely on a name store, very often represented by <code>L</code>, which means when a free name is drawn from a supply, the name must not be in <code>L</code>. This is a realistic treatment when free names are necessary in a program trace.</li>
 <li>There are theorems in the paper which require to count the steps of derivation. In this case, separate relations are defined. Each of such relations copies its corresponding original relation, and additionally has a step counter, usually represented by <code>n</code>. Then this relation is shown to be equivalent to the original one. That is, if the original relation is <code>R ⊆ X × Y</code>, then define <code>R′ ⊆ X × Y × ℕ</code>, such that <code>(x, y) ∈ R ⇔ ∃ n, (x, y, n) ∈ R′</code></li>
 </ul>
 <h2 id="binary-installation">Binary Installation</h2>
 <h3 id="installing-coq">Installing Coq</h3>
-<p>Please ensure that all related binaries can be found in <code>PATH</code>. If a binary is not found, please check your the <code>PATH</code> of your shell.</p>
+<p>Please ensure that all related binaries can be found in <code>PATH</code>. If a binary is not found, please check your <code>PATH</code> of your shell.</p>
 <p>To install Coq, it is recommended to install via opam2, which can be installed via</p>
 <pre class="bash"><code>sh &lt;(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)</code></pre>
 <p>Then the following script will create a switch with the proper compiler version and install Coq.</p>

@@ -7,8 +7,8 @@ Welcome to the homepage of our paper, Undecidability of D<: and Its Decidable Fr
 There are three ways to examine our artifact:
 
 * [download](https://mcgill-my.sharepoint.com/:u:/g/personal/zhong_s_hu_mail_mcgill_ca/EVBdTDWP2vdDguofJZa_3a4BA4LxTznaLdqlwDZnnV2fRA?e=wsU4oo) and run our VirtualBox VM,
-* clone our Github repository, or
-* directly download our artifact package.
+* [clone our Github repository](https://github.com/HuStmpHrrr/popl20-artifact), or
+* directly [download](https://mcgill-my.sharepoint.com/:u:/g/personal/zhong_s_hu_mail_mcgill_ca/ERFMBwiNxtdLqqoIhgwB_yEB0UxpoK7MwiWf5YVqqLPeLg?e=GGclZ1) our artifact package.
 
 The easiest way is to simply run the Ubuntu VM!
 
@@ -153,11 +153,12 @@ To make formalization work, there are proof engineering details that are not exp
 in the paper. They include:
 
 * In Agda, names are modelled using De Bruijn indices.
-* In Coq, names are modelled using cofinite quantification. Therefore, in addition to
-  requiring a type being closed w.r.t. the context, well-formedness condition also
-  requires that the types are locally closed.
-* Some conclusions are results of equivalences of intermediate languages which are not
-  mentioned in the paper.
+* In Coq, names are modelled using locally nameless representation with cofinite
+  quantification. Therefore, in addition to requiring a type being closed w.r.t. the
+  context, well-formedness condition also requires that the types are locally closed.
+* Some conclusions in the formalization are results of equivalences of intermediate
+  languages which are not mentioned in the paper. For example, completeness theorems
+  of kernel and strong kernel `D<:` belong to this category.
 * Step subtyping and Stare-at subtyping are modelled as program traces. In addition to
   every input/output, the relations also rely on a name store, very often represented
   by `L`, which means when a free name is drawn from a supply, the name must not be in
@@ -177,7 +178,7 @@ in the paper. They include:
 ### Installing Coq
 
 Please ensure that all related binaries can be found in `PATH`. If a binary is not
-found, please check your the `PATH` of your shell.
+found, please check your `PATH` of your shell.
 
 To install Coq, it is recommended to install via opam2, which can be installed via
 

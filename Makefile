@@ -18,7 +18,7 @@ lib/Coq-Equations: .submodules-pulled
 ${DEPS} share: .submodules-pulled
 	cd $@ && ${MAKE}
 
-docs/index.html:
+docs/index.html: docs/index.md
 	cd docs && \
 	pandoc index.md -H include.html --no-highlight -T 'Undecidability of D<: and Its Decidable Fragments' -t html --css styling.css -o index.html
 

@@ -195,7 +195,7 @@ eval $(opam env)
 opam pin add coq 8.8.2
 ```
 
-### Install Agda
+### Installing Agda
 
 It is recommended to build Agda from source. To do so, one would need to install
 `stack`. This can be done via

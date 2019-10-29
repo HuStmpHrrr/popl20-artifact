@@ -30,6 +30,16 @@ make -B
 
 This command will also build `dsub/` folder which contains the Coq proofs.
 
+We use git's submodules and if one pulls our repo, the submodules are not
+automatically pulled. `make` should ensure those modules exist before building. In
+case unexpected event occurs, one could update submodules by
+
+``` bash
+git submodule init
+git submodule update
+```
+
+
 `fsub/` folder can be built by 
 
 ``` bash
@@ -92,18 +102,18 @@ is justified by reducing from `F<:` deterministic, `F<:d`, to `F<:-`. `F<:d` is 
 intermediate calculus in Pierce92, which was shown reducible from TCM, and therefore
 `F<:d` is undecidable as well as `F<:-`. 
 
-| Theorem | File                                                | Related Formalization                                                                                     |
-|---------|-----------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
-| 2       | [DsubFull.agda](agda/DsubFull.html)                 | [`<:⇒<:′`](agda/DsubFull.html#2133) and [`<:′⇒<:`](agda/DsubFull.html#2958)                               |
-| 5       | [FsubMinus.agda](agda/FsubMinus.html)               | [`minus⇒deterministic`](agda/FsubMinus.html#29141) and [`deterministic⇒minus`](agda/FsubMinus.html#29388) |
-| 6       | [DsubDef.agda](agda/DsubDef.html)                   | [`contraInvertible`](agda/DsubDef.html#8769)                                                              |
-|         | [DsubReduced.agda](agda/DsubReduced.html)           | [`⟪⟫-contraEnv`](agda/DsubReduced.html#4239)                                                              |
-| 7, 8, 9 | [DsubDef.agda](agda/DsubDef.html)                   | under [`module InvertibleProperties`](agda/DsubDef.html#9405)                                             |
-| 10      | [DsubEquivSimpler.agda](agda/DsubEquivSimpler.html) | under [`module SimplerTransitivity`](agda/DsubEquivSimpler.html#3706)                                     |
-| 11      | [DsubEquivSimpler.agda](agda/DsubEquivSimpler.html) | [`<:⇒<:″`](agda/DsubEquivSimpler.html#14605) and [`<:″⇒<:`](agda/DsubEquivSimpler.html#15057)             |
-| 12, 13  | [DsubEquivSimpler.agda](agda/DsubEquivSimpler.html) | [`F<:⇒D<:`](agda/DsubEquivSimpler.html#18497) and [`D<:⇒F<:`](agda/DsubEquivSimpler.html#18589)           |
-| 14      | [DsubNoTrans.agda](agda/DsubNoTrans.html)           | [`F<:⇒D<:`](agda/DsubNoTrans.html#7080) and [`D<:⇒F<:`](agda/DsubNoTrans.html#7174)                       |
-| 15, 16  | [DsubTermUndec.agda](agda/DsubTermUndec.html)       | [`F<:⇒typing′`](agda/DsubTermUndec.html#897) and [`typing⇒F<:′`](agda/DsubTermUndec.html#1471)            |
+| Theorem | File                                                | Related Formalization                                                                                               |
+|---------|-----------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
+| 2       | [DsubFull.agda](agda/DsubFull.html)                 | [`<:⇒<:′`](agda/DsubFull.html#2133) and [`<:′⇒<:`](agda/DsubFull.html#2958)                                         |
+| 5       | [FsubMinus.agda](agda/FsubMinus.html)               | [`minus⇒deterministic`](agda/FsubMinus.html#29141) and [`deterministic⇒minus`](agda/FsubMinus.html#29388)           |
+| 6       | [DsubDef.agda](agda/DsubDef.html)                   | [`contraInvertible`](agda/DsubDef.html#8769)                                                                        |
+|         | [DsubReduced.agda](agda/DsubReduced.html)           | [`⟪⟫-contraEnv`](agda/DsubReduced.html#4239)                                                                        |
+| 7, 8, 9 | [DsubDef.agda](agda/DsubDef.html)                   | under [`module InvertibleProperties`](agda/DsubDef.html#9405) and [`module DsubInvProperties`](agda/Dsub.html#9520) |
+| 10      | [DsubEquivSimpler.agda](agda/DsubEquivSimpler.html) | under [`module SimplerTransitivity`](agda/DsubEquivSimpler.html#3706)                                               |
+| 11      | [DsubEquivSimpler.agda](agda/DsubEquivSimpler.html) | [`<:⇒<:″`](agda/DsubEquivSimpler.html#14605) and [`<:″⇒<:`](agda/DsubEquivSimpler.html#15057)                       |
+| 12, 13  | [DsubEquivSimpler.agda](agda/DsubEquivSimpler.html) | [`F<:⇒D<:`](agda/DsubEquivSimpler.html#18497) and [`D<:⇒F<:`](agda/DsubEquivSimpler.html#18589)                     |
+| 14      | [DsubNoTrans.agda](agda/DsubNoTrans.html)           | [`F<:⇒D<:`](agda/DsubNoTrans.html#7080) and [`D<:⇒F<:`](agda/DsubNoTrans.html#7174)                                 |
+| 15, 16  | [DsubTermUndec.agda](agda/DsubTermUndec.html)       | [`F<:⇒typing′`](agda/DsubTermUndec.html#897) and [`typing⇒F<:′`](agda/DsubTermUndec.html#1471)                      |
 
 ### Kernel D<: and Step subtyping
 

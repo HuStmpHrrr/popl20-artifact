@@ -8,6 +8,8 @@ ${PROJECTS}: ${ALL_DEPS} share
 	cd $@ && ${MAKE}
 
 .submodules-pulled:
+	git submodule init
+	git submodule update
 	touch .submodules-pulled
 
 share:${DEPS} lib/Coq-Equations

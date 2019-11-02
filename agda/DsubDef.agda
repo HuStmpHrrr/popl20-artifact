@@ -271,12 +271,14 @@ contraInvertible = record
 -- properties of D<:. In the following module, we show that in invertible contexts,
 -- inversion properties are recovered. For technical reasons, we leave the subtyping
 -- judgment open in order to accomodate multiple definition of subtyping in D<:.
+--
 -- These properties are discussed in Section 4.4.
 module InvertibleProperties {P : Env → Set}
                             (invertible : InvertibleEnv P)
                             (_⊢_<:_ : Env → Typ → Typ → Set) where
   open InvertibleEnv invertible public
-  
+
+  -- We define <:ᵢ to describe a fragment of <: under the restriction of invertible contexts.
   infix 4 _⊢ᵢ_<:_
   data _⊢ᵢ_<:_ : Env → Typ → Typ → Set where
     ditop   : ∀ {Γ T} → Γ ⊢ᵢ T <: ⊤
@@ -411,18 +413,6 @@ module InvertibleProperties {P : Env → Set}
                                        = <:Π S<:T pΓ
     <:Π (diall D₁ D₂) pΓ               = inj₂ (inj₂ (-, -, refl))
     <:Π (disel T∈Γ) pΓ                 = inj₂ (inj₁ (-, refl))
-
-    Π<:Π : ∀ {Γ S U S′ U′} →
-             Γ ⊢ᵢ Π S ∙ U <: Π S′ ∙ U′ →
-             P Γ →
-             Γ ⊢ᵢ S′ <: S
-    Π<:Π direfl pΓ                = direfl
-    Π<:Π (ditrans T Π<:T T<:Π′) pΓ with Π<: Π<:T
-    ... | inj₁ refl               = case ⊤<: T<:Π′ of λ ()
-    ... | inj₂ (_ , _ , refl)
-        with Π<:Π Π<:T pΓ | Π<:Π T<:Π′ pΓ
-    ...    | S″<:S        | S′<:S = ditrans _ S′<:S S″<:S
-    Π<:Π (diall Π<:Π′ U<:U′) pΓ   = Π<:Π′
 
 -- Terms and Values
 infix 6 var_ val_

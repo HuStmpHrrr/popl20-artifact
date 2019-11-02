@@ -44,7 +44,7 @@ CAMLFLAGS         := $(COQMF_CAMLFLAGS)
 HASNATDYNLINK     := $(COQMF_HASNATDYNLINK)
 
 Makefile.coq.conf: 
-	coq_makefile -Q ../lib/coq-ext-lib/theories ExtLib -Q ../lib/metalib/Metalib Metalib -Q ../lib/Coq-Equations/theories Equations -I ../lib/Coq-Equations/src -R . "" -install none -o Makefile.coq MetaExt.v EquationsExt.v LibUtils.v ListRelations.v ExtraClasses.v Concepts.v EtcFacts.v Lattice.v Monads.v StdSetup.v
+	coq_makefile -Q ../lib/coq-ext-lib/theories ExtLib -Q ../lib/metalib/Metalib Metalib -Q ../lib/Coq-Equations/theories Equations -I ../lib/Coq-Equations/src -R . "" -install none -o Makefile.coq MetaExt.v EquationsExt.v LibUtils.v ListRelations.v Concepts.v ExtraClasses.v StdSetup.v EtcFacts.v Lattice.v Monads.v
 
 # This file can be created by the user to hook into double colon rules or
 # add any other Makefile code he may need

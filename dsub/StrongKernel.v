@@ -107,13 +107,13 @@ Qed.
 (** ** Soundness and Completeness of Stare-at Subtyping w.r.t. Strong Kernel D#<sub>&lt;:</sub># *)
 
 (** *** The soundness theorem *)
-Lemma subtysk_sound : forall L G1 S U G2,
+Lemma subtysk_sound_gen : forall L G1 S U G2,
     [L] G1 ⊢k S <⦂ U k⊣ G2 ->
     forall G,
       fv G [<=] L ->
       uniq G ->
-      ope_sub G1 G ->
-      ope_sub G2 G ->
+      G ⊆<⦂ G1 ->
+      G ⊆<⦂ G2 ->
       G ⊢ S <⦂ U.
 Proof.
   induction on subtysk; try solve [routine]; intros.
@@ -133,6 +133,14 @@ Proof.
   - apply ty_var in H.
     eapply ope_narrow_trm in H; eauto.
     eauto using ty_sub.
+Qed.
+
+Lemma subtysk_sound : forall G S U,
+    [ fv G ] G ⊢k S <⦂ U k⊣ G ->
+    uniq G ->
+    G ⊢ S <⦂ U.
+Proof.
+  intros. eauto using subtysk_sound_gen, ope_sub_refl.
 Qed.
 
 (** *** The completeness theorem *)

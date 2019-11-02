@@ -108,4 +108,15 @@ Section OpeProperties.
       G1 ++ G2 ⊆<⦂ G.
   Proof. induction G1; routine. Qed.
 
+  Lemma ope_sub_app_r : forall G G1 G2,
+      G ⊆<⦂ G1 ++ G2 ->
+      G ⊆<⦂ G2.
+  Proof.
+    dep induction on ope_sub; eroutine.
+    - destruct H0, H1; routine.
+    - destruct H0; routine.
+      specialize (IHope_sub H0 H1 eq_refl).
+      auto.
+  Qed.
+  
 End OpeProperties.  

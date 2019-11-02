@@ -273,6 +273,38 @@ Inductive stareat : atoms -> env -> typ -> typ -> env -> Prop :=
 where "[ L ] G1 >> T '<⦂' U << G2" := (stareat L G1 T U G2)%type.
 Hint Constructors stareat.
 
+Theorem ope_sub_stareat_sound : forall L G1 T U G2,
+    [ L ] G1 >> T <⦂ U << G2 ->
+    forall G,
+      fv G [<=] L ->
+      uniq G ->
+      G ⊆<⦂ G1 ->
+      G ⊆<⦂ G2 ->
+      G ⊢F T <⦂ U.
+Proof.
+  induction on stareat; eauto 4; intros.
+  - pose proof H1.
+    do 2 apply ope_sub_app_r in H1.
+    apply ope_narrow_var with (x := x) (T := T) in H3; auto.
+    destruct_conjs.
+    eauto.
+  - econstructor; eauto.
+    cofinite. apply open_subst_subty with (x := x); auto 1.
+    + clear Fr. fsetdec.
+    + apply IHstareat2.
+      3,4:apply os_keep; auto.
+      * set solve.
+      * constructor; simpl in *; auto. clear Fr. fsetdec.
+Qed.
+
+Theorem stareat_sound : forall G T U,
+    [ fv G ] G >> T <⦂ U << G ->
+    uniq G ->
+    G ⊢F T <⦂ U.
+Proof.
+  intros. eauto using ope_sub_stareat_sound, ope_sub_refl.
+Qed.
+  
 (** Equivalence between strong kernel and stare-at subtyping *)
 Section Equivalence.
 

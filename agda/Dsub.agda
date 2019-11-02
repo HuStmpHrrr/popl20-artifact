@@ -297,11 +297,11 @@ module DsubInvProperties {P : Env → Set}
   ... | inj₁ ()
   ... | inj₂ (_ , _ , ()) 
   
-  Π<:Π′ : ∀ {Γ S U S′ U′} →
+  Π<:Π : ∀ {Γ S U S′ U′} →
             Γ ⊢ Π S ∙ U <: Π S′ ∙ U′ →
             P Γ →
             Γ ⊢ S′ <: S × (S′ ∷ Γ) ⊢ U <: U′
-  Π<:Π′ <: pΓ = Σ.map₁ <:ᵢ⇒<: $ helper (<:⇒<:ᵢ <: pΓ) pΓ
+  Π<:Π <: pΓ = Σ.map₁ <:ᵢ⇒<: $ helper (<:⇒<:ᵢ <: pΓ) pΓ
     where helper : ∀ {Γ S U S′ U′} →
                      Γ ⊢ᵢ Π S ∙ U <: Π S′ ∙ U′ →
                      P Γ →

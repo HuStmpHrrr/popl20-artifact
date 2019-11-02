@@ -108,11 +108,11 @@ intermediate calculus in Pierce92, which was shown reducible from TCM, and there
 | 5       | [FsubMinus.agda](agda/FsubMinus.html)               | [`minus⇒deterministic`](agda/FsubMinus.html#29141) and [`deterministic⇒minus`](agda/FsubMinus.html#29388)           |
 | 6       | [DsubDef.agda](agda/DsubDef.html)                   | [`contraInvertible`](agda/DsubDef.html#8769)                                                                        |
 |         | [DsubReduced.agda](agda/DsubReduced.html)           | [`⟪⟫-contraEnv`](agda/DsubReduced.html#4239)                                                                        |
-| 7, 8, 9 | [DsubDef.agda](agda/DsubDef.html)                   | under [`module InvertibleProperties`](agda/DsubDef.html#9405) and [`module DsubInvProperties`](agda/Dsub.html#9520) |
+| 7, 8, 9 | [DsubDef.agda](agda/DsubDef.html)                   | under [`module InvertibleProperties`](agda/DsubDef.html#9408) and [`module DsubInvProperties`](agda/Dsub.html#9520) |
 | 10      | [DsubEquivSimpler.agda](agda/DsubEquivSimpler.html) | under [`module SimplerTransitivity`](agda/DsubEquivSimpler.html#3706)                                               |
 | 11      | [DsubEquivSimpler.agda](agda/DsubEquivSimpler.html) | [`<:⇒<:″`](agda/DsubEquivSimpler.html#14605) and [`<:″⇒<:`](agda/DsubEquivSimpler.html#15057)                       |
 | 12, 13  | [DsubEquivSimpler.agda](agda/DsubEquivSimpler.html) | [`F<:⇒D<:`](agda/DsubEquivSimpler.html#18497) and [`D<:⇒F<:`](agda/DsubEquivSimpler.html#18589)                     |
-| 14      | [DsubNoTrans.agda](agda/DsubNoTrans.html)           | [`F<:⇒D<:`](agda/DsubNoTrans.html#7080) and [`D<:⇒F<:`](agda/DsubNoTrans.html#7174)                                 |
+| 14      | [DsubNoTrans.agda](agda/DsubNoTrans.html)           | [`F<:⇒D<:`](agda/DsubNoTrans.html#4523) and [`D<:⇒F<:`](agda/DsubNoTrans.html#4615)                                 |
 | 15, 16  | [DsubTermUndec.agda](agda/DsubTermUndec.html)       | [`F<:⇒typing′`](agda/DsubTermUndec.html#897) and [`typing⇒F<:′`](agda/DsubTermUndec.html#1471)                      |
 
 ### Kernel D<: and Step subtyping
@@ -137,10 +137,11 @@ intermediate calculus in Pierce92, which was shown reducible from TCM, and there
 |---------|------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 26      | [StrongKernel.v](dsub/StrongKernel.html) | [`subtysk_refl`](dsub/StrongKernel.html#subtysk_refl)                                                                                                                                                                                                                              |
 | 27      | [StrongKernel.v](dsub/StrongKernel.html) | [`subtykn_to_subtysk`](dsub/StrongKernel.html#subtykn_to_subtysk)                                                                                                                                                                                                                  |
-| 28, 32  | [StrongKernel.v](dsub/StrongKernel.html) | [`subtysk_sound`](dsub/StrongKernel.html#subtysk_sound)                                                                                                                                                                                                                            |
+| 28      | [StrongKernel.v](dsub/StrongKernel.html) | [`subtysk_sound`](dsub/StrongKernel.html#subtysk_sound)                                                                                                                                                                                                                            |
 | 29      | [OpeSub.v](dsub/OpeSub.html)             | [`ope_sub_refl`](dsub/OpeSub.html#ope_sub_refl)                                                                                                                                                                                                                                    |
 | 30      | [OpeSub.v](dsub/OpeSub.html)             | [`ope_sub_trans`](dsub/OpeSub.html#ope_sub_trans)                                                                                                                                                                                                                                  |
 | 31      | [OpeSub.v](dsub/OpeSub.html)             | [`ope_narrow_subty`](dsub/OpeSub.html#ope_narrow_subty)                                                                                                                                                                                                                            |
+| 32      | [StrongKernel.v](dsub/StrongKernel.html) | [`subtysk_sound_gen`](dsub/StrongKernel.html#subtysk_sound_gen)                                                                                                                                                                                                                    |
 | 33      | [Step.v](dsub/Step.html)                 | [`revealing_gives_prefix`](dsub/Step.html#revealing_gives_prefix)                                                                                                                                                                                                                  |
 | 34, 35  | [Stareat.v](dsub/Stareat.html)           | [`revealing_sound`](dsub/Stareat.html#revealing_sound)                                                                                                                                                                                                                             |
 | 36      | [Stareat.v](dsub/Stareat.html)           | [`revealing_preserves_wf`](dsub/Stareat.html#revealing_preserves_wf)                                                                                                                                                                                                               |
@@ -155,6 +156,21 @@ intermediate calculus in Pierce92, which was shown reducible from TCM, and there
 | 44      | [StrongKernel.v](dsub/StrongKernel.html) | [`stareat_to_subtysk`](dsub/StrongKernel.html#stareat_to_subtysk), [`stareat'_to_subtysk`](dsub/StrongKernel.html#stareat'_to_subtysk), [`stareat_to_stareat'`](dsub/StrongKernel.html#stareat_to_stareat')                                                                        |
 | 45      | [Step.v](dsub/Step.html)                 | [`stareat_strengthening`](dsub/Step.html#stareat_strengthening)                                                                                                                                                                                                                    |
 | 46      | [StrongKernel.v](dsub/StrongKernel.html) | [`subtysk_to_stareat`](dsub/StrongKernel.html#subtysk_to_stareat), [`subtysk_to_stareat'`](dsub/StrongKernel.html#subtysk_to_stareat'), [`stareat'_to_stareat`](dsub/StrongKernel.html#stareat'_to_stareat), [`subtysk'_conversions`](dsub/StrongKernel.html#subtysk'_conversions) |
+
+
+### Strong Kernel and Stare-at Subtyping in F<:
+
+In Secion 7, we discuss how to adapt our methods in F<:, and we also formalized this
+part in [`fsub/`](fsub/toc.html).
+
+| Theorem | File                                     | Related Formalization                                               |
+|---------|------------------------------------------|---------------------------------------------------------------------|
+| 47      | [StrongKernel.v](fsub/StrongKernel.html) | [`k_subty_to_sk_subty`](fsub/StrongKernel.html#k_subty_to_sk_subty) |
+| 48      | [StrongKernel.v](fsub/StrongKernel.html) | [`sk_subty_sound`](fsub/StrongKernel.html#sk_subty_sound)           |
+| 49      | [StrongKernel.v](fsub/StrongKernel.html) | [`stareat_sound`](fsub/StrongKernel.html#stareat_sound)             |
+| 50      | [StrongKernel.v](fsub/StrongKernel.html) | [`stareat_to_sk_subty`](fsub/StrongKernel.html#stareat_to_sk_subty) |
+| 51      | [StrongKernel.v](fsub/StrongKernel.html) | [`sk_subty_to_stareat`](fsub/StrongKernel.html#sk_subty_to_stareat) |
+| 52      | [StrongKernel.v](fsub/StrongKernel.html) | [`stareat_terminates`](fsub/StrongKernel.html#stareat_terminates)   |
 
 
 ### Proof engineering

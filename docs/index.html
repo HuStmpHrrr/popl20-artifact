@@ -72,6 +72,9 @@
 <p>Dependencies are automatically built by</p>
 <pre class="bash"><code>make -B</code></pre>
 <p>This command will also build <code>dsub/</code> folder which contains the Coq proofs.</p>
+<p>We use git's submodules and if one pulls our repo, the submodules are not automatically pulled. <code>make</code> should ensure those modules exist before building. In case unexpected event occurs, one could update submodules by</p>
+<pre class="bash"><code>git submodule init
+git submodule update</code></pre>
 <p><code>fsub/</code> folder can be built by</p>
 <pre class="bash"><code>make fsub</code></pre>
 <p>The Agda proofs can be verified by</p>
@@ -109,6 +112,11 @@ agda-2.5.4.2 Everything.agda</code></pre>
 <h3 id="the-undecidability-proofs">The undecidability proofs</h3>
 <p>The paper made brief discussion on why <code>F&lt;:-</code> is undecidable. In the Agda proof, this is justified by reducing from <code>F&lt;:</code> deterministic, <code>F&lt;:d</code>, to <code>F&lt;:-</code>. <code>F&lt;:d</code> is an intermediate calculus in Pierce92, which was shown reducible from TCM, and therefore <code>F&lt;:d</code> is undecidable as well as <code>F&lt;:-</code>.</p>
 <table>
+<colgroup>
+<col width="5%" />
+<col width="29%" />
+<col width="64%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>Theorem</th>
@@ -140,7 +148,7 @@ agda-2.5.4.2 Everything.agda</code></pre>
 <tr class="odd">
 <td>7, 8, 9</td>
 <td><a href="agda/DsubDef.html">DsubDef.agda</a></td>
-<td>under <a href="agda/DsubDef.html#9405"><code>module InvertibleProperties</code></a></td>
+<td>under <a href="agda/DsubDef.html#9408"><code>module InvertibleProperties</code></a> and <a href="agda/Dsub.html#9520"><code>module DsubInvProperties</code></a></td>
 </tr>
 <tr class="even">
 <td>10</td>
@@ -160,7 +168,7 @@ agda-2.5.4.2 Everything.agda</code></pre>
 <tr class="odd">
 <td>14</td>
 <td><a href="agda/DsubNoTrans.html">DsubNoTrans.agda</a></td>
-<td><a href="agda/DsubNoTrans.html#7080"><code>F&lt;:⇒D&lt;:</code></a> and <a href="agda/DsubNoTrans.html#7174"><code>D&lt;:⇒F&lt;:</code></a></td>
+<td><a href="agda/DsubNoTrans.html#4523"><code>F&lt;:⇒D&lt;:</code></a> and <a href="agda/DsubNoTrans.html#4615"><code>D&lt;:⇒F&lt;:</code></a></td>
 </tr>
 <tr class="even">
 <td>15, 16</td>
@@ -267,7 +275,7 @@ agda-2.5.4.2 Everything.agda</code></pre>
 <td><a href="dsub/StrongKernel.html#subtykn_to_subtysk"><code>subtykn_to_subtysk</code></a></td>
 </tr>
 <tr class="odd">
-<td>28, 32</td>
+<td>28</td>
 <td><a href="dsub/StrongKernel.html">StrongKernel.v</a></td>
 <td><a href="dsub/StrongKernel.html#subtysk_sound"><code>subtysk_sound</code></a></td>
 </tr>
@@ -287,74 +295,122 @@ agda-2.5.4.2 Everything.agda</code></pre>
 <td><a href="dsub/OpeSub.html#ope_narrow_subty"><code>ope_narrow_subty</code></a></td>
 </tr>
 <tr class="odd">
+<td>32</td>
+<td><a href="dsub/StrongKernel.html">StrongKernel.v</a></td>
+<td><a href="dsub/StrongKernel.html#subtysk_sound_gen"><code>subtysk_sound_gen</code></a></td>
+</tr>
+<tr class="even">
 <td>33</td>
 <td><a href="dsub/Step.html">Step.v</a></td>
 <td><a href="dsub/Step.html#revealing_gives_prefix"><code>revealing_gives_prefix</code></a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>34, 35</td>
 <td><a href="dsub/Stareat.html">Stareat.v</a></td>
 <td><a href="dsub/Stareat.html#revealing_sound"><code>revealing_sound</code></a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>36</td>
 <td><a href="dsub/Stareat.html">Stareat.v</a></td>
 <td><a href="dsub/Stareat.html#revealing_preserves_wf"><code>revealing_preserves_wf</code></a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>37</td>
 <td><a href="dsub/Stareat.html">Stareat.v</a></td>
 <td><a href="dsub/Stareat.html#upcast_sound"><code>upcast_sound</code></a>, <a href="dsub/Stareat.html#upcast_preserves_wf"><code>upcast_preserves_wf</code></a>, <a href="dsub/Stareat.html#downcast_sound"><code>downcast_sound</code></a>, <a href="dsub/Stareat.html#downcast_preserves_wf"><code>downcast_preserves_wf</code></a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td></td>
 <td><a href="dsub/Step.html">Step.v</a></td>
 <td><a href="dsub/Step.html#upcast_gives_prefix"><code>upcast_gives_prefix</code></a>, <a href="dsub/Step.html#downcast_gives_prefix"><code>downcast_gives_prefix</code></a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>38</td>
 <td><a href="dsub/Stareat.html">Stareat.v</a></td>
 <td><a href="dsub/Stareat.html#ope_sub_stareat_sound"><code>ope_sub_stareat_sound</code></a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>39</td>
 <td><a href="dsub/Stareat.html">Stareat.v</a></td>
 <td><a href="dsub/Stareat.html#bsubtyp_sound"><code>bsubtyp_sound</code></a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>40</td>
 <td><a href="dsub/Stareat.html">Stareat.v</a></td>
 <td><a href="dsub/Stareat.html#revealing_terminates"><code>revealing_terminates</code></a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>41</td>
 <td><a href="dsub/Stareat.html">Stareat.v</a></td>
 <td><a href="dsub/Stareat.html#revealing_measure"><code>revealing_measure</code></a>, <a href="dsub/Stareat.html#upcast_decreases_measure"><code>upcast_decreases_measure</code></a>, and <a href="dsub/Stareat.html#downcast_decreases_measure"><code>downcast_decreases_measure</code></a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>42</td>
 <td><a href="dsub/Stareat.html">Stareat.v</a></td>
 <td><a href="dsub/Stareat.html#stareat_terminates"><code>stareat_terminates</code></a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>43</td>
 <td><a href="dsub/StrongKernel.html">StrongKernel.v</a></td>
 <td><a href="dsub/StrongKernel.html#revealing_to_subtysk"><code>revealing_to_subtysk</code></a>, <a href="dsub/StrongKernel.html#exposure&#39;_to_subtysk"><code>exposure'_to_subtysk</code></a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>44</td>
 <td><a href="dsub/StrongKernel.html">StrongKernel.v</a></td>
 <td><a href="dsub/StrongKernel.html#stareat_to_subtysk"><code>stareat_to_subtysk</code></a>, <a href="dsub/StrongKernel.html#stareat&#39;_to_subtysk"><code>stareat'_to_subtysk</code></a>, <a href="dsub/StrongKernel.html#stareat_to_stareat&#39;"><code>stareat_to_stareat'</code></a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>45</td>
 <td><a href="dsub/Step.html">Step.v</a></td>
 <td><a href="dsub/Step.html#stareat_strengthening"><code>stareat_strengthening</code></a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>46</td>
 <td><a href="dsub/StrongKernel.html">StrongKernel.v</a></td>
 <td><a href="dsub/StrongKernel.html#subtysk_to_stareat"><code>subtysk_to_stareat</code></a>, <a href="dsub/StrongKernel.html#subtysk_to_stareat&#39;"><code>subtysk_to_stareat'</code></a>, <a href="dsub/StrongKernel.html#stareat&#39;_to_stareat"><code>stareat'_to_stareat</code></a>, <a href="dsub/StrongKernel.html#subtysk&#39;_conversions"><code>subtysk'_conversions</code></a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="strong-kernel-and-stare-at-subtyping-in-f">Strong Kernel and Stare-at Subtyping in F&lt;:</h3>
+<p>In Secion 7, we discuss how to adapt our methods in F&lt;:, and we also formalized this part in <a href="fsub/toc.html"><code>fsub/</code></a>.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Theorem</th>
+<th>File</th>
+<th>Related Formalization</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>47</td>
+<td><a href="fsub/StrongKernel.html">StrongKernel.v</a></td>
+<td><a href="fsub/StrongKernel.html#k_subty_to_sk_subty"><code>k_subty_to_sk_subty</code></a></td>
+</tr>
+<tr class="even">
+<td>48</td>
+<td><a href="fsub/StrongKernel.html">StrongKernel.v</a></td>
+<td><a href="fsub/StrongKernel.html#sk_subty_sound"><code>sk_subty_sound</code></a></td>
+</tr>
+<tr class="odd">
+<td>49</td>
+<td><a href="fsub/StrongKernel.html">StrongKernel.v</a></td>
+<td><a href="fsub/StrongKernel.html#stareat_sound"><code>stareat_sound</code></a></td>
+</tr>
+<tr class="even">
+<td>50</td>
+<td><a href="fsub/StrongKernel.html">StrongKernel.v</a></td>
+<td><a href="fsub/StrongKernel.html#stareat_to_sk_subty"><code>stareat_to_sk_subty</code></a></td>
+</tr>
+<tr class="odd">
+<td>51</td>
+<td><a href="fsub/StrongKernel.html">StrongKernel.v</a></td>
+<td><a href="fsub/StrongKernel.html#sk_subty_to_stareat"><code>sk_subty_to_stareat</code></a></td>
+</tr>
+<tr class="even">
+<td>52</td>
+<td><a href="fsub/StrongKernel.html">StrongKernel.v</a></td>
+<td><a href="fsub/StrongKernel.html#stareat_terminates"><code>stareat_terminates</code></a></td>
 </tr>
 </tbody>
 </table>

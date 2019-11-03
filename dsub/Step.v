@@ -28,7 +28,7 @@ Require Import Stareat.
 (** * Definitions Related to Step Subtyping
     
     Step subtyping was originally developed in Nieto17 and it is the first
- formalization of algorithmic subtyping of D#<sub>D<:lt;:</sub>.
+ formalization of algorithmic subtyping of D#<sub>&lt;:</sub>#.
   *)
 
 
@@ -673,7 +673,7 @@ Qed.
     
     In this definition of [Exposure], contexts are not truncated in the premises. It
  turns out that two definitions are equivalent. This definition is a convenient setup 
- to show the completeness theorem w.r.t. Kernel D#<sub>D<:lt;:</sub>.
+ to show the completeness theorem w.r.t. Kernel D#<sub>&lt;:</sub>#.
  *)
 Section EquivalentRepr.
   
@@ -767,7 +767,7 @@ End EquivalentRepr.
 
 (** ** A Formalization of Termination of Step Subtyping
     
-    One can see from the setup here to understand why it is necessary to easy the
+    One can see from the setup here to understand why it is necessary to ease the
  proof of termination. The complexity can quickly become unmanageable if the setup is
  not fundamentally simplified. 
 

@@ -112,11 +112,6 @@ agda-2.5.4.2 Everything.agda</code></pre>
 <h3 id="the-undecidability-proofs">The undecidability proofs</h3>
 <p>The paper made brief discussion on why <code>F&lt;:-</code> is undecidable. In the Agda proof, this is justified by reducing from <code>F&lt;:</code> deterministic, <code>F&lt;:d</code>, to <code>F&lt;:-</code>. <code>F&lt;:d</code> is an intermediate calculus in Pierce92, which was shown reducible from TCM, and therefore <code>F&lt;:d</code> is undecidable as well as <code>F&lt;:-</code>.</p>
 <table>
-<colgroup>
-<col width="5%" />
-<col width="29%" />
-<col width="64%" />
-</colgroup>
 <thead>
 <tr class="header">
 <th>Theorem</th>
@@ -148,29 +143,34 @@ agda-2.5.4.2 Everything.agda</code></pre>
 <tr class="odd">
 <td>7, 8, 9</td>
 <td><a href="agda/DsubDef.html">DsubDef.agda</a></td>
-<td>under <a href="agda/DsubDef.html#9408"><code>module InvertibleProperties</code></a> and <a href="agda/Dsub.html#9520"><code>module DsubInvProperties</code></a></td>
+<td>under <a href="agda/DsubDef.html#9408"><code>module InvertibleProperties</code></a>, and</td>
 </tr>
 <tr class="even">
+<td></td>
+<td><a href="agda/Dsub.html">Dsub.agda</a></td>
+<td><a href="agda/Dsub.html#9520"><code>module DsubInvProperties</code></a></td>
+</tr>
+<tr class="odd">
 <td>10</td>
 <td><a href="agda/DsubEquivSimpler.html">DsubEquivSimpler.agda</a></td>
 <td>under <a href="agda/DsubEquivSimpler.html#3706"><code>module SimplerTransitivity</code></a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>11</td>
 <td><a href="agda/DsubEquivSimpler.html">DsubEquivSimpler.agda</a></td>
 <td><a href="agda/DsubEquivSimpler.html#14605"><code>&lt;:⇒&lt;:″</code></a> and <a href="agda/DsubEquivSimpler.html#15057"><code>&lt;:″⇒&lt;:</code></a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>12, 13</td>
 <td><a href="agda/DsubEquivSimpler.html">DsubEquivSimpler.agda</a></td>
 <td><a href="agda/DsubEquivSimpler.html#18497"><code>F&lt;:⇒D&lt;:</code></a> and <a href="agda/DsubEquivSimpler.html#18589"><code>D&lt;:⇒F&lt;:</code></a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>14</td>
 <td><a href="agda/DsubNoTrans.html">DsubNoTrans.agda</a></td>
 <td><a href="agda/DsubNoTrans.html#4523"><code>F&lt;:⇒D&lt;:</code></a> and <a href="agda/DsubNoTrans.html#4615"><code>D&lt;:⇒F&lt;:</code></a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>15, 16</td>
 <td><a href="agda/DsubTermUndec.html">DsubTermUndec.agda</a></td>
 <td><a href="agda/DsubTermUndec.html#897"><code>F&lt;:⇒typing′</code></a> and <a href="agda/DsubTermUndec.html#1471"><code>typing⇒F&lt;:′</code></a></td>

@@ -2,6 +2,8 @@
 
 Welcome to the homepage of our paper, Undecidability of D<: and Its Decidable Fragments!
 
+The paper has been put available on [ACM Digital Library](https://dl.acm.org/doi/10.1145/3371077)!
+
 ## The Artifact
 
 There are three ways to examine our artifact:
@@ -231,7 +233,7 @@ It is recommended to build Agda from source. To do so, one would need to install
 curl -sSL https://get.haskellstack.org/ | sh
 ```
 
-Then the following script will use `stack` to install Agda in `.local/bin/`.
+Then the following script will use `stack` to install Agda in `~/.local/bin/`.
 
 ``` bash
 git clone https://github.com/agda/agda
